@@ -9,8 +9,11 @@ const COURSE_WIDTH = 5120;
 const COURSE_HEIGHT = 960;
 
 const JUMP_SPEED = 16;
+const BOSS_SPEED = 2;
+const BOSS_MAXLEFT = 120 * 32;
+const BOSS_MAXRIGHT = 145 * 32;
 
-const SHOW_GRIDLINES = false;
+const SHOW_GRIDLINES = true;
 const SHOW_PLATFORMS = false;
 
 canvas.width = FRAME_WIDTH;
@@ -63,20 +66,32 @@ class Player {
     }
 }
 class Boss {
+    /**
+     * Boss pattern
+     * If player is X blocks away, do nothing (no changing mode, no acting)
+     * If player is above, switch to 'looking up' sprite
+     * If player is to the left, switch to 'looking left' sprite
+     * If player is to the right, switch to 'looking right' sprite
+     * Either in attack mode or move mode
+     * Mode logic
+     *  - 
+     */
     constructor() {
+        this.mode = 'move';
         this.globalPosition = {
-            x: 132 * 32,
-            y: 26 * 32
+            x: 129 * 32,
+            y: 19 * 32
         };
         this.velocity = {
             x: 0,
             y: 0
         };
-        this.width = 32;
-        this.height = 32;
+        this.width = 6 * 32;
+        this.height = 8 * 32;
     }
 
     get left() { return this.globalPosition.x; }
+    get center() { return this.globalPosition.x + (0.5 * this.width); }
     get right() { return this.left + this.width; }
     get top() { return this.globalPosition.y; }
     get bottom() { return this.top + this.height; }
@@ -92,8 +107,12 @@ class Boss {
     }
     update() {
         this.draw();
-        this.globalPosition.x += this.velocity.x;
-        this.globalPosition.y += this.velocity.y;
+
+        if (player.right < this.center && this.left >= BOSS_MAXLEFT) {
+            this.globalPosition.x -= BOSS_SPEED;
+        } else if (player.left > this.center && this.right <= BOSS_MAXRIGHT) {
+            this.globalPosition.x += BOSS_SPEED;
+        }
     }
 }
 class Platform {
@@ -183,8 +202,8 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     bg.draw();
 
-    player.update();
     boss.update();
+    player.update();
 
     if (SHOW_PLATFORMS) {
         platforms.forEach(platform => platform.draw());
@@ -390,8 +409,8 @@ const platforms = [
     new RightPlatform({ left: 150 * 32, top: 11 * 32, bottom: 24 * 32 }), // right
 
 ];
-player.draw();
 boss.draw();
+player.draw();
 animate();
 
 addEventListener('keydown', e => {
