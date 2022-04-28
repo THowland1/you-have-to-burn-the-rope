@@ -3,10 +3,15 @@ const debugPlayer = document.querySelector('#debug-player');
 const debugOffset = document.querySelector('#debug-offset');
 const c = canvas.getContext('2d');
 
-const FRAME_WIDTH = 600;
-const FRAME_HEIGHT = 400;
+const FRAME_WIDTH = 22 * 32;
+const FRAME_HEIGHT = 16 * 32;
 const COURSE_WIDTH = 5120;
 const COURSE_HEIGHT = 960;
+
+const JUMP_SPEED = 16;
+
+const SHOW_GRIDLINES = false;
+const SHOW_PLATFORMS = false;
 
 canvas.width = FRAME_WIDTH;
 canvas.height = FRAME_HEIGHT;
@@ -55,6 +60,40 @@ class Player {
         } else {
             this.velocity.y = 0;
         }
+    }
+}
+class Boss {
+    constructor() {
+        this.globalPosition = {
+            x: 132 * 32,
+            y: 26 * 32
+        };
+        this.velocity = {
+            x: 0,
+            y: 0
+        };
+        this.width = 32;
+        this.height = 32;
+    }
+
+    get left() { return this.globalPosition.x; }
+    get right() { return this.left + this.width; }
+    get top() { return this.globalPosition.y; }
+    get bottom() { return this.top + this.height; }
+
+    get localLeft() { return this.globalPosition.x - offset.x; }
+    get localRight() { return this.localLeft + this.width; }
+    get localTop() { return this.globalPosition.y - offset.y; }
+    get localBottom() { return this.localTop + this.height; }
+
+    draw() {
+        c.fillStyle = 'black';
+        c.fillRect(this.localLeft, this.localTop, this.width, this.height);
+    }
+    update() {
+        this.draw();
+        this.globalPosition.x += this.velocity.x;
+        this.globalPosition.y += this.velocity.y;
     }
 }
 class Platform {
@@ -145,21 +184,27 @@ function animate() {
     bg.draw();
 
     player.update();
-    platforms.forEach(platform => platform.draw());
+    boss.update();
 
-    c.fillStyle = 'white';
-
-    Array.from(Array(COURSE_WIDTH / (32 * 4))).forEach((_, x) => {
-        c.fillRect((x * (32 * 4)) - offset.x, 0, 1, FRAME_HEIGHT);
-        c.fillText(`${x * 4}`, (x * (32 * 4)) - offset.x, 10);
+    if (SHOW_PLATFORMS) {
+        platforms.forEach(platform => platform.draw());
     }
-    );
 
-    Array.from(Array(COURSE_HEIGHT / (32 * 5))).forEach((_, y) => {
-        c.fillRect(0, (y * (32 * 5)) - offset.y, FRAME_WIDTH, 1);
-        c.fillText(`${y * 5}`, 10, (y * (32 * 5)) - offset.y);
+    if (SHOW_GRIDLINES) {
+        c.fillStyle = 'white';
+
+        Array.from(Array(COURSE_WIDTH / (32 * 4))).forEach((_, x) => {
+            c.fillRect((x * (32 * 4)) - offset.x, 0, 1, FRAME_HEIGHT);
+            c.fillText(`${x * 4}`, (x * (32 * 4)) - offset.x, 10);
+        }
+        );
+
+        Array.from(Array(COURSE_HEIGHT / (32 * 5))).forEach((_, y) => {
+            c.fillRect(0, (y * (32 * 5)) - offset.y, FRAME_WIDTH, 1);
+            c.fillText(`${y * 5}`, 10, (y * (32 * 5)) - offset.y);
+        }
+        );
     }
-    );
 
     // # Update velocity for next frame
 
@@ -225,6 +270,7 @@ function animate() {
 
 
 const player = new Player();
+const boss = new Boss();
 const platforms = [
     // Tunnel
     new RightPlatform({ left: 6 * 32, top: 0 * 32, bottom: 15 * 32 }), // right
@@ -345,13 +391,14 @@ const platforms = [
 
 ];
 player.draw();
+boss.draw();
 animate();
 
 addEventListener('keydown', e => {
     switch (e.key) {
         case 'ArrowUp':
             if (player.velocity.y === 0) {
-                player.velocity.y -= 16;
+                player.velocity.y -= JUMP_SPEED;
             }
             break;
         case 'ArrowRight':
