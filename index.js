@@ -223,6 +223,25 @@ class Rope extends Coordinates {
         );
     }
 }
+class Chandelier extends Coordinates {
+    constructor() {
+        super({ x: 130 * 32, y: 12 * 32, width: 5 * 32, height: 3 * 32 });
+        this.img = new Image();
+        this.img.src = './chandelier.png';
+    }
+    draw() {
+        const dx = this.localLeft;
+        const dy = this.localTop;
+        const dw = this.width;
+        const dh = this.height;
+        this.img && c.drawImage(this.img,
+            dx,
+            dy,
+            dw,
+            dh,
+        );
+    }
+}
 
 class BG {
     constructor() {
@@ -262,6 +281,7 @@ function animate() {
     boss.update();
     player.update();
     rope.draw();
+    chandelier.draw();
 
     flames.forEach(flame => flame.draw());
 
@@ -356,6 +376,7 @@ const player = new Player({
 });
 const boss = new Boss();
 const rope = new Rope();
+const chandelier = new Chandelier();
 const flames = [
     new Flame({ left: 109 * 32, top: 18 * 32 }),
     new Flame({ left: 111 * 32, top: 13 * 32 }),
@@ -486,6 +507,7 @@ const platforms = [
 boss.draw();
 player.draw();
 rope.draw();
+chandelier.draw();
 flames.forEach(flame => flame.draw());
 animate();
 
