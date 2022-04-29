@@ -25,47 +25,57 @@ const offset = {
     y: 21 * 32
 };
 
-class Player {
+class Coordinates {
+    constructor({ x, y, height, width }) {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+    }
+
+    get left() { return this.x; }
+    get right() { return this.left + this.width; }
+    get center() { return this.left + (0.5 * this.width); }
+    get top() { return this.y; }
+    get bottom() { return this.top + this.height; }
+
+    get localLeft() { return this.x - offset.x; }
+    get localRight() { return this.localLeft + this.width; }
+    get localTop() { return this.y - offset.y; }
+    get localBottom() { return this.localTop + this.height; }
+}
+class Player extends Coordinates {
     constructor() {
-        this.globalPosition = {
+        super({
             x: 148 * 32,
-            y: 26 * 32
-        };
+            y: 26 * 32,
+            height: 20,
+            width: 20,
+        });
+        this.hasFlame = false;
         this.velocity = {
             x: 0,
             y: 0
         };
-        this.width = 20;
-        this.height = 20;
     }
 
-    get left() { return this.globalPosition.x; }
-    get right() { return this.left + this.width; }
-    get top() { return this.globalPosition.y; }
-    get bottom() { return this.top + this.height; }
-
-    get localLeft() { return this.globalPosition.x - offset.x; }
-    get localRight() { return this.localLeft + this.width; }
-    get localTop() { return this.globalPosition.y - offset.y; }
-    get localBottom() { return this.localTop + this.height; }
-
     draw() {
-        c.fillStyle = 'red';
+        c.fillStyle = this.hasFlame ? 'red' : 'orange';
         c.fillRect(this.localLeft, this.localTop, this.width, this.height);
     }
     update() {
         this.draw();
-        this.globalPosition.x += this.velocity.x;
-        this.globalPosition.y += this.velocity.y;
+        this.x += this.velocity.x;
+        this.y += this.velocity.y;
 
-        if (this.globalPosition.y + this.height + this.velocity.y <= COURSE_HEIGHT) {
+        if (this.y + this.height + this.velocity.y <= COURSE_HEIGHT) {
             this.velocity.y += gravity;
         } else {
             this.velocity.y = 0;
         }
     }
 }
-class Boss {
+class Boss extends Coordinates {
     /**
      * Boss pattern
      * If player is X blocks away, do nothing (no changing mode, no acting)
@@ -77,29 +87,21 @@ class Boss {
      *  - 
      */
     constructor() {
-        this.mode = 'move';
-        this.globalPosition = {
+        super({
             x: 129 * 32,
-            y: 19 * 32
-        };
+            y: 19 * 32,
+            height: 8 * 32,
+            width: 6 * 32,
+        });
+        this.mode = 'move';
+
+        this.x = 129 * 32;
+        this.y = 19 * 32;
         this.velocity = {
             x: 0,
             y: 0
         };
-        this.width = 6 * 32;
-        this.height = 8 * 32;
     }
-
-    get left() { return this.globalPosition.x; }
-    get center() { return this.globalPosition.x + (0.5 * this.width); }
-    get right() { return this.left + this.width; }
-    get top() { return this.globalPosition.y; }
-    get bottom() { return this.top + this.height; }
-
-    get localLeft() { return this.globalPosition.x - offset.x; }
-    get localRight() { return this.localLeft + this.width; }
-    get localTop() { return this.globalPosition.y - offset.y; }
-    get localBottom() { return this.localTop + this.height; }
 
     draw() {
         c.fillStyle = 'black';
@@ -109,30 +111,17 @@ class Boss {
         this.draw();
 
         if (player.right < this.center && this.left >= BOSS_MAXLEFT) {
-            this.globalPosition.x -= BOSS_SPEED;
+            this.x -= BOSS_SPEED;
         } else if (player.left > this.center && this.right <= BOSS_MAXRIGHT) {
-            this.globalPosition.x += BOSS_SPEED;
+            this.x += BOSS_SPEED;
         }
     }
 }
-class Platform {
+class Platform extends Coordinates {
     constructor({ left, top, right, bottom }) {
-        this.globalPosition = {
-            x: left,
-            y: top
-        };
-        this.width = right - left;
-        this.height = bottom - top;
+        super({ x: left, y: top, width: right - left, height: bottom - top });
     }
-    get left() { return this.globalPosition.x; }
-    get right() { return this.left + this.width; }
-    get top() { return this.globalPosition.y; }
-    get bottom() { return this.top + this.height; }
 
-    get localLeft() { return this.globalPosition.x - offset.x; }
-    get localRight() { return this.localLeft + this.width; }
-    get localTop() { return this.globalPosition.y - offset.y; }
-    get localBottom() { return this.localTop + this.height; }
     draw() {
         c.fillStyle = '#00f3';
         c.fillRect(this.localLeft, this.localTop, this.width, this.height);
