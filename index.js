@@ -295,14 +295,14 @@ function animate() {
         player.velocity.x = 0;
     }
 
-    if (player.localRight > 400 && player.velocity.x > 0) {
+    if (player.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && player.velocity.x > 0) {
         offset.x += player.velocity.x;
-    } else if (player.localLeft < 100 && player.velocity.x < 0) {
+    } else if (player.localLeft < 200 && offset.x > 0 && player.velocity.x < 0) {
         offset.x += player.velocity.x;
     }
-    if (player.localTop < 175 && player.velocity.y < 0) {
+    if (player.localTop < 175 && offset.y > 0 && player.velocity.y < 0) {
         offset.y += player.velocity.y;
-    } else if (player.localBottom > 200 && player.velocity.y > 0) {
+    } else if (player.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && player.velocity.y > 0) {
         offset.y += player.velocity.y;
     }
 
