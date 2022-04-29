@@ -21,8 +21,8 @@ canvas.height = FRAME_HEIGHT;
 const gravity = 1;
 const speed = 5;
 const offset = {
-    x: 140 * 32,
-    y: 21 * 32
+    x: 104 * 32,
+    y: 15 * 32
 };
 
 class Coordinates {
@@ -43,15 +43,22 @@ class Coordinates {
     get localRight() { return this.localLeft + this.width; }
     get localTop() { return this.y - offset.y; }
     get localBottom() { return this.localTop + this.height; }
+
+    intersectsX({ left, right }) {
+        return (this.right >= left && this.right <= right) || (this.left >= left && this.right <= right);
+    }
+
+    intersectsY({ top, bottom }) {
+        return (this.bottom <= bottom && this.bottom >= top) || (this.top <= bottom && this.top >= top);
+    }
+
+    intersects({ left, right, top, bottom }) {
+        return this.intersectsX({ left, right }) && this.intersectsY({ top, bottom });
+    }
 }
 class Player extends Coordinates {
-    constructor() {
-        super({
-            x: 148 * 32,
-            y: 26 * 32,
-            height: 20,
-            width: 20,
-        });
+    constructor({ x, y, height, width }) {
+        super({ x, y, height, width });
         this.hasFlame = false;
         this.velocity = {
             x: 0,
@@ -60,7 +67,7 @@ class Player extends Coordinates {
     }
 
     draw() {
-        c.fillStyle = this.hasFlame ? 'red' : 'orange';
+        c.fillStyle = this.hasFlame ? 'orange' : 'red';
         c.fillRect(this.localLeft, this.localTop, this.width, this.height);
     }
     update() {
@@ -72,6 +79,10 @@ class Player extends Coordinates {
             this.velocity.y += gravity;
         } else {
             this.velocity.y = 0;
+        }
+
+        if (!this.hasFlame) {
+            this.hasFlame = flames.some(flame => this.intersects(flame));
         }
     }
 }
@@ -128,6 +139,43 @@ class Platform extends Coordinates {
     }
 }
 
+class Flame extends Coordinates {
+    constructor({ left, top }) {
+        super({ x: left, y: top, width: 1 * 32, height: 2 * 32 });
+        this.img = new Image();
+        this.img.src = './flame-sprites.png';
+        this.framesPerSecond = 10;
+        this.frameCount = 3;
+        this.frameIndex = 0;
+        this.frameUpdated = new Date().valueOf();
+    }
+
+    draw() {
+        if (now - this.frameUpdated > 1000 / this.framesPerSecond) {
+            this.frameIndex = (this.frameIndex + 1) % this.frameCount;
+            this.frameUpdated = now;
+        }
+        const sx = this.frameIndex * 32;
+        const sy = 0;
+        const sw = this.width;
+        const sh = this.height;
+        const dx = this.localLeft;
+        const dy = this.localTop;
+        const dw = this.width;
+        const dh = this.height;
+        this.img && c.drawImage(this.img,
+            sx,
+            sy,
+            sw,
+            sh,
+            dx,
+            dy,
+            dw,
+            dh,
+        );
+    }
+}
+
 class LeftPlatform extends Platform {
     constructor({ top, right, bottom }) {
         super({ left: right - 32, top, right, bottom });
@@ -144,7 +192,7 @@ class BottomPlatform extends Platform {
     }
 }
 class TopPlatform extends Platform {
-    constructor({ left, top, right, bottom }) {
+    constructor({ left, right, bottom }) {
         super({ left, top: bottom - 32, right, bottom });
     }
 }
@@ -156,6 +204,25 @@ const keys = {
         pressed: false
     }
 };
+class Rope extends Coordinates {
+    constructor() {
+        super({ x: (132 * 32) + 12, y: 6 * 32, width: 8, height: 6 * 32 });
+        this.img = new Image();
+        this.img.src = './rope.png';
+    }
+    draw() {
+        const dx = this.localLeft;
+        const dy = this.localTop;
+        const dw = this.width;
+        const dh = this.height;
+        this.img && c.drawImage(this.img,
+            dx,
+            dy,
+            dw,
+            dh,
+        );
+    }
+}
 
 class BG {
     constructor() {
@@ -185,14 +252,18 @@ class BG {
 }
 
 const bg = new BG();
+let now = new Date().valueOf();
 function animate() {
-
+    now = new Date().valueOf();
     requestAnimationFrame(animate);
     c.clearRect(0, 0, canvas.width, canvas.height);
     bg.draw();
 
     boss.update();
     player.update();
+    rope.draw();
+
+    flames.forEach(flame => flame.draw());
 
     if (SHOW_PLATFORMS) {
         platforms.forEach(platform => platform.draw());
@@ -277,8 +348,22 @@ function animate() {
 
 
 
-const player = new Player();
+const player = new Player({
+    x: 107 * 32,
+    y: 16 * 32,
+    height: 20,
+    width: 20,
+});
 const boss = new Boss();
+const rope = new Rope();
+const flames = [
+    new Flame({ left: 109 * 32, top: 18 * 32 }),
+    new Flame({ left: 111 * 32, top: 13 * 32 }),
+    new Flame({ left: 109 * 32, top: 8 * 32 }),
+    new Flame({ left: 155 * 32, top: 18 * 32 }),
+    new Flame({ left: 153 * 32, top: 13 * 32 }),
+    new Flame({ left: 155 * 32, top: 8 * 32 }),
+];
 const platforms = [
     // Tunnel
     new RightPlatform({ left: 6 * 32, top: 0 * 32, bottom: 15 * 32 }), // right
@@ -400,6 +485,8 @@ const platforms = [
 ];
 boss.draw();
 player.draw();
+rope.draw();
+flames.forEach(flame => flame.draw());
 animate();
 
 addEventListener('keydown', e => {
