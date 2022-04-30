@@ -13,7 +13,7 @@ const BOSS_SPEED = 2;
 const BOSS_MAXLEFT = 120 * 32;
 const BOSS_MAXRIGHT = 145 * 32;
 
-const SHOW_GRIDLINES = true;
+const SHOW_GRIDLINES = false;
 const SHOW_PLATFORMS = false;
 
 canvas.width = FRAME_WIDTH;
@@ -24,6 +24,23 @@ const offset = {
     x: 104 * 32,
     y: 15 * 32
 };
+
+class Frames {
+    constructor({ images, fps }) {
+        this.fps = fps;
+        this.images = images;
+        this.frameUpdated = now;
+        this.currentIndex = 0;
+    }
+    get() {
+        if (now - this.frameUpdated > 1000 / this.fps) {
+            this.frameUpdated = now;
+            this.currentIndex = (this.currentIndex + 1) % this.images.length;
+        }
+        return this.images[this.currentIndex];
+    }
+}
+
 
 class Coordinates {
     constructor({ x, y, height, width }) {
@@ -56,20 +73,73 @@ class Coordinates {
         return this.intersectsX({ left, right }) && this.intersectsY({ top, bottom });
     }
 }
+function img(src) {
+    const result = new Image();
+    result.src = src;
+    return result;
+}
 class Player extends Coordinates {
-    constructor({ x, y, height, width }) {
-        super({ x, y, height, width });
+    constructor({ x, y }) {
+        super({ x, y, height: 36, width: 30 });
         this.hasFlame = false;
+        this.facingRight = true;
         this.velocity = {
             x: 0,
             y: 0
         };
+        this.images = {
+            fall: img('./sprites/player-fall_30x36.png'),
+            hit: img('./sprites/player-hit_30x36.png'),
+            jump: img('./sprites/player-jump_30x36.png'),
+            still: img('./sprites/player-still_30x36.png'),
+            throw: img('./sprites/player-throw_30x36.png'),
+            walk1: img('./sprites/player-walk-1_30x36.png'),
+            walk2: img('./sprites/player-walk-2_30x36.png'),
+            walk3: img('./sprites/player-walk-3_30x36.png'),
+            stick: img('./sprites/stick_30x6.png'),
+            flame1: img('./sprites/flame-1_28x28.png'),
+            flame2: img('./sprites/flame-2_28x28.png'),
+            flame3: img('./sprites/flame-3_28x28.png'),
+        };
+        this.walkFrames = new Frames({ fps: 12, images: [this.images.walk3, this.images.walk2, this.images.walk1] });
+        this.flameFrames = new Frames({ fps: 12, images: [this.images.flame1, this.images.flame2, this.images.flame3] });
     }
 
     draw() {
-        c.fillStyle = this.hasFlame ? 'orange' : 'red';
-        c.fillRect(this.localLeft, this.localTop, this.width, this.height);
+        const torchOffset = { x: 0, y: 0 };
+        let img;
+        if (this.velocity.y > 0) {
+            img = this.images.fall;
+            torchOffset.x = 1;
+            torchOffset.y = -6;
+        } else if (this.velocity.y < 0) {
+            img = this.images.jump;
+            torchOffset.x = 1;
+        } else if (this.velocity.x !== 0) {
+            img = this.walkFrames.get();
+            torchOffset.x = 1;
+        } else {
+            img = this.images.still;
+        }
+
+        if (this.facingRight) {
+            c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+            if (this.hasFlame) {
+                c.drawImage(this.images.stick, this.localLeft + 5 + torchOffset.x, this.localTop + 18 + torchOffset.y, 30, 6);
+                c.drawImage(this.flameFrames.get(), this.localLeft + 20 + torchOffset.x, this.localTop - 7 + torchOffset.y, 28, 28);
+            }
+        } else {
+            c.save();
+            c.scale(-1, 1);
+            c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            if (this.hasFlame) {
+                c.drawImage(this.images.stick, - this.localRight + 5 + torchOffset.x, this.localTop + 18 + torchOffset.y, 30, 6);
+                c.drawImage(this.flameFrames.get(), -this.localRight + 20 + torchOffset.x, this.localTop - 7 + torchOffset.y, 28, 28);
+            }
+            c.restore();
+        }
     }
+
     update() {
         this.draw();
         this.x += this.velocity.x;
@@ -208,7 +278,7 @@ class Rope extends Coordinates {
     constructor() {
         super({ x: (132 * 32) + 12, y: 6 * 32, width: 8, height: 6 * 32 });
         this.img = new Image();
-        this.img.src = './rope.png';
+        this.img.src = './sprites/rope_8x192.png';
     }
     draw() {
         const dx = this.localLeft;
@@ -227,7 +297,7 @@ class Chandelier extends Coordinates {
     constructor() {
         super({ x: 130 * 32, y: 12 * 32, width: 5 * 32, height: 3 * 32 });
         this.img = new Image();
-        this.img.src = './chandelier.png';
+        this.img.src = './sprites/chandelier_160x96.png';
     }
     draw() {
         const dx = this.localLeft;
@@ -272,107 +342,10 @@ class BG {
 
 const bg = new BG();
 let now = new Date().valueOf();
-function animate() {
-    now = new Date().valueOf();
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    bg.draw();
-
-    boss.update();
-    player.update();
-    rope.draw();
-    chandelier.draw();
-
-    flames.forEach(flame => flame.draw());
-
-    if (SHOW_PLATFORMS) {
-        platforms.forEach(platform => platform.draw());
-    }
-
-    if (SHOW_GRIDLINES) {
-        c.fillStyle = 'white';
-
-        Array.from(Array(COURSE_WIDTH / (32 * 4))).forEach((_, x) => {
-            c.fillRect((x * (32 * 4)) - offset.x, 0, 1, FRAME_HEIGHT);
-            c.fillText(`${x * 4}`, (x * (32 * 4)) - offset.x, 10);
-        }
-        );
-
-        Array.from(Array(COURSE_HEIGHT / (32 * 5))).forEach((_, y) => {
-            c.fillRect(0, (y * (32 * 5)) - offset.y, FRAME_WIDTH, 1);
-            c.fillText(`${y * 5}`, 10, (y * (32 * 5)) - offset.y);
-        }
-        );
-    }
-
-    // # Update velocity for next frame
-
-    if (keys.right.pressed) {
-        player.velocity.x = speed;
-    } else if (keys.left.pressed) {
-        player.velocity.x = -speed;
-    } else {
-        player.velocity.x = 0;
-    }
-
-    if (player.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && player.velocity.x > 0) {
-        offset.x += player.velocity.x;
-    } else if (player.localLeft < 200 && offset.x > 0 && player.velocity.x < 0) {
-        offset.x += player.velocity.x;
-    }
-    if (player.localTop < 175 && offset.y > 0 && player.velocity.y < 0) {
-        offset.y += player.velocity.y;
-    } else if (player.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && player.velocity.y > 0) {
-        offset.y += player.velocity.y;
-    }
-
-    platforms.forEach(platform => {
-        if (player.right >= platform.left && player.left <= platform.right) {
-            if (player.bottom <= platform.top &&
-                player.bottom + player.velocity.y >= platform.top
-            ) {
-                player.velocity.y = 0;
-            }
-            if (player.top >= platform.bottom &&
-                player.top + player.velocity.y <= platform.bottom
-            ) {
-                player.velocity.y = 0;
-            }
-        }
-
-        if (player.bottom >= platform.top && player.top <= platform.bottom) {
-            if (player.right <= platform.left &&
-                player.right + player.velocity.x >= platform.left
-            ) {
-                player.velocity.x = 0;
-            }
-            if (player.left >= platform.right &&
-                player.left + player.velocity.x <= platform.right
-            ) {
-                player.velocity.x = 0;
-            }
-        }
-    });
-
-    // if (player.position.y < 100 && offset.y > -4321 && player.velocity.y < 0) {
-    //     offset.y += player.velocity.y;
-    //     player.velocity.y = 0;
-    // }
-    // if (player.position.y > 300 && offset.y < 0 && player.velocity.y > 0) {
-    //     offset.y += player.velocity.y;
-    //     player.velocity.y = 0;
-    // }
-
-    // debugPlayer.innerText = JSON.stringify(player);
-}
-
-
 
 const player = new Player({
     x: 107 * 32,
     y: 16 * 32,
-    height: 20,
-    width: 20,
 });
 const boss = new Boss();
 const rope = new Rope();
@@ -504,12 +477,7 @@ const platforms = [
     new RightPlatform({ left: 150 * 32, top: 11 * 32, bottom: 24 * 32 }), // right
 
 ];
-boss.draw();
-player.draw();
-rope.draw();
-chandelier.draw();
-flames.forEach(flame => flame.draw());
-animate();
+
 
 addEventListener('keydown', e => {
     switch (e.key) {
@@ -520,9 +488,11 @@ addEventListener('keydown', e => {
             break;
         case 'ArrowRight':
             keys.right.pressed = true;
+            player.facingRight = true;
             break;
         case 'ArrowLeft':
             keys.left.pressed = true;
+            player.facingRight = false;
             break;
 
         default:
@@ -542,3 +512,87 @@ addEventListener('keyup', e => {
             break;
     }
 });
+
+function animate() {
+    now = new Date().valueOf();
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    bg.draw();
+
+    boss.update();
+    player.update();
+    rope.draw();
+    chandelier.draw();
+
+    flames.forEach(flame => flame.draw());
+
+    if (SHOW_PLATFORMS) {
+        platforms.forEach(platform => platform.draw());
+    }
+
+    if (SHOW_GRIDLINES) {
+        c.fillStyle = 'white';
+
+        Array.from(Array(COURSE_WIDTH / (32 * 4))).forEach((_, x) => {
+            c.fillRect((x * (32 * 4)) - offset.x, 0, 1, FRAME_HEIGHT);
+            c.fillText(`${x * 4}`, (x * (32 * 4)) - offset.x, 10);
+        }
+        );
+
+        Array.from(Array(COURSE_HEIGHT / (32 * 5))).forEach((_, y) => {
+            c.fillRect(0, (y * (32 * 5)) - offset.y, FRAME_WIDTH, 1);
+            c.fillText(`${y * 5}`, 10, (y * (32 * 5)) - offset.y);
+        }
+        );
+    }
+
+    // # Update velocity for next frame
+
+    if (keys.right.pressed) {
+        player.velocity.x = speed;
+    } else if (keys.left.pressed) {
+        player.velocity.x = -speed;
+    } else {
+        player.velocity.x = 0;
+    }
+
+    if (player.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && player.velocity.x > 0) {
+        offset.x += player.velocity.x;
+    } else if (player.localLeft < 200 && offset.x > 0 && player.velocity.x < 0) {
+        offset.x += player.velocity.x;
+    }
+    if (player.localTop < 175 && offset.y > 0 && player.velocity.y < 0) {
+        offset.y += player.velocity.y;
+    } else if (player.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && player.velocity.y > 0) {
+        offset.y += player.velocity.y;
+    }
+
+    platforms.forEach(platform => {
+        if (player.right >= platform.left && player.left <= platform.right) {
+            if (player.bottom <= platform.top &&
+                player.bottom + player.velocity.y >= platform.top
+            ) {
+                player.velocity.y = 0;
+            }
+            if (player.top >= platform.bottom &&
+                player.top + player.velocity.y <= platform.bottom
+            ) {
+                player.velocity.y = 0;
+            }
+        }
+
+        if (player.bottom >= platform.top && player.top <= platform.bottom) {
+            if (player.right <= platform.left &&
+                player.right + player.velocity.x >= platform.left
+            ) {
+                player.velocity.x = 0;
+            }
+            if (player.left >= platform.right &&
+                player.left + player.velocity.x <= platform.right
+            ) {
+                player.velocity.x = 0;
+            }
+        }
+    });
+}
+animate();
