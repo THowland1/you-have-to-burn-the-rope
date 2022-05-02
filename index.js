@@ -19,14 +19,15 @@ const SHOW_PLATFORMS = false;
 canvas.width = FRAME_WIDTH;
 canvas.height = FRAME_HEIGHT;
 const gravity = 1;
+const CHANDELIER_GRAVITY = .1;
 const speed = 5;
 const offset = {
-    x: 104 * 32,
-    y: 15 * 32
+    x: 124 * 32,
+    y: 5 * 32
 };
 
 class Frames {
-    constructor({ images, fps }) {
+    constructor({ images, fps, loop }) {
         this.fps = fps;
         this.images = images;
         this.frameUpdated = now;
@@ -41,6 +42,7 @@ class Frames {
     }
 }
 
+async function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
 class Coordinates {
     constructor({ x, y, height, width }) {
@@ -81,7 +83,7 @@ function img(src) {
 class Player extends Coordinates {
     constructor({ x, y }) {
         super({ x, y, height: 36, width: 30 });
-        this.hasFlame = false;
+        this.hasFlame = true;
         this.facingRight = true;
         this.velocity = {
             x: 0,
@@ -175,6 +177,8 @@ class Boss extends Coordinates {
             width: 6 * 32,
         });
         this.mode = 'move';
+        this.facingRight = false;
+        /** @type {'living' | 'about-to-die' | 'dying' | 'dead'} */ this.state = 'living';//
 
         this.x = 129 * 32;
         this.y = 19 * 32;
@@ -182,19 +186,48 @@ class Boss extends Coordinates {
             x: 0,
             y: 0
         };
+        this.images = {
+            attack: img('./sprites/boss-attack_204x256.png'),
+            die: img('./sprites/boss-die_192x256.png'),
+            lookup: img('./sprites/boss-lookup_192x256.png'),
+            move: img('./sprites/boss-move_204x256.png'),
+            still: img('./sprites/boss-still_204x256.png'),
+        };
     }
 
     draw() {
-        c.fillStyle = 'black';
-        c.fillRect(this.localLeft, this.localTop, this.width, this.height);
+        let img;
+        img = this.images.move;
+        if (this.state === 'dying') {
+            img = this.images.die;
+        } else if (this.top > player.bottom) {
+            img = this.images.lookup;
+        }
+        if (this.facingRight) {
+            c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+        } else {
+            c.save();
+            c.scale(-1, 1);
+            c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            c.restore();
+        }
     }
     update() {
+        if (this.state === 'dead') {
+            return;
+        }
         this.draw();
+
+        if (this.state === 'dying' || this.state === 'about-to-die') {
+            return;
+        }
 
         if (player.right < this.center && this.left >= BOSS_MAXLEFT) {
             this.x -= BOSS_SPEED;
+            this.facingRight = false;
         } else if (player.left > this.center && this.right <= BOSS_MAXRIGHT) {
             this.x += BOSS_SPEED;
+            this.facingRight = true;
         }
     }
 }
@@ -245,6 +278,44 @@ class Flame extends Coordinates {
         );
     }
 }
+const explosionImages = [
+    img('./sprites/explosion-1_36x36.png'),
+    img('./sprites/explosion-2_36x36.png'),
+    img('./sprites/explosion-3_36x36.png'),
+    img('./sprites/explosion-4_36x36.png'),
+    img('./sprites/explosion-5_36x36.png'),
+    img('./sprites/explosion-6_36x36.png'),
+    img('./sprites/explosion-7_36x36.png'),
+];
+class Explosions {
+    constructor() {
+         /** @type {Explosion[]} */ this.explosions = [];
+    }
+    add({ left, top }) {
+        this.explosions.push(new Explosion({ left, top }));
+    }
+    update() {
+        this.explosions = this.explosions.filter(explosion => explosion.frames.currentIndex < 6);
+        this.draw();
+    }
+    draw() {
+        this.explosions.forEach(explosion => explosion.draw());
+    }
+}
+class Explosion extends Coordinates {
+    constructor({ left, top }) {
+        super({ x: left, y: top, width: 36, height: 36 });
+        this.img = new Image();
+        this.frames = new Frames({ images: explosionImages, fps: 14 });
+        this.startTime = new Date();
+        this.finished = false;
+    }
+
+    draw() {
+        c.drawImage(this.frames.get(), this.localLeft, this.localTop, this.width, this.height);
+    }
+
+}
 
 class LeftPlatform extends Platform {
     constructor({ top, right, bottom }) {
@@ -279,6 +350,13 @@ class Rope extends Coordinates {
         super({ x: (132 * 32) + 12, y: 6 * 32, width: 8, height: 6 * 32 });
         this.img = new Image();
         this.img.src = './sprites/rope_8x192.png';
+        this.show = true;
+    }
+    update() {
+        if (!this.show) {
+            return;
+        }
+        this.draw();
     }
     draw() {
         const dx = this.localLeft;
@@ -298,18 +376,24 @@ class Chandelier extends Coordinates {
         super({ x: 130 * 32, y: 12 * 32, width: 5 * 32, height: 3 * 32 });
         this.img = new Image();
         this.img.src = './sprites/chandelier_160x96.png';
+        this.show = true;
+        this.dropped = false;
+        this.velocity = {
+            y: 0
+        };
     }
     draw() {
-        const dx = this.localLeft;
-        const dy = this.localTop;
-        const dw = this.width;
-        const dh = this.height;
-        this.img && c.drawImage(this.img,
-            dx,
-            dy,
-            dw,
-            dh,
-        );
+        this.img && c.drawImage(this.img, this.localLeft, this.localTop, this.width, this.height);
+    }
+    update() {
+        if (!this.show) {
+            return;
+        }
+        if (this.dropped) {
+            this.velocity.y += CHANDELIER_GRAVITY;
+            this.y += this.velocity.y;
+        }
+        this.draw();
     }
 }
 
@@ -344,12 +428,13 @@ const bg = new BG();
 let now = new Date().valueOf();
 
 const player = new Player({
-    x: 107 * 32,
-    y: 16 * 32,
+    x: 127 * 32,
+    y: 6 * 32,
 });
 const boss = new Boss();
 const rope = new Rope();
 const chandelier = new Chandelier();
+const explosions = new Explosions();
 const flames = [
     new Flame({ left: 109 * 32, top: 18 * 32 }),
     new Flame({ left: 111 * 32, top: 13 * 32 }),
@@ -494,7 +579,6 @@ addEventListener('keydown', e => {
             keys.left.pressed = true;
             player.facingRight = false;
             break;
-
         default:
             break;
     }
@@ -521,16 +605,93 @@ function animate() {
 
     boss.update();
     player.update();
-    rope.draw();
-    chandelier.draw();
+    rope.update();
+    chandelier.update();
+    explosions.update();
 
     flames.forEach(flame => flame.draw());
+
+    if (player.hasFlame && player.intersects(rope)) {
+        player.hasFlame = false;
+        (async function () {
+            explosions.add({ left: 132 * 32, top: 6 * 32 });
+            await wait(200);
+            explosions.add({ left: 132 * 32, top: 7 * 32 });
+            await wait(200);
+            explosions.add({ left: 132 * 32, top: 8 * 32 });
+            await wait(200);
+            explosions.add({ left: 132 * 32, top: 9 * 32 });
+            await wait(200);
+            explosions.add({ left: 132 * 32, top: 10 * 32 });
+            chandelier.dropped = true;
+            boss.state = 'about-to-die';
+            await wait(1200);
+            boss.state = 'dying';
+            chandelier.show = false;
+            rope.show = false;
+            explosions.add({ left: 4291, top: 642 });
+            explosions.add({ left: 4283, top: 676 });
+            explosions.add({ left: 4264, top: 681 });
+            explosions.add({ left: 4282, top: 688 });
+            explosions.add({ left: 4186, top: 621 });
+            explosions.add({ left: 4194, top: 649 });
+            explosions.add({ left: 4203, top: 642 });
+            explosions.add({ left: 4223, top: 664 });
+            explosions.add({ left: 4219, top: 668 });
+            explosions.add({ left: 4203, top: 686 });
+            explosions.add({ left: 4200, top: 670 });
+            explosions.add({ left: 4200, top: 700 });
+            explosions.add({ left: 4205, top: 792 });
+            explosions.add({ left: 4248, top: 730 });
+            explosions.add({ left: 4154, top: 686 });
+            explosions.add({ left: 4126, top: 725 });
+            explosions.add({ left: 4214, top: 598 });
+            await wait(300);
+            explosions.add({ left: 4159, top: 654 });
+            await wait(300);
+            explosions.add({ left: 4161, top: 706 });
+            await wait(300);
+            explosions.add({ left: 4274, top: 851 });
+            await wait(300);
+            explosions.add({ left: 4206, top: 734 });
+            await wait(300);
+            explosions.add({ left: 4192, top: 733 });
+            await wait(300);
+            explosions.add({ left: 4203, top: 732 });
+            await wait(300);
+            explosions.add({ left: 4252, top: 546 });
+            await wait(300);
+            boss.state = 'dead';
+
+            explosions.add({ left: 4237, top: 560 });
+            explosions.add({ left: 4205, top: 596 });
+            explosions.add({ left: 4251, top: 603 });
+            explosions.add({ left: 4231, top: 642 });
+            explosions.add({ left: 4295, top: 644 });
+            explosions.add({ left: 4249, top: 656 });
+            explosions.add({ left: 4243, top: 681 });
+            explosions.add({ left: 4203, top: 684 });
+            explosions.add({ left: 4266, top: 684 });
+            explosions.add({ left: 4219, top: 692 });
+            explosions.add({ left: 4215, top: 700 });
+            explosions.add({ left: 4293, top: 730 });
+            explosions.add({ left: 4126, top: 740 });
+            explosions.add({ left: 4187, top: 746 });
+            explosions.add({ left: 4224, top: 750 });
+            explosions.add({ left: 4199, top: 767 });
+            explosions.add({ left: 4176, top: 768 });
+            explosions.add({ left: 4296, top: 813 });
+            explosions.add({ left: 4161, top: 820 });
+            explosions.add({ left: 4179, top: 844 });
+            explosions.add({ left: 4180, top: 882 });
+        })();
+    }
 
     if (SHOW_PLATFORMS) {
         platforms.forEach(platform => platform.draw());
     }
 
-    if (SHOW_GRIDLINES) {
+    if (SHOW_GRIDLINES || true) {
         c.fillStyle = 'white';
 
         Array.from(Array(COURSE_WIDTH / (32 * 4))).forEach((_, x) => {
