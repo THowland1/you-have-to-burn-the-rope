@@ -158,6 +158,34 @@ class Player extends Coordinates {
         }
     }
 }
+class HealthBar {
+    constructor() {
+        this.health = 1;
+        this.deathTime = null;
+    }
+    die() {
+        this.deathTime = new Date().valueOf();
+    }
+    update() {
+        if (this.deathTime) {
+            this.health = 1 * Math.exp(- (new Date().valueOf() - this.deathTime) / 200);
+        }
+        this.draw();
+    }
+    draw() {
+        c.fillStyle = 'white';
+        c.fillRect(16, 16, FRAME_WIDTH - 32, 20);
+        c.fillRect(16, 32, 154, 24);
+        c.fillStyle = 'black';
+        c.fillRect(18, 18, FRAME_WIDTH - 36, 16);
+        c.fillRect(18, 30, 150, 24);
+        c.fillStyle = 'red';
+        c.fillRect(20, 20, (FRAME_WIDTH - 40) * this.health, 12);
+        c.fillStyle = 'white';
+        c.font = 'bold 14px Arial';
+        c.fillText('Grinning Colossus', 28, 48);
+    }
+}
 class Boss extends Coordinates {
     /**
      * Boss pattern
@@ -435,6 +463,7 @@ const boss = new Boss();
 const rope = new Rope();
 const chandelier = new Chandelier();
 const explosions = new Explosions();
+const healthBar = new HealthBar();
 const flames = [
     new Flame({ left: 109 * 32, top: 18 * 32 }),
     new Flame({ left: 111 * 32, top: 13 * 32 }),
@@ -608,6 +637,7 @@ function animate() {
     rope.update();
     chandelier.update();
     explosions.update();
+    healthBar.update();
 
     flames.forEach(flame => flame.draw());
 
@@ -626,6 +656,7 @@ function animate() {
             chandelier.dropped = true;
             boss.state = 'about-to-die';
             await wait(1200);
+            healthBar.die();
             boss.state = 'dying';
             chandelier.show = false;
             rope.show = false;
