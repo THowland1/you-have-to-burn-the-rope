@@ -1,10 +1,10 @@
-const canvas = document.querySelector('canvas');
-const debugPlayer = document.querySelector('#debug-player');
-const debugOffset = document.querySelector('#debug-offset');
-const c = canvas.getContext('2d');
 
-const FRAME_WIDTH = 22 * 32;
-const FRAME_HEIGHT = 16 * 32;
+
+import { audio } from './audio.js';
+import { slides } from './slides.js';
+import { FRAME_HEIGHT, FRAME_WIDTH, c, canvas } from './canvas.js';
+
+
 const COURSE_WIDTH = 5120;
 const COURSE_HEIGHT = 960;
 
@@ -15,6 +15,9 @@ const BOSS_MAXRIGHT = 145 * 32;
 
 const SHOW_GRIDLINES = false;
 const SHOW_PLATFORMS = false;
+
+
+
 
 canvas.width = FRAME_WIDTH;
 canvas.height = FRAME_HEIGHT;
@@ -182,7 +185,8 @@ class HealthBar {
         c.fillStyle = 'red';
         c.fillRect(20, 20, (FRAME_WIDTH - 40) * this.health, 12);
         c.fillStyle = 'white';
-        c.font = 'bold 14px Arial';
+        c.textAlign = 'left';
+        c.font = 'bold 14px Inter';
         c.fillText('Grinning Colossus', 28, 48);
     }
 }
@@ -608,6 +612,8 @@ addEventListener('keydown', e => {
             keys.left.pressed = true;
             player.facingRight = false;
             break;
+        case 'x':
+            audio.play();
         default:
             break;
     }
@@ -625,7 +631,7 @@ addEventListener('keyup', e => {
             break;
     }
 });
-
+const creditsBg = img('./sprites/credits-bg_704x512.png');
 function animate() {
     now = new Date().valueOf();
     requestAnimationFrame(animate);
@@ -640,6 +646,9 @@ function animate() {
     healthBar.update();
 
     flames.forEach(flame => flame.draw());
+
+    c.drawImage(creditsBg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+    slides.forEach(slide => slide.draw());
 
     if (player.hasFlame && player.intersects(rope)) {
         player.hasFlame = false;
@@ -722,7 +731,7 @@ function animate() {
         platforms.forEach(platform => platform.draw());
     }
 
-    if (SHOW_GRIDLINES || true) {
+    if (SHOW_GRIDLINES) {
         c.fillStyle = 'white';
 
         Array.from(Array(COURSE_WIDTH / (32 * 4))).forEach((_, x) => {

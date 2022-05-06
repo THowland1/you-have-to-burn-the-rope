@@ -1,0 +1,1 @@
+export const audio = new Audio('./sounds/now-youre-a-hero.mp3');
