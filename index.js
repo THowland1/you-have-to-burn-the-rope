@@ -631,23 +631,31 @@ addEventListener('keyup', e => {
             break;
     }
 });
-const creditsBg = img('./sprites/credits-bg_704x512.png');
 function animate() {
     now = new Date().valueOf();
     requestAnimationFrame(animate);
+
     c.clearRect(0, 0, canvas.width, canvas.height);
-    bg.draw();
+    if (audio.currentTime < 2) {
 
-    boss.update();
-    player.update();
-    rope.update();
-    chandelier.update();
-    explosions.update();
-    healthBar.update();
+        bg.draw();
 
-    flames.forEach(flame => flame.draw());
+        boss.update();
+        player.update();
+        rope.update();
+        chandelier.update();
+        explosions.update();
+        healthBar.update();
 
-    c.drawImage(creditsBg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        flames.forEach(flame => flame.draw());
+        canvas.style.opacity = (2 - audio.currentTime) / 2;
+    } else {
+        canvas.style.opacity = 1;
+
+    }
+
+    // c.drawImage(creditsBg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+    c.fillStyle = 'white';
     slides.forEach(slide => slide.draw());
 
     if (player.hasFlame && player.intersects(rope)) {
@@ -724,6 +732,8 @@ function animate() {
             explosions.add({ left: 4161, top: 820 });
             explosions.add({ left: 4179, top: 844 });
             explosions.add({ left: 4180, top: 882 });
+            await wait(2000);
+            audio.play();
         })();
     }
 

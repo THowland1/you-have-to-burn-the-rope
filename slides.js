@@ -1,6 +1,6 @@
 
 import { audio } from './audio.js';
-import { FRAME_HEIGHT, FRAME_WIDTH, c } from './canvas.js';
+import { FRAME_HEIGHT, FRAME_WIDTH, c, canvas } from './canvas.js';
 
 function img(src) {
     const result = new Image();
@@ -19,17 +19,39 @@ class TitleSlide {
         if (time < this.timeIn || time > this.timeOut) {
             return;
         }
-        // if (time < this.timeIn + this.fadeTime) {
-        //     c.globalAlpha = (time - this.timeIn) / this.fadeTime;
-        // } else if (time > this.timeOut - this.fadeTime) {
-        //     c.globalAlpha = (this.timeOut - time) / this.fadeTime;
-
-        // }
+        if (time - this.timeIn < this.fadeTime) {
+            canvas.style.opacity = ((time - this.timeIn) / this.fadeTime);
+        } else if (this.timeOut - time < this.fadeTime) {
+            canvas.style.opacity = (this.timeOut - time) / this.fadeTime;
+        }
         c.textAlign = 'center';
         c.font = '500 14px Inter';
         c.fillText('You Have To Burn The Rope', FRAME_WIDTH / 2, (FRAME_HEIGHT / 2) - 10);
         c.font = '400 12px Inter';
         c.fillText('Thank you for playing!', FRAME_WIDTH / 2, (FRAME_HEIGHT / 2) + 10);
+    }
+}
+class GameOverSlide {
+    constructor({ timeIn, fadeTime, text }) {
+        this.timeIn = timeIn;
+        this.fadeTime = fadeTime;
+        this.text = text;
+    }
+    draw() {
+        const time = audio.currentTime;
+        if (time < this.timeIn) {
+            return;
+        }
+        if (time - this.timeIn < this.fadeTime) {
+            canvas.style.opacity = ((time - this.timeIn) / this.fadeTime);
+        }
+        // if (!audio.ended) {
+        //     const fadeTime = audio.duration - this.timeIn;
+        //     canvas.style.opacity = ((time - this.timeIn) / fadeTime);
+        // }
+        c.textAlign = 'center';
+        c.font = '500 14px Inter';
+        c.fillText(this.text, FRAME_WIDTH / 2, (FRAME_HEIGHT / 2));
     }
 }
 class LyricSlide {
@@ -51,24 +73,30 @@ class LyricSlide {
 
 
 class ImageTextSlide {
-    constructor({ heading, lines, src, timeIn, timeOut }) {
+    constructor({ heading, lines, src, timeIn, timeOut, fadeTime }) {
         this.img = img(src);
         /** @type {string} */ this.heading = heading;
         /** @type {string[]} */ this.lines = lines;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
+        this.fadeTime = fadeTime;
     }
     draw() {
         const time = audio.currentTime;
         if (time < this.timeIn || time > this.timeOut) {
             return;
         }
+        if (time - this.timeIn < this.fadeTime) {
+            canvas.style.opacity = ((time - this.timeIn) / this.fadeTime);
+        } else if (this.timeOut - time < this.fadeTime) {
+            canvas.style.opacity = (this.timeOut - time) / this.fadeTime;
+        }
         let offsetX = 150;
         const offsetY = 0;
         c.drawImage(this.img, (FRAME_WIDTH / 2) - 250, (FRAME_HEIGHT - 200) / 2, 200, 200);
         c.textAlign = 'center';
         c.font = '500 14px Inter';
-        c.fillText(`${this.heading} ${audio.currentTime}`, offsetX + (FRAME_WIDTH / 2), offsetY + (FRAME_HEIGHT / 2) - 10);
+        c.fillText(this.heading, offsetX + (FRAME_WIDTH / 2), offsetY + (FRAME_HEIGHT / 2) - 10);
         c.font = '400 12px Inter';
         this.lines.forEach((line, i) => {
             c.fillText(line, offsetX + (FRAME_WIDTH / 2), offsetY + (FRAME_HEIGHT / 2) + 5 + (15 * i));
@@ -77,10 +105,11 @@ class ImageTextSlide {
     }
 }
 class TextImageSlide {
-    constructor({ heading, lines, src, timeIn, timeOut }) {
+    constructor({ heading, lines, src, timeIn, timeOut, fadeTime }) {
         this.img = img(src);
         this.timeIn = timeIn;
         this.timeOut = timeOut;
+        this.fadeTime = fadeTime;
         /** @type {string} */ this.heading = heading;
         /** @type {string[]} */ this.lines = lines;
     }
@@ -88,6 +117,11 @@ class TextImageSlide {
         const time = audio.currentTime;
         if (time < this.timeIn || time > this.timeOut) {
             return;
+        }
+        if (time - this.timeIn < this.fadeTime) {
+            canvas.style.opacity = ((time - this.timeIn) / this.fadeTime);
+        } else if (this.timeOut - time < this.fadeTime) {
+            canvas.style.opacity = (this.timeOut - time) / this.fadeTime;
         }
         let offsetX = -150;
         c.drawImage(this.img, (FRAME_WIDTH / 2) + 50, (FRAME_HEIGHT - 200) / 2, 200, 200);
@@ -105,31 +139,11 @@ class TextImageSlide {
 // Design, Code, Graphics Kian Bashiri (mazapan.se)
 const slides = [
     new TitleSlide({ timeIn: 3.158386, timeOut: 10.540059, fadeTime: .45 }),
-    new ImageTextSlide({ heading: 'fdf', lines: ['er', 'ksbdf frf'], src: './sprites/credits-1_200x200.png', timeIn: 11.89449, timeOut: 19.374947 }),
-    new TextImageSlide({ heading: 'Music', lines: ['Henrik Nåmark', '(reachground.se)'], src: './sprites/credits-2_200x200.png', timeIn: 20.633224, timeOut: 28.119119 }),
-    new ImageTextSlide({ heading: 'Additional Design', lines: ['Henrik Nåmark', 'Christian Dryden'], src: './sprites/credits-3_200x200.png', timeIn: 29.364552, timeOut: 36.967399 }),
-    new TextImageSlide({ heading: 'Special thanks to', lines: ['Umami'], src: './sprites/credits-4_200x200.png', timeIn: 38.17481, timeOut: 45.787413 }),
+    new ImageTextSlide({ heading: 'Design, Code, Graphics', lines: ['Kian Bashiri', '(mazapan.se)'], src: './sprites/credits-1_200x200.png', timeIn: 11.89449, timeOut: 19.374947, fadeTime: .45 }),
+    new TextImageSlide({ heading: 'Music', lines: ['Henrik Nåmark', '(reachground.se)'], src: './sprites/credits-2_200x200.png', timeIn: 20.633224, timeOut: 28.119119, fadeTime: .45 }),
+    new ImageTextSlide({ heading: 'Additional Design', lines: ['Henrik Nåmark', 'Christian Dryden'], src: './sprites/credits-3_200x200.png', timeIn: 29.364552, timeOut: 36.967399, fadeTime: .45 }),
+    new TextImageSlide({ heading: 'Special thanks to', lines: ['Umami'], src: './sprites/credits-4_200x200.png', timeIn: 38.17481, timeOut: 45.787413, fadeTime: .45 }),
 
-    // 1 fadeinstart 3.158386
-    // 1 fadeinend 3.625043
-    // 1 fadeoutstart 10.102125
-    // 1 fadeoutend 10.540059
-    // 2 fadeinstart 11.89449
-    // 2 fadeinend 12.363112
-    // 2 fadeoutstart 18.806675
-    // 2 fadeoutend 19.374947
-    // 3 fadeinstart 20.633224
-    // 3 fadeinend 21.185954
-    // 3 fadeoutstart 27.534666
-    // 3 fadeoutend 28.119119
-    // 4 fadeinstart 29.364552
-    // 4 fadeinend 29.908917
-    // 4 fadeoutstart 36.448878
-    // 4 fadeoutend 36.967399
-    // 5 fadeinstart 38.17481
-    // 5 fadeinend 38.687975
-    // 5 fadeoutstart 45.208802
-    // 5 fadeoutend 
     new LyricSlide({ timeIn: 52.289314, timeOut: 53.952062, text: 'Now you\'re a hero' }),
     new LyricSlide({ timeIn: 53.952062, timeOut: 55.10938, text: 'You managed to' }),
     new LyricSlide({ timeIn: 55.10938, timeOut: 58.198456, text: 'beat the whole damn ga-ame' }),
@@ -167,8 +181,7 @@ const slides = [
     new LyricSlide({ timeIn: 129.520024, timeOut: 131.412406, text: 'Maybe press refresh' }),
     new LyricSlide({ timeIn: 131.412406, timeOut: 132.373833, text: 'and start again' }),
 
-    // Fade in
-    new LyricSlide({ timeIn: 134.1794266, timeOut: 136.705254, text: 'Game Over' }),
+    new GameOverSlide({ timeIn: 134.084787, fadeTime: 3, text: 'Game over' })
 ];
 
 export { slides };
