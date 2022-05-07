@@ -24,6 +24,8 @@ canvas.height = FRAME_HEIGHT;
 const gravity = 1;
 const CHANDELIER_GRAVITY = .1;
 const speed = 5;
+const AXE_SPEED = 3;
+const AXE_GRAVITY = .5;
 const offset = {
     x: 124 * 32,
     y: 5 * 32
@@ -108,12 +110,22 @@ class Player extends Coordinates {
         };
         this.walkFrames = new Frames({ fps: 12, images: [this.images.walk3, this.images.walk2, this.images.walk1] });
         this.flameFrames = new Frames({ fps: 12, images: [this.images.flame1, this.images.flame2, this.images.flame3] });
+        this.lastAttack = 0;
+    }
+
+    attack() {
+        this.hasFlame = false;
+        this.lastAttack = new Date().valueOf();
+        axes.add({ left: player.left + 0.5 * player.width, top: player.top + 0.5 * player.height, shootRight: this.facingRight });
     }
 
     draw() {
         const torchOffset = { x: 0, y: 0 };
         let img;
-        if (this.velocity.y > 0) {
+        if (now - this.lastAttack < 100) {
+            img = this.images.throw;
+            this.remainingAttackFrames--;
+        } else if (this.velocity.y > 0) {
             img = this.images.fall;
             torchOffset.x = 1;
             torchOffset.y = -6;
@@ -173,6 +185,7 @@ class HealthBar {
         if (this.deathTime) {
             this.health = 1 * Math.exp(- (new Date().valueOf() - this.deathTime) / 200);
         }
+        this.health = (1 - 0.99 * (1 - this.health));
         this.draw();
     }
     draw() {
@@ -348,6 +361,52 @@ class Explosion extends Coordinates {
     }
 
 }
+class Axes {
+    constructor() {
+         /** @type {Axe[]} */ this.axes = [];
+    }
+    add({ left, top, shootRight }) {
+        this.axes.push(new Axe({ left, top, shootRight }));
+    }
+    update() {
+        this.axes = this.axes.filter(axe => now - axe.startTime < 6000 && !axe.hitBoss);
+        this.axes.forEach(axe => axe.update());
+    }
+}
+class Axe extends Coordinates {
+    constructor({ left, top, shootRight }) {
+        super({ x: left, y: top, width: 18, height: 18 });
+        this.img = img('./sprites/axe_18x18.png');
+        this.startTime = new Date().valueOf();
+        this.angle = 0;
+        this.finished = false;
+        this.velocity = -7.5;
+        this.turnsPerSecond = .25;
+        this.shootRight = shootRight;
+        this.hitBoss = false;
+    }
+
+    update() {
+        if (this.intersects(boss)) {
+            this.hitBoss = true;
+            healthBar.health -= .05;
+        }
+        this.x += this.shootRight ? AXE_SPEED : -AXE_SPEED;
+        this.velocity += AXE_GRAVITY;
+        this.y += this.velocity;
+        this.angle += 2 * Math.PI * this.turnsPerSecond * (now - this.startTime) / 1000;
+        this.draw();
+    }
+
+    draw() {
+        c.save();
+        c.setTransform(1, 0, 0, 1, this.localLeft, this.localTop); // sets scale and origin
+        c.rotate(this.angle);
+        c.drawImage(this.img, -9, -9, this.width, this.height);
+        c.restore();
+    }
+
+}
 
 class LeftPlatform extends Platform {
     constructor({ top, right, bottom }) {
@@ -374,6 +433,12 @@ const keys = {
         pressed: false
     },
     left: {
+        pressed: false
+    },
+    jump: {
+        pressed: false
+    },
+    attack: {
         pressed: false
     }
 };
@@ -467,6 +532,7 @@ const boss = new Boss();
 const rope = new Rope();
 const chandelier = new Chandelier();
 const explosions = new Explosions();
+const axes = new Axes();
 const healthBar = new HealthBar();
 const flames = [
     new Flame({ left: 109 * 32, top: 18 * 32 }),
@@ -599,6 +665,7 @@ const platforms = [
 
 addEventListener('keydown', e => {
     switch (e.key) {
+        case ' ':
         case 'ArrowUp':
             if (player.velocity.y === 0) {
                 player.velocity.y -= JUMP_SPEED;
@@ -614,20 +681,26 @@ addEventListener('keydown', e => {
             break;
         case 'x':
             audio.play();
+            break;
         default:
+            keys.left.attack = false;
+            player.attack();
             break;
     }
 });
 addEventListener('keyup', e => {
     switch (e.key) {
+        case ' ':
+        case 'ArrowUp':
+            break;
         case 'ArrowRight':
             keys.right.pressed = false;
             break;
         case 'ArrowLeft':
             keys.left.pressed = false;
             break;
-
         default:
+            keys.left.attack = false;
             break;
     }
 });
@@ -645,6 +718,7 @@ function animate() {
         rope.update();
         chandelier.update();
         explosions.update();
+        axes.update();
         healthBar.update();
 
         flames.forEach(flame => flame.draw());
