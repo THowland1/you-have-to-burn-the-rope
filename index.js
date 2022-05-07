@@ -16,9 +16,6 @@ const BOSS_MAXRIGHT = 145 * 32;
 const SHOW_GRIDLINES = false;
 const SHOW_PLATFORMS = false;
 
-
-
-
 canvas.width = FRAME_WIDTH;
 canvas.height = FRAME_HEIGHT;
 const gravity = 1;
@@ -26,10 +23,162 @@ const CHANDELIER_GRAVITY = .1;
 const speed = 5;
 const AXE_SPEED = 3;
 const AXE_GRAVITY = .5;
+// const offset = {
+//     x: 0 * 32,
+//     y: 5 * 32
+// };
 const offset = {
     x: 124 * 32,
     y: 5 * 32
 };
+const PHASES = {
+    start: 0,
+    tunnel: 1,
+    bossfight: 2,
+    ropeburning: 3,
+    ropefalling: 4,
+    bossdying: 5,
+    end: 6
+};
+class PhaseManager {
+    constructor() {
+        this.tunnelMusic = new Audio('./sounds/tunnel.mp3');
+        this.bossFightMusic = new Audio('./sounds/boss-fight.mp3');
+        this.backDoorImage = img('./sprites/back-door_32x64.png');
+        this.showBackDoor = false;
+        this.phase = PHASES.start;
+    }
+    startTunnelPhase() {
+        if (this.phase >= PHASES.tunnel) {
+            return;
+        }
+        this.tunnelMusic.play();
+        this.phase = PHASES.tunnel;
+    }
+    startBossFightPhase() {
+        if (this.phase >= PHASES.bossfight) {
+            return;
+        }
+        this.tunnelMusic.pause();
+        this.bossFightMusic.play();
+        this.showBackDoor = true;
+        healthBar.show = true;
+        platforms.push(new LeftPlatform({ right: 108 * 32, bottom: 27 * 32, top: 25 * 32 }));
+        explosions.add({ left: (107 * 32) - 2, top: (25 * 32) - 2 });
+        explosions.add({ left: (107 * 32) - 2, top: (26 * 32) - 2 });
+        this.phase = PHASES.bossfight;
+    }
+    async startRopeBurningPhase() {
+        if (this.phase >= PHASES.ropeburning) {
+            return;
+        }
+        this.bossFightMusic.pause();
+        this.phase = PHASES.ropeburning;
+
+        explosions.add({ left: 132 * 32, top: 6 * 32 });
+        await wait(200);
+        explosions.add({ left: 132 * 32, top: 7 * 32 });
+        await wait(200);
+        explosions.add({ left: 132 * 32, top: 8 * 32 });
+        await wait(200);
+        explosions.add({ left: 132 * 32, top: 9 * 32 });
+        await wait(200);
+        explosions.add({ left: 132 * 32, top: 10 * 32 });
+        this.startRopeFallingPhase();
+    }
+    async startRopeFallingPhase() {
+        if (this.phase >= PHASES.ropefalling) {
+            return;
+        }
+        this.phase = PHASES.ropefalling;
+
+        chandelier.dropped = true;
+        await wait(1200);
+        this.startBossDyingPhase();
+
+    }
+
+    async startBossDyingPhase() {
+        if (this.phase >= PHASES.bossdying) {
+            return;
+        }
+        this.phase = PHASES.bossdying;
+        healthBar.die();
+        chandelier.show = false;
+        rope.show = false;
+        // #region Explosions
+        explosions.add({ left: 4291, top: 642 });
+        explosions.add({ left: 4283, top: 676 });
+        explosions.add({ left: 4264, top: 681 });
+        explosions.add({ left: 4282, top: 688 });
+        explosions.add({ left: 4186, top: 621 });
+        explosions.add({ left: 4194, top: 649 });
+        explosions.add({ left: 4203, top: 642 });
+        explosions.add({ left: 4223, top: 664 });
+        explosions.add({ left: 4219, top: 668 });
+        explosions.add({ left: 4203, top: 686 });
+        explosions.add({ left: 4200, top: 670 });
+        explosions.add({ left: 4200, top: 700 });
+        explosions.add({ left: 4205, top: 792 });
+        explosions.add({ left: 4248, top: 730 });
+        explosions.add({ left: 4154, top: 686 });
+        explosions.add({ left: 4126, top: 725 });
+        explosions.add({ left: 4214, top: 598 });
+        await wait(300);
+        explosions.add({ left: 4159, top: 654 });
+        await wait(300);
+        explosions.add({ left: 4161, top: 706 });
+        await wait(300);
+        explosions.add({ left: 4274, top: 851 });
+        await wait(300);
+        explosions.add({ left: 4206, top: 734 });
+        await wait(300);
+        explosions.add({ left: 4192, top: 733 });
+        await wait(300);
+        explosions.add({ left: 4203, top: 732 });
+        await wait(300);
+        explosions.add({ left: 4252, top: 546 });
+        await wait(300);
+        // #endregion
+        this.startEndPhase();
+
+
+    }
+    async startEndPhase() {
+        if (this.phase >= PHASES.end) {
+            return;
+        }
+        this.phase = PHASES.end;
+        // #region Explosions
+        explosions.add({ left: 4237, top: 560 });
+        explosions.add({ left: 4205, top: 596 });
+        explosions.add({ left: 4251, top: 603 });
+        explosions.add({ left: 4231, top: 642 });
+        explosions.add({ left: 4295, top: 644 });
+        explosions.add({ left: 4249, top: 656 });
+        explosions.add({ left: 4243, top: 681 });
+        explosions.add({ left: 4203, top: 684 });
+        explosions.add({ left: 4266, top: 684 });
+        explosions.add({ left: 4219, top: 692 });
+        explosions.add({ left: 4215, top: 700 });
+        explosions.add({ left: 4293, top: 730 });
+        explosions.add({ left: 4126, top: 740 });
+        explosions.add({ left: 4187, top: 746 });
+        explosions.add({ left: 4224, top: 750 });
+        explosions.add({ left: 4199, top: 767 });
+        explosions.add({ left: 4176, top: 768 });
+        explosions.add({ left: 4296, top: 813 });
+        explosions.add({ left: 4161, top: 820 });
+        explosions.add({ left: 4179, top: 844 });
+        explosions.add({ left: 4180, top: 882 });
+        // #endregion
+        await wait(2000);
+        audio.play();
+    }
+    drawBackDoor() {
+        c.drawImage(this.backDoorImage, 107 * 32 - offset.x, 25 * 32 - offset.y, 32, 64);
+    }
+}
 
 class Frames {
     constructor({ images, fps, loop }) {
@@ -182,11 +331,15 @@ class HealthBar {
     constructor() {
         this.health = 1;
         this.deathTime = null;
+        this.show = false;
     }
     die() {
         this.deathTime = new Date().valueOf();
     }
     update() {
+        if (!this.show) {
+            return;
+        }
         if (this.deathTime) {
             this.health = 1 * Math.exp(- (new Date().valueOf() - this.deathTime) / 200);
         }
@@ -228,7 +381,6 @@ class Boss extends Coordinates {
         });
         this.mode = 'move';
         this.facingRight = false;
-        /** @type {'living' | 'about-to-die' | 'dying' | 'dead'} */ this.state = 'living';//
 
         this.x = 129 * 32;
         this.y = 19 * 32;
@@ -248,7 +400,7 @@ class Boss extends Coordinates {
     draw() {
         let img;
         img = this.images.move;
-        if (this.state === 'dying') {
+        if (phaseManager.phase === PHASES.bossdying) {
             img = this.images.die;
         } else if (this.top > player.bottom) {
             img = this.images.lookup;
@@ -263,12 +415,12 @@ class Boss extends Coordinates {
         }
     }
     update() {
-        if (this.state === 'dead') {
+        if (phaseManager.phase === PHASES.end) {
             return;
         }
         this.draw();
 
-        if (this.state === 'dying' || this.state === 'about-to-die') {
+        if (phaseManager.phase === PHASES.bossdying || phaseManager.phase === PHASES.ropefalling) {
             return;
         }
 
@@ -573,9 +725,13 @@ class BG {
 const bg = new BG();
 let now = new Date().valueOf();
 
+// const player = new Player({
+//     x: 4 * 32,
+//     y: 8.5 * 32,
+// });
 const player = new Player({
     x: 127 * 32,
-    y: 6 * 32,
+    y: 8.5 * 32,
 });
 const boss = new Boss();
 const rope = new Rope();
@@ -584,6 +740,8 @@ const explosions = new Explosions();
 const plumes = new Plumes();
 const axes = new Axes();
 const healthBar = new HealthBar();
+const phaseManager = new PhaseManager();
+
 const flames = [
     new Flame({ left: 109 * 32, top: 18 * 32 }),
     new Flame({ left: 111 * 32, top: 13 * 32 }),
@@ -712,7 +870,6 @@ const platforms = [
 
 ];
 
-
 addEventListener('keydown', e => {
     switch (e.key) {
         case ' ':
@@ -762,6 +919,9 @@ function animate() {
     if (audio.currentTime < 2) {
 
         bg.draw();
+        if (phaseManager.showBackDoor) {
+            phaseManager.drawBackDoor();
+        }
 
         boss.update();
         player.update();
@@ -776,7 +936,12 @@ function animate() {
         canvas.style.opacity = (2 - audio.currentTime) / 2;
     } else {
         canvas.style.opacity = 1;
+    }
 
+    if (player.left >= 108 * 32) {
+        phaseManager.startBossFightPhase();
+    } else if (player.left >= 6 * 32) {
+        phaseManager.startTunnelPhase();
     }
 
     // c.drawImage(creditsBg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
@@ -785,81 +950,7 @@ function animate() {
 
     if (player.hasFlame && player.intersects(rope)) {
         player.hasFlame = false;
-        (async function () {
-            explosions.add({ left: 132 * 32, top: 6 * 32 });
-            await wait(200);
-            explosions.add({ left: 132 * 32, top: 7 * 32 });
-            await wait(200);
-            explosions.add({ left: 132 * 32, top: 8 * 32 });
-            await wait(200);
-            explosions.add({ left: 132 * 32, top: 9 * 32 });
-            await wait(200);
-            explosions.add({ left: 132 * 32, top: 10 * 32 });
-            chandelier.dropped = true;
-            boss.state = 'about-to-die';
-            await wait(1200);
-            healthBar.die();
-            boss.state = 'dying';
-            chandelier.show = false;
-            rope.show = false;
-            explosions.add({ left: 4291, top: 642 });
-            explosions.add({ left: 4283, top: 676 });
-            explosions.add({ left: 4264, top: 681 });
-            explosions.add({ left: 4282, top: 688 });
-            explosions.add({ left: 4186, top: 621 });
-            explosions.add({ left: 4194, top: 649 });
-            explosions.add({ left: 4203, top: 642 });
-            explosions.add({ left: 4223, top: 664 });
-            explosions.add({ left: 4219, top: 668 });
-            explosions.add({ left: 4203, top: 686 });
-            explosions.add({ left: 4200, top: 670 });
-            explosions.add({ left: 4200, top: 700 });
-            explosions.add({ left: 4205, top: 792 });
-            explosions.add({ left: 4248, top: 730 });
-            explosions.add({ left: 4154, top: 686 });
-            explosions.add({ left: 4126, top: 725 });
-            explosions.add({ left: 4214, top: 598 });
-            await wait(300);
-            explosions.add({ left: 4159, top: 654 });
-            await wait(300);
-            explosions.add({ left: 4161, top: 706 });
-            await wait(300);
-            explosions.add({ left: 4274, top: 851 });
-            await wait(300);
-            explosions.add({ left: 4206, top: 734 });
-            await wait(300);
-            explosions.add({ left: 4192, top: 733 });
-            await wait(300);
-            explosions.add({ left: 4203, top: 732 });
-            await wait(300);
-            explosions.add({ left: 4252, top: 546 });
-            await wait(300);
-            boss.state = 'dead';
-
-            explosions.add({ left: 4237, top: 560 });
-            explosions.add({ left: 4205, top: 596 });
-            explosions.add({ left: 4251, top: 603 });
-            explosions.add({ left: 4231, top: 642 });
-            explosions.add({ left: 4295, top: 644 });
-            explosions.add({ left: 4249, top: 656 });
-            explosions.add({ left: 4243, top: 681 });
-            explosions.add({ left: 4203, top: 684 });
-            explosions.add({ left: 4266, top: 684 });
-            explosions.add({ left: 4219, top: 692 });
-            explosions.add({ left: 4215, top: 700 });
-            explosions.add({ left: 4293, top: 730 });
-            explosions.add({ left: 4126, top: 740 });
-            explosions.add({ left: 4187, top: 746 });
-            explosions.add({ left: 4224, top: 750 });
-            explosions.add({ left: 4199, top: 767 });
-            explosions.add({ left: 4176, top: 768 });
-            explosions.add({ left: 4296, top: 813 });
-            explosions.add({ left: 4161, top: 820 });
-            explosions.add({ left: 4179, top: 844 });
-            explosions.add({ left: 4180, top: 882 });
-            await wait(2000);
-            audio.play();
-        })();
+        phaseManager.startRopeBurningPhase();
     }
 
     if (SHOW_PLATFORMS) {
