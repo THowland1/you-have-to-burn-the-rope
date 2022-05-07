@@ -119,6 +119,11 @@ class Player extends Coordinates {
         axes.add({ left: player.left + 0.5 * player.width, top: player.top + 0.5 * player.height, shootRight: this.facingRight });
     }
 
+    land() {
+        plumes.add({ left: this.left - 43, bottom: this.bottom, facingRight: false });
+        plumes.add({ left: this.right, bottom: this.bottom, facingRight: true });
+    }
+
     draw() {
         const torchOffset = { x: 0, y: 0 };
         let img;
@@ -361,6 +366,50 @@ class Explosion extends Coordinates {
     }
 
 }
+const plumeImages = [
+    img('./sprites/plume-1_43x21.png'),
+    img('./sprites/plume-2_43x21.png'),
+    img('./sprites/plume-3_43x21.png'),
+    img('./sprites/plume-4_43x21.png'),
+    img('./sprites/plume-5_43x21.png'),
+    img('./sprites/plume-6_43x21.png'),
+];
+class Plumes {
+    constructor() {
+         /** @type {Plume[]} */ this.plumes = [];
+    }
+    add({ left, bottom, facingRight }) {
+        this.plumes.push(new Plume({ left, bottom, facingRight }));
+    }
+    update() {
+        this.plumes = this.plumes.filter(plume => plume.frames.currentIndex < 5);
+        this.draw();
+    }
+    draw() {
+        this.plumes.forEach(plume => plume.draw());
+    }
+}
+class Plume extends Coordinates {
+    constructor({ left, bottom, facingRight }) {
+        super({ x: left, y: bottom - 21, width: 43, height: 21 });
+        this.frames = new Frames({ images: plumeImages, fps: 14 });
+        this.facingRight = facingRight;
+    }
+
+    draw() {
+
+        const img = this.frames.get();
+        if (this.facingRight) {
+            c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+        } else {
+            c.save();
+            c.scale(-1, 1);
+            c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            c.restore();
+        }
+    }
+
+}
 class Axes {
     constructor() {
          /** @type {Axe[]} */ this.axes = [];
@@ -532,6 +581,7 @@ const boss = new Boss();
 const rope = new Rope();
 const chandelier = new Chandelier();
 const explosions = new Explosions();
+const plumes = new Plumes();
 const axes = new Axes();
 const healthBar = new HealthBar();
 const flames = [
@@ -718,6 +768,7 @@ function animate() {
         rope.update();
         chandelier.update();
         explosions.update();
+        plumes.update();
         axes.update();
         healthBar.update();
 
@@ -857,24 +908,32 @@ function animate() {
             if (player.bottom <= platform.top &&
                 player.bottom + player.velocity.y >= platform.top
             ) {
+                player.y = platform.y - player.height;
+                if (player.velocity.y > 20) {
+                    player.land();
+                }
                 player.velocity.y = 0;
+
             }
             if (player.top >= platform.bottom &&
                 player.top + player.velocity.y <= platform.bottom
             ) {
+                player.y = platform.bottom;
                 player.velocity.y = 0;
             }
         }
 
-        if (player.bottom >= platform.top && player.top <= platform.bottom) {
+        if (player.bottom > platform.top && player.top < platform.bottom) {
             if (player.right <= platform.left &&
                 player.right + player.velocity.x >= platform.left
             ) {
+                player.x = platform.left - player.width;
                 player.velocity.x = 0;
             }
             if (player.left >= platform.right &&
                 player.left + player.velocity.x <= platform.right
             ) {
+                player.x = platform.right;
                 player.velocity.x = 0;
             }
         }
