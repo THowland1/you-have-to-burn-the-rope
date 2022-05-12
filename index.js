@@ -70,24 +70,29 @@ addEventListener('keydown', e => {
     switch (e.key) {
         case ' ':
         case 'ArrowUp':
-            if (player.velocity.y === 0) {
+            if (!player.stunned && player.velocity.y === 0) {
                 player.velocity.y -= JUMP_SPEED;
             }
             break;
         case 'ArrowRight':
-            keys.right.pressed = true;
-            player.facingRight = true;
+            if (!player.stunned) {
+                keys.right.pressed = true;
+                player.facingRight = true;
+            }
             break;
         case 'ArrowLeft':
-            keys.left.pressed = true;
-            player.facingRight = false;
+            if (!player.stunned) {
+                keys.left.pressed = true;
+                player.facingRight = false;
+            }
             break;
         case 'x':
             audio.play();
             break;
         default:
-            keys.left.attack = false;
-            player.attack();
+            if (!player.stunned) {
+                player.attack();
+            }
             break;
     }
 });
@@ -171,7 +176,9 @@ function animate() {
 
     // # Update velocity for next frame
 
-    if (keys.right.pressed) {
+    if (player.flying) {
+        player.velocity.x *= .9;
+    } else if (keys.right.pressed) {
         player.velocity.x = speed;
     } else if (keys.left.pressed) {
         player.velocity.x = -speed;

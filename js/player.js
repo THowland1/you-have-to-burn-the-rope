@@ -1,9 +1,10 @@
 import { c } from './canvas.js';
-import { COURSE_HEIGHT, gravity } from './consts.js';
+import { COURSE_HEIGHT, gravity, JUMP_SPEED } from './consts.js';
 import { Coordinates } from './coordinates.js';
 import { Frames } from './frames.js';
 import { flames } from './flames.js';
 import { plumes } from './plumes.js';
+import { boss } from './boss.js';
 import { timeManager } from './time-manager.js';
 import { axes } from './axes.js';
 
@@ -39,6 +40,18 @@ export class Player extends Coordinates {
         this.walkFrames = new Frames({ fps: 12, images: [this.images.walk3, this.images.walk2, this.images.walk1] });
         this.flameFrames = new Frames({ fps: 12, images: [this.images.flame1, this.images.flame2, this.images.flame3] });
         this.lastAttack = 0;
+        this.lastHit = 0;
+    }
+
+    get flying() {
+        return (timeManager.now - this.lastHit) < 500;
+    }
+
+    get stunned() {
+        return (timeManager.now - this.lastHit) < 1500;
+    }
+    get blinking() {
+        return (timeManager.now - this.lastHit) < 2000;
     }
 
     attack() {
@@ -52,12 +65,24 @@ export class Player extends Coordinates {
         plumes.add({ left: this.right, bottom: this.bottom, facingRight: true });
     }
 
+    hurtByBoss() {
+        this.hasFlame = false;
+        this.lastHit = new Date().valueOf();
+        this.velocity.x = (this.facingRight ? -1 : 1) * JUMP_SPEED;
+    }
+    hurtByLaser() {
+        this.hasFlame = false;
+        this.lastHit = new Date().valueOf();
+        this.velocity.y = -JUMP_SPEED;
+    }
+
     draw() {
         const torchOffset = { x: 0, y: 0 };
         let img;
-        if (timeManager.now - this.lastAttack < 100) {
+        if (this.flying) {
+            img = this.images.hit;
+        } else if (timeManager.now - this.lastAttack < 100) {
             img = this.images.throw;
-            this.remainingAttackFrames--;
         } else if (this.velocity.y > 0) {
             img = this.images.fall;
             torchOffset.x = 1;
@@ -70,6 +95,13 @@ export class Player extends Coordinates {
             torchOffset.x = 1;
         } else {
             img = this.images.still;
+        }
+
+        if (this.blinking) {
+            const sinceHit = timeManager.now - this.lastHit;
+            if ((sinceHit % 500) > 300) {
+                return;
+            }
         }
 
         if (this.facingRight) {
@@ -103,6 +135,10 @@ export class Player extends Coordinates {
 
         if (!this.hasFlame) {
             this.hasFlame = flames.some(flame => this.intersects(flame));
+        }
+
+        if (this.intersects(boss)) {
+            this.hurtByBoss();
         }
     }
 }
