@@ -72,8 +72,10 @@ export class Player extends Coordinates {
     }
     hurtByLaser() {
         this.hasFlame = false;
-        this.lastHit = new Date().valueOf();
-        this.velocity.y = -JUMP_SPEED;
+        if (!this.blinking) {
+            this.velocity.y = -JUMP_SPEED;
+            this.lastHit = new Date().valueOf();
+        }
     }
 
     draw() {

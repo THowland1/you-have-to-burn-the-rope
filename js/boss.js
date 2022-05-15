@@ -3,11 +3,19 @@
 import { c } from './canvas.js';
 import {
     BOSS_MAXLEFT,
-    BOSS_MAXRIGHT, BOSS_SPEED
+    BOSS_MAXRIGHT,
+    BOSS_SPEED,
+    BOSS_ATTACKINTERVAL,
+    BOSS_MAXMODEDURATION,
+    ATTACKZONE_LEFT,
+    ATTACKZONE_RIGHT,
+    RAFTERS_BOTTOM
 } from './consts.js';
 import { Coordinates } from './coordinates.js';
 import { player } from './player.js';
 import { phaseManager, PHASES } from './phase-manager.js';
+import { lasers } from './lasers.js';
+import { timeManager } from './time-manager.js';
 
 function img(src) {
     const result = new Image();
@@ -33,7 +41,7 @@ class Boss extends Coordinates {
             height: 8 * 32,
             width: 6 * 32,
         });
-        this.mode = 'move';
+        /** @type{'move' | 'attack' | 'still'} */ this.mode = 'attack';
         this.facingRight = false;
 
         this.x = 129 * 32;
@@ -49,14 +57,23 @@ class Boss extends Coordinates {
             move: img('./sprites/boss-move_204x256.png'),
             still: img('./sprites/boss-still_204x256.png'),
         };
+        this.lastAttacked = 0;
+        this.recalculateModeAt = 0;
     }
 
     draw() {
         let img;
+        this.width = 204;
         img = this.images.move;
         if (phaseManager.phase === PHASES.bossdying) {
+            this.width = 192;
             img = this.images.die;
+        } else if (this.mode === 'attack') {
+            img = this.images.attack;
+        } else if (this.mode === 'still') {
+            img = this.images.still;
         } else if (this.top > player.bottom) {
+            this.width = 192;
             img = this.images.lookup;
         }
         if (this.facingRight) {
@@ -78,12 +95,39 @@ class Boss extends Coordinates {
             return;
         }
 
-        if (player.right < this.center && this.left >= BOSS_MAXLEFT) {
-            this.x -= BOSS_SPEED;
-            this.facingRight = false;
-        } else if (player.left > this.center && this.right <= BOSS_MAXRIGHT) {
-            this.x += BOSS_SPEED;
-            this.facingRight = true;
+        if (player.left > ATTACKZONE_LEFT && player.right < ATTACKZONE_RIGHT) {
+            if (player.bottom <= RAFTERS_BOTTOM && (player.left < boss.left || player.right > boss.right)) {
+                this.mode = 'move';
+            } else if (timeManager.now > this.recalculateModeAt) {
+                this.recalculateModeAt = timeManager.now + (BOSS_MAXMODEDURATION * Math.random());
+                this.mode = ['move', 'attack', 'still'][Math.floor(3 * Math.random())];
+            }
+        } else {
+            this.mode = 'still';
+        }
+
+        this.facingRight = player.center > this.center;
+        switch (this.mode) {
+            case 'attack':
+                if (timeManager.now > this.lastAttacked + BOSS_ATTACKINTERVAL) {
+
+                    lasers.add({
+                        left: this.facingRight ? this.right - 32 : this.left + 16,
+                        top: this.top + 108
+                    });
+                    this.lastAttacked = timeManager.now;
+
+                }
+                break;
+            case 'move':
+                if (this.facingRight && this.right <= BOSS_MAXRIGHT) {
+                    this.x += BOSS_SPEED;
+
+                } else if (!this.facingRight && this.left >= BOSS_MAXLEFT) {
+                    this.x -= BOSS_SPEED;
+
+                }
+
         }
     }
 }

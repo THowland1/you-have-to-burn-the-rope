@@ -18,6 +18,7 @@ export class Coordinates {
     get left() { return this.x; }
     get right() { return this.left + this.width; }
     get center() { return this.left + (0.5 * this.width); }
+    get yCenter() { return this.top + (0.5 * this.height); }
     get top() { return this.y; }
     get bottom() { return this.top + this.height; }
 

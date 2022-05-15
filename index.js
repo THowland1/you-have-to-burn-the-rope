@@ -6,13 +6,14 @@ import { boss } from './js/boss.js';
 import { c, canvas, FRAME_HEIGHT, FRAME_WIDTH } from './js/canvas.js';
 import { chandelier } from './js/chandelier.js';
 import {
-    COURSE_HEIGHT, COURSE_WIDTH, JUMP_SPEED, SHOW_GRIDLINES,
+    COURSE_HEIGHT, COURSE_WIDTH, JUMP_SPEED, PLAYER_ATTACKINTERVAL, SHOW_GRIDLINES,
     SHOW_PLATFORMS, speed
 } from './js/consts.js';
 import { offset } from './js/coordinates.js';
 import { explosions } from './js/explosions.js';
 import { flames } from './js/flames.js';
 import { healthBar } from './js/healthbar.js';
+import { lasers } from './js/lasers.js';
 import { phaseManager } from './js/phase-manager.js';
 import { platforms } from './js/platforms.js';
 import { player } from './js/player.js';
@@ -90,7 +91,7 @@ addEventListener('keydown', e => {
             audio.play();
             break;
         default:
-            if (!player.stunned) {
+            if (!player.stunned && timeManager.now > player.lastAttack + PLAYER_ATTACKINTERVAL) {
                 player.attack();
             }
             break;
@@ -131,6 +132,7 @@ function animate() {
         explosions.update();
         plumes.update();
         axes.update();
+        lasers.update();
         healthBar.update();
 
         flames.forEach(flame => flame.draw());
