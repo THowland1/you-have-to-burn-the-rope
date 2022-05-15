@@ -14,9 +14,12 @@ class HealthBar {
             return;
         }
         if (this.deathTime) {
-            this.health = 1 * Math.exp(- (new Date().valueOf() - this.deathTime) / 200);
+            if (this.health > 0.0001) {
+                this.health = 1 * Math.exp(- (new Date().valueOf() - this.deathTime) / 200);
+            }
+        } else {
+            this.health = (1 - 0.99 * (1 - this.health));
         }
-        this.health = (1 - 0.99 * (1 - this.health));
         this.draw();
     }
     draw() {
