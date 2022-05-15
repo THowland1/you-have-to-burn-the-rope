@@ -39,7 +39,7 @@ class Axe extends Coordinates {
     update() {
         if (this.intersects(boss)) {
             this.hitBoss = true;
-            healthBar.health -= .05;
+            healthBar.health -= .01;
         }
         this.x += this.shootRight ? AXE_SPEED : -AXE_SPEED;
         this.velocity += AXE_GRAVITY;
