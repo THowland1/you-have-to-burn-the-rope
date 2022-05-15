@@ -147,11 +147,10 @@ function animate() {
         phaseManager.startTunnelPhase();
     }
 
-    // c.drawImage(creditsBg, 0, 0, FRAME_WIDTH, FRAME_HEIGHT);
     c.fillStyle = 'white';
     slides.forEach(slide => slide.draw());
 
-    if (player.hasFlame && player.intersects(rope)) {
+    if (player.hasFlame && player.intersects(rope.flammableBitOfRope)) {
         player.hasFlame = false;
         phaseManager.startRopeBurningPhase();
     }
