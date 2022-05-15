@@ -91,12 +91,12 @@ class Boss extends Coordinates {
         }
         this.draw();
 
-        if (phaseManager.phase === PHASES.bossdying || phaseManager.phase === PHASES.ropefalling) {
+        if (phaseManager.phase === PHASES.bossdying) {
             return;
         }
 
         if (player.left > ATTACKZONE_LEFT && player.right < ATTACKZONE_RIGHT) {
-            if (player.bottom <= RAFTERS_BOTTOM && (player.left < boss.left || player.right > boss.right)) {
+            if (phaseManager.phase === PHASES.ropeburning || phaseManager.phase === PHASES.ropefalling || (player.bottom <= RAFTERS_BOTTOM && (player.left < boss.left || player.right > boss.right))) {
                 this.mode = 'move';
             } else if (timeManager.now > this.recalculateModeAt) {
                 this.recalculateModeAt = timeManager.now + (BOSS_MAXMODEDURATION * Math.random());
