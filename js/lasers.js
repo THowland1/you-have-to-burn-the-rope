@@ -1,6 +1,6 @@
 import { Coordinates } from './coordinates.js';
 import { c } from './canvas.js';
-import { Frames } from './Frames.js';
+import { Frames } from './frames.js';
 import { timeManager } from './time-manager.js';
 import { LASER_DURATION, LASER_SPEED } from './consts.js';
 import { player } from './player.js';
