@@ -38,7 +38,6 @@ const keys = {
     }
 };
 
-
 class BG {
     constructor() {
         this.img = new Image();

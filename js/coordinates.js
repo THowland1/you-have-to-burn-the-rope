@@ -1,11 +1,11 @@
-// export const offset = {
-//     x: 0 * 32,
-//     y: 0 * 32
-// };
 export const offset = {
-    x: 124 * 32,
-    y: 5 * 32
+    x: 0 * 32,
+    y: 0 * 32
 };
+// export const offset = {
+//     x: 124 * 32,
+//     y: 5 * 32
+// };
 
 export class Coordinates {
     constructor({ x, y, height, width }) {

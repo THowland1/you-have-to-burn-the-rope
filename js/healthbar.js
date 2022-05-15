@@ -33,7 +33,7 @@ class HealthBar {
         c.fillRect(20, 20, (FRAME_WIDTH - 40) * this.health, 12);
         c.fillStyle = 'white';
         c.textAlign = 'left';
-        c.font = 'bold 14px Inter';
+        c.font = 'bold 112px Inter';
         c.fillText('Grinning Colossus', 28, 48);
     }
 }

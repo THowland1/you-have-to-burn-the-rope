@@ -153,11 +153,11 @@ export class Player extends Coordinates {
 
 
 
-// export const player = new Player({
-//     x: 4 * 32,
-//     y: 0 * 32,
-// });
 export const player = new Player({
-    x: 127 * 32,
-    y: 8.5 * 32,
+    x: 4 * 32,
+    y: 0 * 32,
 });
+// export const player = new Player({
+//     x: 127 * 32,
+//     y: 8.5 * 32,
+// });
