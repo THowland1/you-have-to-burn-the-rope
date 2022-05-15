@@ -1,10 +1,9 @@
 import { c } from './canvas.js';
-import { COURSE_HEIGHT, gravity, JUMP_SPEED } from './consts.js';
+import { COURSE_HEIGHT, PLAYER_GRAVITY, JUMP_SPEED } from './consts.js';
 import { Coordinates } from './coordinates.js';
 import { Frames } from './frames.js';
 import { flames } from './flames.js';
 import { plumes } from './plumes.js';
-import { boss } from './boss.js';
 import { timeManager } from './time-manager.js';
 import { axes } from './axes.js';
 
@@ -17,12 +16,9 @@ function img(src) {
 export class Player extends Coordinates {
     constructor({ x, y }) {
         super({ x, y, height: 36, width: 30 });
-        this.hasFlame = false;
+        this.hasFlame = true;
         this.facingRight = true;
-        this.velocity = {
-            x: 0,
-            y: 0
-        };
+        /** px per frame */ this.velocity = { x: 0, y: 0 };
         this.images = {
             fall: img('./sprites/player-fall_30x36.png'),
             hit: img('./sprites/player-hit_30x36.png'),
@@ -54,10 +50,19 @@ export class Player extends Coordinates {
         return (timeManager.now - this.lastHit) < 2000;
     }
 
+    get nextFrame() {
+        return new Coordinates({
+            x: this.x + this.velocity.x * timeManager.msPerFrame,
+            y: this.y + this.velocity.y * timeManager.msPerFrame,
+            width: this.width,
+            height: this.height,
+        });
+    }
+
     attack() {
         this.hasFlame = false;
         this.lastAttack = new Date().valueOf();
-        axes.add({ left: player.left + 0.5 * player.width, top: player.top + 0.5 * player.height, shootRight: this.facingRight });
+        axes.add({ left: this.left + 0.5 * this.width, top: this.top + 0.5 * this.height, shootRight: this.facingRight });
     }
 
     land() {
@@ -126,11 +131,12 @@ export class Player extends Coordinates {
 
     update() {
         this.draw();
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
+
+        this.x += this.velocity.x * timeManager.msPerFrame;
+        this.y += this.velocity.y * timeManager.msPerFrame;
 
         if (this.y + this.height + this.velocity.y <= COURSE_HEIGHT) {
-            this.velocity.y += gravity;
+            this.velocity.y += PLAYER_GRAVITY * timeManager.msPerFrame;
         } else {
             this.velocity.y = 0;
         }
@@ -139,19 +145,19 @@ export class Player extends Coordinates {
             this.hasFlame = flames.some(flame => this.intersects(flame));
         }
 
-        if (this.intersects(boss)) {
-            this.hurtByBoss();
-        }
+        // if (this.intersects(boss)) {
+        //     this.hurtByBoss();
+        // }
     }
 }
 
 
 
-export const player = new Player({
-    x: 4 * 32,
-    y: 0 * 32,
-});
 // export const player = new Player({
-//     x: 127 * 32,
-//     y: 8.5 * 32,
+//     x: 4 * 32,
+//     y: 0 * 32,
 // });
+export const player = new Player({
+    x: 127 * 32,
+    y: 8.5 * 32,
+});

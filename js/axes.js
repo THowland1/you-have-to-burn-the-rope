@@ -3,7 +3,7 @@ import { c } from './canvas.js';
 import { boss } from './boss.js';
 import { healthBar } from './healthbar.js';
 import { timeManager } from './time-manager.js';
-import { AXE_SPEED, AXE_GRAVITY } from './consts.js';
+import { AXE_SPEED_X, AXE_SPEED_Y, AXE_GRAVITY } from './consts.js';
 
 function img(src) {
     const result = new Image();
@@ -30,7 +30,7 @@ class Axe extends Coordinates {
         this.startTime = new Date().valueOf();
         this.angle = 0;
         this.finished = false;
-        this.velocity = -7.5;
+        this.velocity = -AXE_SPEED_Y;
         this.turnsPerSecond = .25;
         this.shootRight = shootRight;
         this.hitBoss = false;
@@ -41,9 +41,9 @@ class Axe extends Coordinates {
             this.hitBoss = true;
             healthBar.health -= .01;
         }
-        this.x += this.shootRight ? AXE_SPEED : -AXE_SPEED;
-        this.velocity += AXE_GRAVITY;
-        this.y += this.velocity;
+        this.x += AXE_SPEED_X * timeManager.msPerFrame * (this.shootRight ? 1 : -1);
+        this.velocity += AXE_GRAVITY * timeManager.msPerFrame;
+        this.y += this.velocity * timeManager.msPerFrame;
         this.angle += 2 * Math.PI * this.turnsPerSecond * (timeManager.now - this.startTime) / 1000;
         this.draw();
     }

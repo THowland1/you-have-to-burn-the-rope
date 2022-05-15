@@ -82,9 +82,6 @@ class PhaseManager {
         this.phase = PHASES.ropefalling;
 
         chandelier.dropped = true;
-        await wait(1200);
-        this.startBossDyingPhase();
-
     }
 
     async startBossDyingPhase() {

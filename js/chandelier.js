@@ -1,6 +1,9 @@
 import { Coordinates } from './coordinates.js';
 import { c } from './canvas.js';
 import { CHANDELIER_GRAVITY } from './consts.js';
+import { timeManager } from './time-manager.js';
+import { phaseManager } from './phase-manager.js';
+import { boss } from './boss.js';
 
 class Chandelier extends Coordinates {
     constructor() {
@@ -21,8 +24,12 @@ class Chandelier extends Coordinates {
             return;
         }
         if (this.dropped) {
-            this.velocity.y += CHANDELIER_GRAVITY;
-            this.y += this.velocity.y;
+            this.velocity.y += CHANDELIER_GRAVITY * timeManager.msPerFrame;
+            this.y += this.velocity.y * timeManager.msPerFrame;
+
+            if (this.yCenter > boss.yCenter) {
+                phaseManager.startBossDyingPhase();
+            }
         }
         this.draw();
     }

@@ -7,14 +7,15 @@ import { c, canvas, FRAME_HEIGHT, FRAME_WIDTH } from './js/canvas.js';
 import { chandelier } from './js/chandelier.js';
 import {
     COURSE_HEIGHT, COURSE_WIDTH, JUMP_SPEED, PLAYER_ATTACKINTERVAL, SHOW_GRIDLINES,
-    SHOW_PLATFORMS, speed
+    SHOW_PLATFORMS, WALKING_SPEED, SHOW_DEBUGMENU, DEBUG_DELAY
 } from './js/consts.js';
 import { offset } from './js/coordinates.js';
+import { debugMenu } from './js/debug-menu.js';
 import { explosions } from './js/explosions.js';
 import { flames } from './js/flames.js';
 import { healthBar } from './js/healthbar.js';
 import { lasers } from './js/lasers.js';
-import { phaseManager } from './js/phase-manager.js';
+import { phaseManager, PHASES } from './js/phase-manager.js';
 import { platforms } from './js/platforms.js';
 import { player } from './js/player.js';
 import { plumes } from './js/plumes.js';
@@ -68,6 +69,9 @@ class BG {
 const bg = new BG();
 
 addEventListener('keydown', e => {
+    if (phaseManager.phase >= PHASES.ropeburning) {
+        return;
+    }
     switch (e.key) {
         case ' ':
         case 'ArrowUp':
@@ -114,8 +118,19 @@ addEventListener('keyup', e => {
     }
 });
 function animate() {
-    timeManager.now = new Date().valueOf();
-    requestAnimationFrame(animate);
+    const now = new Date().valueOf();
+    timeManager.msPerFrame = now - timeManager.now;
+    timeManager.now = now;
+
+
+    if (DEBUG_DELAY) {
+        setTimeout(() => {
+            requestAnimationFrame(animate);
+        }, DEBUG_DELAY);
+
+    } else {
+        requestAnimationFrame(animate);
+    }
 
     c.clearRect(0, 0, canvas.width, canvas.height);
     if (audio.currentTime < 2) {
@@ -158,6 +173,9 @@ function animate() {
     if (SHOW_PLATFORMS) {
         platforms.forEach(platform => platform.draw());
     }
+    if (SHOW_DEBUGMENU) {
+        debugMenu.draw();
+    }
 
     if (SHOW_GRIDLINES) {
         c.fillStyle = 'white';
@@ -180,28 +198,29 @@ function animate() {
     if (player.flying) {
         player.velocity.x *= .9;
     } else if (keys.right.pressed) {
-        player.velocity.x = speed;
+        player.velocity.x = WALKING_SPEED;
     } else if (keys.left.pressed) {
-        player.velocity.x = -speed;
+        player.velocity.x = -WALKING_SPEED;
     } else {
         player.velocity.x = 0;
     }
 
     if (player.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && player.velocity.x > 0) {
-        offset.x += player.velocity.x;
+        offset.x += player.velocity.x * timeManager.msPerFrame;
     } else if (player.localLeft < 200 && offset.x > 0 && player.velocity.x < 0) {
-        offset.x += player.velocity.x;
+        offset.x += player.velocity.x * timeManager.msPerFrame;
     }
     if (player.localTop < 175 && offset.y > 0 && player.velocity.y < 0) {
-        offset.y += player.velocity.y;
+        offset.y += player.velocity.y * timeManager.msPerFrame;
     } else if (player.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && player.velocity.y > 0) {
-        offset.y += player.velocity.y;
+        offset.y += player.velocity.y * timeManager.msPerFrame;
     }
 
     platforms.forEach(platform => {
         if (player.right > platform.left && player.left < platform.right) {
-            if (player.bottom <= platform.top &&
-                player.bottom + player.velocity.y >= platform.top
+            if (
+                player.bottom <= platform.top &&
+                player.nextFrame.bottom >= platform.top
             ) {
                 player.y = platform.y - player.height;
                 if (player.velocity.y > 20) {
@@ -209,9 +228,9 @@ function animate() {
                 }
                 player.velocity.y = 0;
 
-            }
-            if (player.top >= platform.bottom &&
-                player.top + player.velocity.y <= platform.bottom
+            } else if (
+                player.top >= platform.bottom &&
+                player.nextFrame.top <= platform.bottom
             ) {
                 player.y = platform.bottom;
                 player.velocity.y = 0;
@@ -220,13 +239,13 @@ function animate() {
 
         if (player.bottom > platform.top && player.top < platform.bottom) {
             if (player.right <= platform.left &&
-                player.right + player.velocity.x >= platform.left
+                player.nextFrame.right >= platform.left
             ) {
                 player.x = platform.left - player.width;
                 player.velocity.x = 0;
             }
             if (player.left >= platform.right &&
-                player.left + player.velocity.x <= platform.right
+                player.nextFrame.left <= platform.right
             ) {
                 player.x = platform.right;
                 player.velocity.x = 0;
