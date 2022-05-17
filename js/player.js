@@ -73,18 +73,18 @@ class KeyManager {
         });
 
         const rightBtn = document.getElementById('right');
-        rightBtn.addEventListener('mousedown', startRight);
-        rightBtn.addEventListener('mouseup', stopRight);
+        rightBtn.addEventListener('touchstart', startRight);
+        rightBtn.addEventListener('touchend', stopRight);
 
         const leftBtn = document.getElementById('left');
-        leftBtn.addEventListener('mousedown', startLeft);
-        leftBtn.addEventListener('mouseup', stopLeft);
+        leftBtn.addEventListener('touchstart', startLeft);
+        leftBtn.addEventListener('touchend', stopLeft);
 
         const jumpBtn = document.getElementById('jump');
-        jumpBtn.addEventListener('mousedown', jump);
+        jumpBtn.addEventListener('touchstart', jump);
 
         const attackBtn = document.getElementById('attack');
-        attackBtn.addEventListener('mousedown', attack);
+        attackBtn.addEventListener('touchstart', attack);
     }
 }
 const keys = new KeyManager();
