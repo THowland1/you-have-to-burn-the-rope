@@ -131,6 +131,17 @@ function animate() {
         );
     }
 
+    if (player.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && player.velocity.x > 0) {
+        offset.x += player.velocity.x * timeManager.msPerFrame;
+    } else if (player.localLeft < 200 && offset.x > 0 && player.velocity.x < 0) {
+        offset.x += player.velocity.x * timeManager.msPerFrame;
+    }
+    if (player.localTop < 175 && offset.y > 0 && player.velocity.y < 0) {
+        offset.y += player.velocity.y * timeManager.msPerFrame;
+    } else if (player.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && player.velocity.y > 0) {
+        offset.y += player.velocity.y * timeManager.msPerFrame;
+    }
+
 
 
     // platforms.forEach(platform => {

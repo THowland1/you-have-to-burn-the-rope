@@ -204,7 +204,7 @@ export class Player extends Coordinates {
     update() {
 
         // Update Y velocity
-        this.velocity.y += PLAYER_GRAVITY;
+        this.velocity.y += PLAYER_GRAVITY * timeManager.msPerFrame;
 
         // Update X velocity
 
@@ -218,19 +218,10 @@ export class Player extends Coordinates {
             this.velocity.x = 0;
         }
 
-        if (this.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && this.velocity.x > 0) {
-            offset.x += this.velocity.x * timeManager.msPerFrame;
-        } else if (this.localLeft < 200 && offset.x > 0 && this.velocity.x < 0) {
-            offset.x += this.velocity.x * timeManager.msPerFrame;
-        }
-        if (this.localTop < 175 && offset.y > 0 && this.velocity.y < 0) {
-            offset.y += this.velocity.y * timeManager.msPerFrame;
-        } else if (this.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && this.velocity.y > 0) {
-            offset.y += this.velocity.y * timeManager.msPerFrame;
-        }
+
 
         platforms.forEach(platform => {
-            if (this.right > platform.left && this.left < platform.right) {
+            if ((this.right > platform.left && this.left < platform.right) || (this.nextFrame.right > platform.left && this.nextFrame.left < platform.right)) {
                 if (
                     this.bottom <= platform.top &&
                     this.nextFrame.bottom >= platform.top
@@ -250,7 +241,7 @@ export class Player extends Coordinates {
                 }
             }
 
-            if (this.bottom > platform.top && this.top < platform.bottom) {
+            if ((this.bottom > platform.top && this.top < platform.bottom) || (this.nextFrame.bottom > platform.top && this.nextFrame.top < platform.bottom)) {
                 if (this.right <= platform.left &&
                     this.nextFrame.right >= platform.left
                 ) {
@@ -285,11 +276,20 @@ export class Player extends Coordinates {
 
 
 
-export const player = new Player({
-    x: 4 * 32,
-    y: 0 * 32,
-});
+//start
+// export const player = new Player({
+//     x: 4 * 32,
+//     y: 0 * 32,
+// });
+
+//rope
 // export const player = new Player({
 //     x: 127 * 32,
 //     y: 8.5 * 32,
 // });
+
+//bottomright
+export const player = new Player({
+    x: 152 * 32,
+    y: 23.5 * 32,
+});
