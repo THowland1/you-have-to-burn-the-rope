@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="shortcut icon"
+      href="./sprites/player-still_30x36.png"
+      type="image/x-icon"
+    />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1"
@@ -29,6 +34,7 @@
         bottom: 32px;
         display: none;
         justify-content: space-between;
+        user-select: none;
       }
       button {
         background-color: rgb(255 255 255 / 0);
@@ -44,10 +50,12 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
+        user-select: none;
       }
       button svg {
         height: 1em;
         width: 1em;
+        user-select: none;
       }
 
       button:active,
