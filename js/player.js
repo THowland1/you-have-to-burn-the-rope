@@ -1,7 +1,7 @@
 import { axes } from './axes.js';
-import { c, FRAME_HEIGHT, FRAME_WIDTH } from './canvas.js';
-import { COURSE_HEIGHT, COURSE_WIDTH, JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts.js';
-import { Coordinates, offset } from './coordinates.js';
+import { c } from './canvas.js';
+import { JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts.js';
+import { Coordinates } from './coordinates.js';
 import { flames } from './flames.js';
 import { Frames } from './frames.js';
 import { phaseManager, PHASES } from './phase-manager.js';
@@ -25,55 +25,66 @@ class KeyManager {
                 pressed: false
             }
         };
+        const jump = () => {
+            if (!player.stunned && player.velocity.y === 0) {
+                player.velocity.y -= JUMP_SPEED;
+            }
+        };
+        const startRight = () => {
+            if (!player.stunned) {
+                this.keys.right.pressed = true;
+                player.facingRight = true;
+            }
+        };
+        const stopRight = () => this.keys.right.pressed = false;
+        const startLeft = () => {
+            if (!player.stunned) {
+                this.keys.left.pressed = true;
+                player.facingRight = false;
+            }
+        };
+        const stopLeft = () => this.keys.left.pressed = false;
+        const attack = () => {
+            if (!player.stunned && timeManager.now > player.lastAttack + PLAYER_ATTACKINTERVAL) {
+                player.attack();
+            }
+        };
         addEventListener('keydown', e => {
             if (phaseManager.phase >= PHASES.ropeburning) {
                 return;
             }
-            switch (e.key) {
-                case ' ':
-                case 'ArrowUp':
-                    if (!player.stunned && player.velocity.y === 0) {
-                        player.velocity.y -= JUMP_SPEED;
-                    }
-                    break;
-                case 'ArrowRight':
-                    if (!player.stunned) {
-                        this.keys.right.pressed = true;
-                        player.facingRight = true;
-                    }
-                    break;
-                case 'ArrowLeft':
-                    if (!player.stunned) {
-                        this.keys.left.pressed = true;
-                        player.facingRight = false;
-                    }
-                    break;
-                case 'x':
-                    audio.play();
-                    break;
-                default:
-                    if (!player.stunned && timeManager.now > player.lastAttack + PLAYER_ATTACKINTERVAL) {
-                        player.attack();
-                    }
-                    break;
-            }
+            const fn = {
+                ' ': jump,
+                'ArrowUp': jump,
+                'ArrowRight': startRight,
+                'ArrowLeft': startLeft,
+            }[e.key];
+            (fn ?? attack)();
         });
         addEventListener('keyup', e => {
-            switch (e.key) {
-                case ' ':
-                case 'ArrowUp':
-                    break;
-                case 'ArrowRight':
-                    this.keys.right.pressed = false;
-                    break;
-                case 'ArrowLeft':
-                    this.keys.left.pressed = false;
-                    break;
-                default:
-                    this.keys.left.attack = false;
-                    break;
+            if (phaseManager.phase >= PHASES.ropeburning) {
+                return;
             }
+            const fn = {
+                'ArrowRight': stopRight,
+                'ArrowLeft': stopLeft,
+            }[e.key];
+            fn?.();
         });
+
+        const rightBtn = document.getElementById('right');
+        rightBtn.addEventListener('mousedown', startRight);
+        rightBtn.addEventListener('mouseup', stopRight);
+
+        const leftBtn = document.getElementById('left');
+        leftBtn.addEventListener('mousedown', startLeft);
+        leftBtn.addEventListener('mouseup', stopLeft);
+
+        const jumpBtn = document.getElementById('jump');
+        jumpBtn.addEventListener('mousedown', jump);
+
+        const attackBtn = document.getElementById('attack');
+        attackBtn.addEventListener('mousedown', attack);
     }
 }
 const keys = new KeyManager();
