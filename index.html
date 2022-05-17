@@ -17,6 +17,24 @@
         position: absolute;
         inset: 0;
       }
+      #buttons {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 32px;
+        display: flex;
+        justify-content: space-between;
+      }
+      button {
+        background-color: rgba(0, 0, 0, 0);
+        border: solid 1px #999;
+        border-radius: 8px;
+        height: 48px;
+        width: 48px;
+        color: #999;
+        margin-left: 4px;
+        margin-right: 4px;
+      }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,8 +45,16 @@
     <script src="./index.js" type="module"></script>
   </head>
   <body>
-    <div id="debug-player"></div>
-    <div id="debug-offset"></div>
     <canvas id="canvas"></canvas>
+    <div id="buttons">
+      <div>
+        <button>&#8593;</button>
+        <button>&times;</button>
+      </div>
+      <div>
+        <button>&#8592;</button>
+        <button>&#8594;</button>
+      </div>
+    </div>
   </body>
 </html>
