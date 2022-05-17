@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
     <title>You have to burn the rope</title>
     <style>
       body {
@@ -11,6 +14,7 @@
         background: url('./sprites/page-bg_32x32.png');
         position: absolute;
         inset: 0;
+        touch-action: manipulation;
       }
       #canvas {
         margin: auto;
@@ -22,19 +26,21 @@
         left: 16px;
         right: 16px;
         bottom: 32px;
-        display: flex;
+        display: none;
         justify-content: space-between;
       }
       button {
         background-color: rgb(255 255 255 / 0);
         border: solid 1px #999;
         border-radius: 8px;
-        height: 48px;
-        width: 48px;
+        height: 60px;
+        width: 60px;
         color: #999;
         margin-left: 4px;
         margin-right: 4px;
         transition: all 0.3s;
+        user-select: none;
+        font-size: 24px;
       }
       button:active,
       button:focus {

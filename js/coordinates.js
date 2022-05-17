@@ -1,8 +1,8 @@
 // start
-// export const offset = {
-//     x: 0 * 32,
-//     y: 0 * 32
-// };
+export const offset = {
+    x: 0 * 32,
+    y: 0 * 32
+};
 
 // rope
 // export const offset = {
@@ -11,10 +11,10 @@
 // };
 
 // end
-export const offset = {
-    x: 144 * 32,
-    y: 15 * 32
-};
+// export const offset = {
+//     x: 144 * 32,
+//     y: 15 * 32
+// };
 
 export class Coordinates {
     constructor({ x, y, height, width }) {

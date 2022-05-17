@@ -72,19 +72,26 @@ class KeyManager {
             fn?.();
         });
 
-        const rightBtn = document.getElementById('right');
-        rightBtn.addEventListener('touchstart', startRight);
-        rightBtn.addEventListener('touchend', stopRight);
+        const touch = matchMedia('(hover: none)').matches;
+        if (touch) {
+            const buttonsDiv = document.getElementById('buttons');
+            buttonsDiv.style.display = 'flex';
 
-        const leftBtn = document.getElementById('left');
-        leftBtn.addEventListener('touchstart', startLeft);
-        leftBtn.addEventListener('touchend', stopLeft);
+            const rightBtn = document.getElementById('right');
+            rightBtn.addEventListener('touchstart', startRight);
+            rightBtn.addEventListener('touchend', stopRight);
 
-        const jumpBtn = document.getElementById('jump');
-        jumpBtn.addEventListener('touchstart', jump);
+            const leftBtn = document.getElementById('left');
+            leftBtn.addEventListener('touchstart', startLeft);
+            leftBtn.addEventListener('touchend', stopLeft);
 
-        const attackBtn = document.getElementById('attack');
-        attackBtn.addEventListener('touchstart', attack);
+            const jumpBtn = document.getElementById('jump');
+            jumpBtn.addEventListener('touchstart', jump);
+
+            const attackBtn = document.getElementById('attack');
+            attackBtn.addEventListener('touchstart', attack);
+        }
+
     }
 }
 const keys = new KeyManager();
@@ -288,10 +295,10 @@ export class Player extends Coordinates {
 
 
 //start
-// export const player = new Player({
-//     x: 4 * 32,
-//     y: 0 * 32,
-// });
+export const player = new Player({
+    x: 4 * 32,
+    y: 0 * 32,
+});
 
 //rope
 // export const player = new Player({
@@ -300,7 +307,7 @@ export class Player extends Coordinates {
 // });
 
 //bottomright
-export const player = new Player({
-    x: 152 * 32,
-    y: 23.5 * 32,
-});
+// export const player = new Player({
+//     x: 152 * 32,
+//     y: 23.5 * 32,
+// });
