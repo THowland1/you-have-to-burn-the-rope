@@ -59,6 +59,21 @@ export const FRAME_HEIGHT = 16 * 32;
 canvas.height = SCALE * FRAME_HEIGHT;
 canvas.width = SCALE * FRAME_WIDTH;
 
+function setSize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const maxHeight = FRAME_HEIGHT;
+    const maxWidth = FRAME_WIDTH;
 
-canvas.style.height = `${FRAME_HEIGHT}px`;
-canvas.style.width = `${FRAME_WIDTH}px`;
+    if (width >= maxWidth && height >= maxHeight) {
+        canvas.style.height = `${maxHeight}px`;
+        canvas.style.width = `${maxWidth}px`;
+    } else {
+        var ratio = FRAME_HEIGHT / FRAME_WIDTH;
+        canvas.style.height = `${width * ratio}px`;
+        canvas.style.width = `${width}px`;
+    }
+}
+
+setSize();
+addEventListener('resize', setSize);
