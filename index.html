@@ -15,6 +15,7 @@
         position: absolute;
         inset: 0;
         touch-action: manipulation;
+        user-select: none;
       }
       #canvas {
         margin: auto;
@@ -39,9 +40,16 @@
         margin-left: 4px;
         margin-right: 4px;
         transition: all 0.3s;
-        user-select: none;
         font-size: 24px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
       }
+      button svg {
+        height: 1em;
+        width: 1em;
+      }
+
       button:active,
       button:focus {
         outline: none;
@@ -62,12 +70,66 @@
     <canvas id="canvas"></canvas>
     <div id="buttons">
       <div>
-        <button id="jump">&#8593;</button>
-        <button id="attack">&times;</button>
+        <button id="jump">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M32 5L33.7472 3.21192C32.7758 2.26269 31.2242 2.26269 30.2528 3.21192L32 5ZM29.5 5V62H34.5V5H29.5ZM8.74721 31.2167L33.7472 6.78808L30.2528 3.21192L5.25279 27.6405L8.74721 31.2167ZM30.2528 6.78808L55.2528 31.2167L58.7472 27.6405L33.7472 3.21192L30.2528 6.78808Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <button id="attack">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M32.1467 22.125L51.9333 4C51.9333 4 59 16.7966 59 25.75C59 34.7034 51.9333 47.5 51.9333 47.5L32.1467 33.725M32.1467 22.125C32.1467 25.6692 32.1467 29.6657 32.1467 33.725M32.1467 22.125L11.6533 4C11.6533 4 6 16.9593 6 25.75C6 34.5407 11.6533 47.5 11.6533 47.5L32.1467 33.725M32.1467 62C32.1467 62 32.1467 47.5009 32.1467 33.725"
+              stroke="currentColor"
+              stroke-width="5"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
       </div>
       <div>
-        <button id="left">&#8592;</button>
-        <button id="right">&#8594;</button>
+        <button id="left">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M5 32L3.21191 30.2528C2.26269 31.2242 2.26269 32.7758 3.21191 33.7472L5 32ZM5 34.5L62 34.5L62 29.5L5 29.5L5 34.5ZM31.2167 55.2528L6.78808 30.2528L3.21191 33.7472L27.6405 58.7472L31.2167 55.2528ZM6.78808 33.7472L31.2167 8.74721L27.6405 5.25278L3.21191 30.2528L6.78808 33.7472Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <button id="right">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 64 64"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M59 32L60.7881 33.7472C61.7373 32.7758 61.7373 31.2242 60.7881 30.2528L59 32ZM59 29.5L2 29.5L2 34.5L59 34.5L59 29.5ZM32.7833 8.74721L57.2119 33.7472L60.7881 30.2528L36.3595 5.25279L32.7833 8.74721ZM57.2119 30.2528L32.7833 55.2528L36.3595 58.7472L60.7881 33.7472L57.2119 30.2528Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   </body>
