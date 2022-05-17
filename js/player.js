@@ -1,11 +1,83 @@
-import { c } from './canvas.js';
-import { COURSE_HEIGHT, PLAYER_GRAVITY, JUMP_SPEED } from './consts.js';
-import { Coordinates } from './coordinates.js';
-import { Frames } from './frames.js';
+import { axes } from './axes.js';
+import { c, FRAME_HEIGHT, FRAME_WIDTH } from './canvas.js';
+import { COURSE_HEIGHT, COURSE_WIDTH, JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts.js';
+import { Coordinates, offset } from './coordinates.js';
 import { flames } from './flames.js';
+import { Frames } from './frames.js';
+import { phaseManager, PHASES } from './phase-manager.js';
+import { platforms } from './platforms.js';
 import { plumes } from './plumes.js';
 import { timeManager } from './time-manager.js';
-import { axes } from './axes.js';
+
+class KeyManager {
+    constructor() {
+        this.keys = {
+            right: {
+                pressed: false
+            },
+            left: {
+                pressed: false
+            },
+            jump: {
+                pressed: false
+            },
+            attack: {
+                pressed: false
+            }
+        };
+        addEventListener('keydown', e => {
+            if (phaseManager.phase >= PHASES.ropeburning) {
+                return;
+            }
+            switch (e.key) {
+                case ' ':
+                case 'ArrowUp':
+                    if (!player.stunned && player.velocity.y === 0) {
+                        player.velocity.y -= JUMP_SPEED;
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (!player.stunned) {
+                        this.keys.right.pressed = true;
+                        player.facingRight = true;
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (!player.stunned) {
+                        this.keys.left.pressed = true;
+                        player.facingRight = false;
+                    }
+                    break;
+                case 'x':
+                    audio.play();
+                    break;
+                default:
+                    if (!player.stunned && timeManager.now > player.lastAttack + PLAYER_ATTACKINTERVAL) {
+                        player.attack();
+                    }
+                    break;
+            }
+        });
+        addEventListener('keyup', e => {
+            switch (e.key) {
+                case ' ':
+                case 'ArrowUp':
+                    break;
+                case 'ArrowRight':
+                    this.keys.right.pressed = false;
+                    break;
+                case 'ArrowLeft':
+                    this.keys.left.pressed = false;
+                    break;
+                default:
+                    this.keys.left.attack = false;
+                    break;
+            }
+        });
+    }
+}
+const keys = new KeyManager();
+
 
 function img(src) {
     const result = new Image();
@@ -130,20 +202,80 @@ export class Player extends Coordinates {
     }
 
     update() {
-        this.draw();
+
+        // Update Y velocity
+        this.velocity.y += PLAYER_GRAVITY;
+
+        // Update X velocity
+
+        if (this.flying) {
+            this.velocity.x *= .9;
+        } else if (keys.keys.right.pressed) {
+            this.velocity.x = WALKING_SPEED;
+        } else if (keys.keys.left.pressed) {
+            this.velocity.x = -WALKING_SPEED;
+        } else {
+            this.velocity.x = 0;
+        }
+
+        if (this.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && this.velocity.x > 0) {
+            offset.x += this.velocity.x * timeManager.msPerFrame;
+        } else if (this.localLeft < 200 && offset.x > 0 && this.velocity.x < 0) {
+            offset.x += this.velocity.x * timeManager.msPerFrame;
+        }
+        if (this.localTop < 175 && offset.y > 0 && this.velocity.y < 0) {
+            offset.y += this.velocity.y * timeManager.msPerFrame;
+        } else if (this.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && this.velocity.y > 0) {
+            offset.y += this.velocity.y * timeManager.msPerFrame;
+        }
+
+        platforms.forEach(platform => {
+            if (this.right > platform.left && this.left < platform.right) {
+                if (
+                    this.bottom <= platform.top &&
+                    this.nextFrame.bottom >= platform.top
+                ) {
+                    this.y = platform.y - this.height;
+                    if (this.velocity.y > 20) {
+                        this.land();
+                    }
+                    this.velocity.y = 0;
+
+                } else if (
+                    this.top >= platform.bottom &&
+                    this.nextFrame.top <= platform.bottom
+                ) {
+                    this.y = platform.bottom;
+                    this.velocity.y = 0;
+                }
+            }
+
+            if (this.bottom > platform.top && this.top < platform.bottom) {
+                if (this.right <= platform.left &&
+                    this.nextFrame.right >= platform.left
+                ) {
+                    this.x = platform.left - this.width;
+                    this.velocity.x = 0;
+                }
+                if (this.left >= platform.right &&
+                    this.nextFrame.left <= platform.right
+                ) {
+                    this.x = platform.right;
+                    this.velocity.x = 0;
+                }
+            }
+        });
 
         this.x += this.velocity.x * timeManager.msPerFrame;
         this.y += this.velocity.y * timeManager.msPerFrame;
 
-        if (this.y + this.height + this.velocity.y <= COURSE_HEIGHT) {
-            this.velocity.y += PLAYER_GRAVITY * timeManager.msPerFrame;
-        } else {
-            this.velocity.y = 0;
-        }
 
         if (!this.hasFlame) {
             this.hasFlame = flames.some(flame => this.intersects(flame));
         }
+
+        this.draw();
+
 
         // if (this.intersects(boss)) {
         //     this.hurtByBoss();

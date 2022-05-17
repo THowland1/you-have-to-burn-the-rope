@@ -23,20 +23,7 @@ import { rope } from './js/rope.js';
 import { slides } from './js/slides.js';
 import { timeManager } from './js/time-manager.js';
 
-const keys = {
-    right: {
-        pressed: false
-    },
-    left: {
-        pressed: false
-    },
-    jump: {
-        pressed: false
-    },
-    attack: {
-        pressed: false
-    }
-};
+
 
 class BG {
     constructor() {
@@ -67,55 +54,7 @@ class BG {
 
 const bg = new BG();
 
-addEventListener('keydown', e => {
-    if (phaseManager.phase >= PHASES.ropeburning) {
-        return;
-    }
-    switch (e.key) {
-        case ' ':
-        case 'ArrowUp':
-            if (!player.stunned && player.velocity.y === 0) {
-                player.velocity.y -= JUMP_SPEED;
-            }
-            break;
-        case 'ArrowRight':
-            if (!player.stunned) {
-                keys.right.pressed = true;
-                player.facingRight = true;
-            }
-            break;
-        case 'ArrowLeft':
-            if (!player.stunned) {
-                keys.left.pressed = true;
-                player.facingRight = false;
-            }
-            break;
-        case 'x':
-            audio.play();
-            break;
-        default:
-            if (!player.stunned && timeManager.now > player.lastAttack + PLAYER_ATTACKINTERVAL) {
-                player.attack();
-            }
-            break;
-    }
-});
-addEventListener('keyup', e => {
-    switch (e.key) {
-        case ' ':
-        case 'ArrowUp':
-            break;
-        case 'ArrowRight':
-            keys.right.pressed = false;
-            break;
-        case 'ArrowLeft':
-            keys.left.pressed = false;
-            break;
-        default:
-            keys.left.attack = false;
-            break;
-    }
-});
+
 function animate() {
     const now = new Date().valueOf();
     timeManager.msPerFrame = now - timeManager.now;
@@ -192,64 +131,43 @@ function animate() {
         );
     }
 
-    // # Update velocity for next frame
 
-    if (player.flying) {
-        player.velocity.x *= .9;
-    } else if (keys.right.pressed) {
-        player.velocity.x = WALKING_SPEED;
-    } else if (keys.left.pressed) {
-        player.velocity.x = -WALKING_SPEED;
-    } else {
-        player.velocity.x = 0;
-    }
 
-    if (player.localRight > 400 && offset.x + FRAME_WIDTH < COURSE_WIDTH && player.velocity.x > 0) {
-        offset.x += player.velocity.x * timeManager.msPerFrame;
-    } else if (player.localLeft < 200 && offset.x > 0 && player.velocity.x < 0) {
-        offset.x += player.velocity.x * timeManager.msPerFrame;
-    }
-    if (player.localTop < 175 && offset.y > 0 && player.velocity.y < 0) {
-        offset.y += player.velocity.y * timeManager.msPerFrame;
-    } else if (player.localBottom > 200 && offset.y + FRAME_HEIGHT < COURSE_HEIGHT && player.velocity.y > 0) {
-        offset.y += player.velocity.y * timeManager.msPerFrame;
-    }
+    // platforms.forEach(platform => {
+    //     if (player.right > platform.left && player.left < platform.right) {
+    //         if (
+    //             player.bottom <= platform.top &&
+    //             player.nextFrame.bottom >= platform.top
+    //         ) {
+    //             player.y = platform.y - player.height;
+    //             if (player.velocity.y > 20) {
+    //                 player.land();
+    //             }
+    //             player.velocity.y = 0;
 
-    platforms.forEach(platform => {
-        if (player.right > platform.left && player.left < platform.right) {
-            if (
-                player.bottom <= platform.top &&
-                player.nextFrame.bottom >= platform.top
-            ) {
-                player.y = platform.y - player.height;
-                if (player.velocity.y > 20) {
-                    player.land();
-                }
-                player.velocity.y = 0;
+    //         } else if (
+    //             player.top >= platform.bottom &&
+    //             player.nextFrame.top <= platform.bottom
+    //         ) {
+    //             player.y = platform.bottom;
+    //             player.velocity.y = 0;
+    //         }
+    //     }
 
-            } else if (
-                player.top >= platform.bottom &&
-                player.nextFrame.top <= platform.bottom
-            ) {
-                player.y = platform.bottom;
-                player.velocity.y = 0;
-            }
-        }
-
-        if (player.bottom > platform.top && player.top < platform.bottom) {
-            if (player.right <= platform.left &&
-                player.nextFrame.right >= platform.left
-            ) {
-                player.x = platform.left - player.width;
-                player.velocity.x = 0;
-            }
-            if (player.left >= platform.right &&
-                player.nextFrame.left <= platform.right
-            ) {
-                player.x = platform.right;
-                player.velocity.x = 0;
-            }
-        }
-    });
+    //     if (player.bottom > platform.top && player.top < platform.bottom) {
+    //         if (player.right <= platform.left &&
+    //             player.nextFrame.right >= platform.left
+    //         ) {
+    //             player.x = platform.left - player.width;
+    //             player.velocity.x = 0;
+    //         }
+    //         if (player.left >= platform.right &&
+    //             player.nextFrame.left <= platform.right
+    //         ) {
+    //             player.x = platform.right;
+    //             player.velocity.x = 0;
+    //         }
+    //     }
+    // });
 }
 animate();

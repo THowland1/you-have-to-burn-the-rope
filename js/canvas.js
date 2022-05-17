@@ -1,4 +1,4 @@
-const SCALE = 8;
+const SCALE = 1;
 class Context {
     constructor() {
         this.canvas = document.querySelector('canvas');

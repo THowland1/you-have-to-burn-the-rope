@@ -12,14 +12,14 @@ export const BOSS_MAXMODEDURATION = 2000;
 
 /** DEBUG */
 export const SHOW_GRIDLINES = false;
-export const SHOW_PLATFORMS = false;
+export const SHOW_PLATFORMS = true;
 export const SHOW_DEBUGMENU = true;
 export const DEBUG_DELAY = 0;
 
 /** PLAYER */
-/** px per second per second */ export const PLAYER_GRAVITY = 3.4 / (30 * 30);
+/** px per second per second */ export const PLAYER_GRAVITY = 35 / (30 * 30);
 /** px per second */ export const WALKING_SPEED = 8 / 30;
-/** px per second */ export const JUMP_SPEED = 30 / 30;
+/** px per second */ export const JUMP_SPEED = 25 / 30;
 
 /** CHANDELIER */
 export const CHANDELIER_GRAVITY = .001;
