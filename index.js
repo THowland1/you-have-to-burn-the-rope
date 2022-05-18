@@ -1,6 +1,5 @@
 
 
-import { audio } from './js/audio.js';
 import { axes } from './js/axes.js';
 import { boss } from './js/boss.js';
 import { c, canvas, FRAME_HEIGHT, FRAME_WIDTH } from './js/canvas.js';
@@ -22,6 +21,7 @@ import { plumes } from './js/plumes.js';
 import { rope } from './js/rope.js';
 import { slides } from './js/slides.js';
 import { timeManager } from './js/time-manager.js';
+import { audioManager } from './js/audio-manager.js';
 
 
 
@@ -71,7 +71,7 @@ function animate() {
     }
 
     c.clearRect(0, 0, canvas.width, canvas.height);
-    if (audio.currentTime < 2) {
+    if (audioManager.endCreditsMusic.currentTime < 2) {
 
         bg.draw();
         if (phaseManager.showBackDoor) {
@@ -89,7 +89,7 @@ function animate() {
         healthBar.update();
 
         flames.forEach(flame => flame.draw());
-        canvas.style.opacity = (2 - audio.currentTime) / 2;
+        canvas.style.opacity = (2 - audioManager.endCreditsMusic.currentTime) / 2;
     } else {
         canvas.style.opacity = 1;
     }

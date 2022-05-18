@@ -5,8 +5,7 @@ import { c } from './canvas.js';
 import { offset } from './coordinates.js';
 import { chandelier } from './chandelier.js';
 import { rope } from './rope.js';
-import { audio } from './audio.js';
-import { VOLUME } from './consts.js';
+import { audioManager } from './audio-manager.js';
 
 function img(src) {
     const result = new Image();
@@ -27,12 +26,6 @@ export const PHASES = {
 };
 class PhaseManager {
     constructor() {
-        this.tunnelMusic = new Audio('./sounds/tunnel.mp3');
-        this.tunnelMusic.loop = true;
-        this.tunnelMusic.volume = VOLUME;
-        this.bossFightMusic = new Audio('./sounds/boss-fight.mp3');
-        this.bossFightMusic.loop = true;
-        this.bossFightMusic.volume = VOLUME;
         this.backDoorImage = img('./sprites/back-door_32x64.png');
         this.showBackDoor = false;
         this.phase = PHASES.start;
@@ -41,15 +34,15 @@ class PhaseManager {
         if (this.phase >= PHASES.tunnel) {
             return;
         }
-        this.tunnelMusic.play();
+        audioManager.tunnelMusic.play();
         this.phase = PHASES.tunnel;
     }
     startBossFightPhase() {
         if (this.phase >= PHASES.bossfight) {
             return;
         }
-        this.tunnelMusic.pause();
-        this.bossFightMusic.play();
+        audioManager.tunnelMusic.pause();
+        audioManager.bossFightMusic.play();
         this.showBackDoor = true;
         healthBar.show = true;
         platforms.push(new LeftPlatform({ right: 108 * 32, bottom: 27 * 32, top: 25 * 32 }));
@@ -61,7 +54,7 @@ class PhaseManager {
         if (this.phase >= PHASES.ropeburning) {
             return;
         }
-        this.bossFightMusic.pause();
+        audioManager.bossFightMusic.pause();
         this.phase = PHASES.ropeburning;
 
         explosions.add({ left: 132 * 32, top: 6 * 32 });
@@ -159,7 +152,7 @@ class PhaseManager {
         explosions.add({ left: 4180, top: 882 });
         // #endregion
         await wait(2000);
-        audio.play();
+        audioManager.endCreditsMusic.play();
     }
     drawBackDoor() {
         c.drawImage(this.backDoorImage, 107 * 32 - offset.x, 25 * 32 - offset.y, 32, 64);

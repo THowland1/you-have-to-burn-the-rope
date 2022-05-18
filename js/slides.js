@@ -1,5 +1,5 @@
 
-import { audio } from './audio.js';
+import { audioManager } from './audio-manager.js';
 import { FRAME_HEIGHT, FRAME_WIDTH, c, canvas } from './canvas.js';
 
 function img(src) {
@@ -15,7 +15,7 @@ class TitleSlide {
         this.fadeTime = fadeTime;
     }
     draw() {
-        const time = audio.currentTime;
+        const time = audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) {
             return;
         }
@@ -38,17 +38,14 @@ class GameOverSlide {
         this.text = text;
     }
     draw() {
-        const time = audio.currentTime;
+        const time = audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn) {
             return;
         }
         if (time - this.timeIn < this.fadeTime) {
             canvas.style.opacity = ((time - this.timeIn) / this.fadeTime);
         }
-        // if (!audio.ended) {
-        //     const fadeTime = audio.duration - this.timeIn;
-        //     canvas.style.opacity = ((time - this.timeIn) / fadeTime);
-        // }
+
         c.textAlign = 'center';
         c.font = '500 14px Inter';
         c.fillText(this.text, FRAME_WIDTH / 2, (FRAME_HEIGHT / 2));
@@ -61,7 +58,7 @@ class LyricSlide {
         this.text = text;
     }
     draw() {
-        const time = audio.currentTime;
+        const time = audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) {
             return;
         }
@@ -82,7 +79,7 @@ class ImageTextSlide {
         this.fadeTime = fadeTime;
     }
     draw() {
-        const time = audio.currentTime;
+        const time = audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) {
             return;
         }
@@ -114,7 +111,7 @@ class TextImageSlide {
         /** @type {string[]} */ this.lines = lines;
     }
     draw() {
-        const time = audio.currentTime;
+        const time = audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) {
             return;
         }

@@ -35,4 +35,4 @@ export const LASER_DURATION = 2000;
 /** ms per attack */ export const PLAYER_ATTACKINTERVAL = 150;
 
 
-export const VOLUME = 0;
+export const VOLUME = .2;
