@@ -14,13 +14,17 @@
     />
     <title>You have to burn the rope</title>
     <style>
+      * {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+      }
       body {
         margin: 0;
         background: url('./sprites/page-bg_32x32.png');
         position: absolute;
         inset: 0;
         touch-action: manipulation;
-        user-select: none;
       }
       #canvas {
         margin: auto;
@@ -34,7 +38,6 @@
         bottom: 32px;
         display: none;
         justify-content: space-between;
-        user-select: none;
       }
       button {
         background-color: rgb(255 255 255 / 0);
@@ -50,12 +53,10 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        user-select: none;
       }
       button svg {
         height: 1em;
         width: 1em;
-        user-select: none;
       }
 
       button:active,
