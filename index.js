@@ -23,7 +23,13 @@ import { slides } from './js/slides.js';
 import { timeManager } from './js/time-manager.js';
 import { audioManager } from './js/audio-manager.js';
 
+document.getElementById('show-info').addEventListener('click', () => {
+    document.getElementById('info').classList.remove('hidden');
+});
 
+document.getElementById('hide-info').addEventListener('click', () => {
+    document.getElementById('info').classList.add('hidden');
+});
 
 class BG {
     constructor() {
