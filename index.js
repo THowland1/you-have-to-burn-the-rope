@@ -22,6 +22,7 @@ import { rope } from './js/rope.js';
 import { slides } from './js/slides.js';
 import { timeManager } from './js/time-manager.js';
 import { audioManager } from './js/audio-manager.js';
+import { buttonManager } from './js/button-manager.js';
 
 document.getElementById('show-info').addEventListener('click', () => {
     document.getElementById('info').classList.remove('hidden');
@@ -29,6 +30,10 @@ document.getElementById('show-info').addEventListener('click', () => {
 
 document.getElementById('hide-info').addEventListener('click', () => {
     document.getElementById('info').classList.add('hidden');
+});
+
+document.getElementById('canvas').addEventListener('click', () => {
+    phaseManager.startStartPhase();
 });
 
 class BG {
@@ -77,6 +82,17 @@ function animate() {
     }
 
     c.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (phaseManager.phase === PHASES.clicktostart) {
+        c.fillStyle = 'white';
+
+        c.textAlign = 'center';
+        c.font = '500 14px Inter';
+
+        c.fillText('Click to start', FRAME_WIDTH / 2, (FRAME_HEIGHT / 2));
+        return;
+    }
+
     if (audioManager.endCreditsMusic.currentTime < 2) {
 
         bg.draw();
@@ -96,8 +112,10 @@ function animate() {
 
         flames.forEach(flame => flame.draw());
         canvas.style.opacity = (2 - audioManager.endCreditsMusic.currentTime) / 2;
+        buttonManager.setOpacity((2 - audioManager.endCreditsMusic.currentTime) / 2);
     } else {
         canvas.style.opacity = 1;
+        buttonManager.hide();
     }
 
     if (player.left >= 108 * 32) {
