@@ -120,6 +120,37 @@
         border: none;
         color: inherit;
       }
+      .icon-button::before {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        content: '';
+        height: 1em;
+        width: 1em;
+      }
+      #volume-0::before {
+        background-image: url('./sprites/volume-0_999_64x64.svg');
+      }
+      #volume-1::before {
+        background-image: url('./sprites/volume-1_999_64x64.svg');
+      }
+      #show-info::before {
+        background-image: url('./sprites/info-circle_999_64x64.svg');
+      }
+      #jump::before {
+        background-image: url('./sprites/up-arrow_999_64x64.svg');
+      }
+      #attack::before {
+        background-image: url('./sprites/axe_999_64x64.svg');
+      }
+      #left::before {
+        background-image: url('./sprites/up-arrow_999_64x64.svg');
+        transform: rotate(-90deg);
+      }
+      #right::before {
+        background-image: url('./sprites/up-arrow_999_64x64.svg');
+        transform: rotate(90deg);
+      }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -131,90 +162,9 @@
   </head>
   <body>
     <nav>
-      <button id="volume-0">
-        <svg
-          width="64"
-          height="64"
-          viewBox="0 0 64 64"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M8 23.367H22.0625C22.0625 23.367 33.5 8.49979 35 9.99989C36.5 11.5 36.5 53.5 35 53.9999C33.5 54.4998 22.0625 41.1898 22.0625 41.1898H8V23.367Z"
-            stroke="currentColor"
-            stroke-width="5"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M42 26C43.8024 27.7874 44.5 29.4616 44.5 32C44.5 34.5384 43.8024 36.2126 42 38"
-            stroke="currentColor"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M49 21C52.6048 24.2769 54 27.3463 54 32C54 36.6537 52.6048 39.7231 49 43"
-            stroke="currentColor"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
-      <button id="volume-1" class="hidden">
-        <svg
-          width="64"
-          height="64"
-          viewBox="0 0 64 64"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M13.296 20.8671L8 20.8671C6.61929 20.8671 5.5 21.9864 5.5 23.3671L5.5 41.1899C5.5 42.5706 6.61929 43.6899 8 43.6899L20.9515 43.6899C21.2586 44.0286 21.6484 44.4572 22.099 44.9496C23.2401 46.1966 24.7757 47.8579 26.3458 49.5067C27.9087 51.1479 29.5351 52.8074 30.8495 54.036C31.4978 54.6419 32.1254 55.1953 32.6586 55.5945C32.9137 55.7855 33.238 56.0106 33.5869 56.1821C33.7579 56.2662 34.035 56.388 34.379 56.4576C34.6879 56.5202 35.3762 56.6074 36.1189 56.2356C36.8494 55.87 37.1716 55.2723 37.2497 55.1266C37.3734 54.8957 37.4442 54.6848 37.4821 54.5605C37.5611 54.3015 37.6107 54.0348 37.6445 53.823C37.7155 53.3781 37.7724 52.8094 37.8208 52.177C37.919 50.8945 37.9985 49.1265 38.0613 47.0602C38.075 46.6121 38.0879 46.1485 38.1 45.6711L33.1929 40.764C33.1621 42.9999 33.119 45.0873 33.0637 46.9082C33.0391 47.7146 33.0123 48.464 32.9834 49.1476C32.0472 48.2213 31.0071 47.1512 29.9667 46.0586C28.4275 44.4423 26.9161 42.8073 25.7877 41.5741C25.224 40.9581 24.757 40.4437 24.4313 40.0837C24.2685 39.9037 24.1411 39.7624 24.0546 39.6664L23.9563 39.5571L23.9315 39.5295L23.9254 39.5227L23.924 39.5211L23.9237 39.5208L22.0625 41.1899L23.9237 39.5207C23.4495 38.992 22.7727 38.6899 22.0625 38.6899L10.5 38.6899L10.5 25.8671L18.296 25.8671L13.296 20.8671ZM23.973 17.4019L27.5144 20.9433C28.2939 20.0677 29.1437 19.122 30.0022 18.1821C31.0311 17.0555 32.0602 15.951 32.9892 14.9909C33.0159 15.6367 33.0408 16.3394 33.0637 17.0916C33.1465 19.8156 33.2019 23.1362 33.2295 26.6584L38.2499 31.6789C38.2475 26.3339 38.1849 21.0018 38.0613 16.9396C37.9985 14.8733 37.919 13.1053 37.8208 11.8228C37.7724 11.1905 37.7155 10.6218 37.6445 10.1769C37.6107 9.96514 37.5611 9.69848 37.482 9.43937C37.4441 9.31506 37.3733 9.10413 37.2496 8.87322C37.1715 8.72747 36.849 8.12947 36.118 7.76396C35.3512 7.38054 34.6418 7.48499 34.3309 7.55429C33.9831 7.63182 33.7051 7.76197 33.5357 7.85016C33.1888 8.03068 32.8669 8.26529 32.6134 8.46428C32.0831 8.88053 31.4578 9.45672 30.8103 10.0887C29.4978 11.37 27.8729 13.0994 26.3103 14.8101C25.506 15.6907 24.7108 16.5746 23.973 17.4019ZM44.9749 38.4039L41.3776 34.8066C41.4727 34.6412 41.5517 34.4798 41.6182 34.3201C41.8587 33.7429 42 33.0349 42 32C42 30.9652 41.8587 30.2571 41.6182 29.6799C41.3777 29.1027 40.9744 28.5038 40.2396 27.7752C39.2593 26.803 39.2526 25.2201 40.2249 24.2397C41.1971 23.2593 42.78 23.2527 43.7604 24.2249C44.828 25.2836 45.6747 26.4155 46.2336 27.7569C46.7925 29.0982 47 30.4965 47 32C47 33.5036 46.7925 34.9018 46.2336 36.2432C45.9076 37.0257 45.4836 37.7369 44.9749 38.4039ZM51.0655 44.4945L47.5282 40.9571C49.0384 39.5503 49.9838 38.2845 50.5759 36.9818C51.1917 35.627 51.5 34.0683 51.5 32C51.5 29.9317 51.1917 28.3731 50.5759 27.0182C49.9568 25.6562 48.9516 24.3346 47.3184 22.8499C46.2967 21.9212 46.2214 20.3401 47.1501 19.3184C48.0788 18.2967 49.6599 18.2214 50.6816 19.1501C52.6532 20.9424 54.148 22.7939 55.1277 24.9492C56.1107 27.1117 56.5 29.4146 56.5 32C56.5 34.5855 56.1107 36.8884 55.1277 39.0509C54.2126 41.064 52.8482 42.8121 51.0655 44.4945Z"
-            fill="currentColor"
-          />
-          <path
-            d="M6.5 7L57 57.5"
-            stroke="currentColor"
-            stroke-width="5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
-      <button id="show-info">
-        <svg
-          width="64"
-          height="64"
-          viewBox="0 0 64 64"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="32"
-            cy="32"
-            r="24.5"
-            stroke="currentColor"
-            stroke-width="5"
-          />
-          <path
-            d="M32 32L32 46"
-            stroke="currentColor"
-            stroke-width="6"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <circle
-            cx="32"
-            cy="21"
-            r="2"
-            stroke="currentColor"
-            stroke-width="4"
-          />
-        </svg>
-      </button>
+      <button class="icon-button" id="volume-0"></button>
+      <button class="icon-button hidden" id="volume-1"></button>
+      <button class="icon-button" id="show-info"></button>
     </nav>
     <div id="info" class="hidden">
       <div>
@@ -239,66 +189,12 @@
     <canvas id="canvas"></canvas>
     <div id="buttons">
       <div>
-        <button id="jump">
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M32 5L33.7472 3.21192C32.7758 2.26269 31.2242 2.26269 30.2528 3.21192L32 5ZM29.5 5V62H34.5V5H29.5ZM8.74721 31.2167L33.7472 6.78808L30.2528 3.21192L5.25279 27.6405L8.74721 31.2167ZM30.2528 6.78808L55.2528 31.2167L58.7472 27.6405L33.7472 3.21192L30.2528 6.78808Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
-        <button id="attack">
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M32.1467 22.125L51.9333 4C51.9333 4 59 16.7966 59 25.75C59 34.7034 51.9333 47.5 51.9333 47.5L32.1467 33.725M32.1467 22.125C32.1467 25.6692 32.1467 29.6657 32.1467 33.725M32.1467 22.125L11.6533 4C11.6533 4 6 16.9593 6 25.75C6 34.5407 11.6533 47.5 11.6533 47.5L32.1467 33.725M32.1467 62C32.1467 62 32.1467 47.5009 32.1467 33.725"
-              stroke="currentColor"
-              stroke-width="5"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
+        <button class="icon-button" id="jump"></button>
+        <button class="icon-button" id="attack"></button>
       </div>
       <div>
-        <button id="left">
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M5 32L3.21191 30.2528C2.26269 31.2242 2.26269 32.7758 3.21191 33.7472L5 32ZM5 34.5L62 34.5L62 29.5L5 29.5L5 34.5ZM31.2167 55.2528L6.78808 30.2528L3.21191 33.7472L27.6405 58.7472L31.2167 55.2528ZM6.78808 33.7472L31.2167 8.74721L27.6405 5.25278L3.21191 30.2528L6.78808 33.7472Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
-        <button id="right">
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 64 64"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M59 32L60.7881 33.7472C61.7373 32.7758 61.7373 31.2242 60.7881 30.2528L59 32ZM59 29.5L2 29.5L2 34.5L59 34.5L59 29.5ZM32.7833 8.74721L57.2119 33.7472L60.7881 30.2528L36.3595 5.25279L32.7833 8.74721ZM57.2119 30.2528L32.7833 55.2528L36.3595 58.7472L60.7881 33.7472L57.2119 30.2528Z"
-              fill="currentColor"
-            />
-          </svg>
-        </button>
+        <button class="icon-button" id="left"></button>
+        <button class="icon-button" id="right"></button>
       </div>
     </div>
   </body>
