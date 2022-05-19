@@ -6,6 +6,7 @@ import { offset } from './coordinates.js';
 import { chandelier } from './chandelier.js';
 import { rope } from './rope.js';
 import { audioManager } from './audio-manager.js';
+import { buttonManager } from './button-manager.js';
 
 function img(src) {
     const result = new Image();
@@ -16,19 +17,27 @@ function img(src) {
 async function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
 export const PHASES = {
-    start: 0,
-    tunnel: 1,
-    bossfight: 2,
-    ropeburning: 3,
-    ropefalling: 4,
-    bossdying: 5,
-    end: 6
+    clicktostart: 0,
+    start: 1,
+    tunnel: 2,
+    bossfight: 3,
+    ropeburning: 4,
+    ropefalling: 5,
+    bossdying: 6,
+    end: 7
 };
 class PhaseManager {
     constructor() {
         this.backDoorImage = img('./sprites/back-door_32x64.png');
         this.showBackDoor = false;
+        this.phase = PHASES.clicktostart;
+    }
+    startStartPhase() {
+        if (this.phase >= PHASES.start) {
+            return;
+        }
         this.phase = PHASES.start;
+        buttonManager.show();
     }
     startTunnelPhase() {
         if (this.phase >= PHASES.tunnel) {
