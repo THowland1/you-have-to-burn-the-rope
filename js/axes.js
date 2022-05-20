@@ -3,6 +3,7 @@ import { c } from './canvas.js';
 import { boss } from './boss.js';
 import { healthBar } from './healthbar.js';
 import { timeManager } from './time-manager.js';
+import { audioManager } from './audio-manager.js';
 import { AXE_SPEED_X, AXE_SPEED_Y, AXE_GRAVITY } from './consts.js';
 
 function img(src) {
@@ -17,6 +18,7 @@ class Axes {
     }
     add({ left, top, shootRight }) {
         this.axes.push(new Axe({ left, top, shootRight }));
+        audioManager.playAxeThrowSound();
     }
     update() {
         this.axes = this.axes.filter(axe => timeManager.now - axe.startTime < 6000 && !axe.hitBoss);

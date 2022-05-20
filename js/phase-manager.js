@@ -57,6 +57,7 @@ class PhaseManager {
         platforms.push(new LeftPlatform({ right: 108 * 32, bottom: 27 * 32, top: 25 * 32 }));
         explosions.add({ left: (107 * 32) - 2, top: (25 * 32) - 2 });
         explosions.add({ left: (107 * 32) - 2, top: (26 * 32) - 2 });
+        audioManager.playDoorslamSound();
         this.phase = PHASES.bossfight;
     }
     async startRopeBurningPhase() {
@@ -67,14 +68,19 @@ class PhaseManager {
         this.phase = PHASES.ropeburning;
 
         explosions.add({ left: 132 * 32, top: 6 * 32 });
+        audioManager.playRopeExplosionSound();
         await wait(200);
         explosions.add({ left: 132 * 32, top: 7 * 32 });
+        audioManager.playRopeExplosionSound();
         await wait(200);
         explosions.add({ left: 132 * 32, top: 8 * 32 });
+        audioManager.playRopeExplosionSound();
         await wait(200);
         explosions.add({ left: 132 * 32, top: 9 * 32 });
+        audioManager.playRopeExplosionSound();
         await wait(200);
         explosions.add({ left: 132 * 32, top: 10 * 32 });
+        audioManager.playRopeExplosionSound();
         this.startRopeFallingPhase();
     }
     async startRopeFallingPhase() {
@@ -112,20 +118,28 @@ class PhaseManager {
         explosions.add({ left: 4154, top: 686 });
         explosions.add({ left: 4126, top: 725 });
         explosions.add({ left: 4214, top: 598 });
+        audioManager.playDeathSound();
         await wait(300);
         explosions.add({ left: 4159, top: 654 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         explosions.add({ left: 4161, top: 706 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         explosions.add({ left: 4274, top: 851 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         explosions.add({ left: 4206, top: 734 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         explosions.add({ left: 4192, top: 733 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         explosions.add({ left: 4203, top: 732 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         explosions.add({ left: 4252, top: 546 });
+        audioManager.playBossExplosionSound();
         await wait(300);
         // #endregion
         this.startEndPhase();
@@ -159,6 +173,7 @@ class PhaseManager {
         explosions.add({ left: 4161, top: 820 });
         explosions.add({ left: 4179, top: 844 });
         explosions.add({ left: 4180, top: 882 });
+        audioManager.playDeathSound();
         // #endregion
         await wait(2000);
         audioManager.endCreditsMusic.play();

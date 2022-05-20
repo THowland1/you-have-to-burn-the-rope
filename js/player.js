@@ -1,3 +1,4 @@
+import { audioManager } from './audio-manager.js';
 import { axes } from './axes.js';
 import { c } from './canvas.js';
 import { JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts.js';
@@ -28,6 +29,7 @@ class KeyManager {
         const jump = () => {
             if (!player.stunned && player.velocity.y === 0) {
                 player.velocity.y -= JUMP_SPEED;
+                audioManager.playJumpSound();
             }
         };
         const startRight = () => {
@@ -62,9 +64,6 @@ class KeyManager {
             (fn ?? attack)();
         });
         addEventListener('keyup', e => {
-            if (phaseManager.phase >= PHASES.ropeburning) {
-                return;
-            }
             const fn = {
                 'ArrowRight': stopRight,
                 'ArrowLeft': stopLeft,
@@ -245,7 +244,7 @@ export class Player extends Coordinates {
                     this.nextFrame.bottom >= platform.top
                 ) {
                     this.y = platform.y - this.height;
-                    if (this.velocity.y > 20) {
+                    if (this.velocity.y > 0.1 * timeManager.msPerFrame) {
                         this.land();
                     }
                     this.velocity.y = 0;

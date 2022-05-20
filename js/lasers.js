@@ -2,6 +2,7 @@ import { Coordinates } from './coordinates.js';
 import { c } from './canvas.js';
 import { Frames } from './frames.js';
 import { timeManager } from './time-manager.js';
+import { audioManager } from './audio-manager.js';
 import { LASER_DURATION, LASER_SPEED } from './consts.js';
 import { player } from './player.js';
 import { explosions } from './explosions.js';
@@ -28,6 +29,7 @@ class Lasers {
     }
     add({ left, top }) {
         this.lasers.push(new Laser({ left, top }));
+        audioManager.playLaserSound();
     }
     update() {
         this.lasers = this.lasers.filter(laser => !laser.finished && !laser.hitPlayer);

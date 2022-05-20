@@ -13,7 +13,7 @@ export const BOSS_MAXMODEDURATION = 2000;
 /** DEBUG */
 export const SHOW_GRIDLINES = false;
 export const SHOW_PLATFORMS = false;
-export const SHOW_DEBUGMENU = false;
+export const SHOW_DEBUGMENU = true;
 export const DEBUG_DELAY = 0;
 
 /** PLAYER */

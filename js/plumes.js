@@ -1,5 +1,6 @@
 import { Coordinates } from './coordinates.js';
 import { Frames } from './frames.js';
+import { audioManager } from './audio-manager.js';
 import { c } from './canvas.js';
 
 function img(src) {
@@ -22,6 +23,7 @@ class Plumes {
     }
     add({ left, bottom, facingRight }) {
         this.plumes.push(new Plume({ left, bottom, facingRight }));
+        audioManager.playLandSound();
     }
     update() {
         this.plumes = this.plumes.filter(plume => plume.frames.currentIndex < 5);

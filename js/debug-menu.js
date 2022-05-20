@@ -1,5 +1,6 @@
 import { c, FRAME_WIDTH } from './canvas.js';
 import { timeManager } from './time-manager.js';
+import { player } from './player.js';
 
 class DebugMenu {
     constructor() {
@@ -14,6 +15,12 @@ class DebugMenu {
         c.textAlign = 'right';
         c.fillStyle = 'white';
         c.fillText(timeManager.msPerFrame, 28, 48);
+
+
+        c.fillStyle = '#bbb';
+        c.textAlign = 'left';
+        c.font = 'bold 14px Inter';
+        c.fillText(player.velocity.y, 58, 68);
     }
 }
 
