@@ -12,6 +12,8 @@ function img(src) {
     return result;
 }
 
+const axeImg = img('./sprites/axe_18x18.png');
+
 class Axes {
     constructor() {
          /** @type {Axe[]} */ this.axes = [];
@@ -28,7 +30,7 @@ class Axes {
 class Axe extends Coordinates {
     constructor({ left, top, shootRight }) {
         super({ x: left, y: top, width: 18, height: 18 });
-        this.img = img('./sprites/axe_18x18.png');
+        this.img = axeImg;
         this.startTime = new Date().valueOf();
         this.angle = 0;
         this.finished = false;
