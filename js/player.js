@@ -4,6 +4,7 @@ import { c } from './canvas.js';
 import { JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts.js';
 import { Coordinates } from './coordinates.js';
 import { flames } from './flames.js';
+import { boss } from './boss.js';
 import { Frames } from './frames.js';
 import { phaseManager, PHASES } from './phase-manager.js';
 import { platforms } from './platforms.js';
@@ -105,7 +106,7 @@ function img(src) {
 export class Player extends Coordinates {
     constructor({ x, y }) {
         super({ x, y, height: 36, width: 30 });
-        this.hasFlame = true;
+        this.hasFlame = false;
         this.facingRight = true;
         /** px per frame */ this.velocity = { x: 0, y: 0 };
         this.images = {
@@ -285,9 +286,9 @@ export class Player extends Coordinates {
         this.draw();
 
 
-        // if (this.intersects(boss)) {
-        //     this.hurtByBoss();
-        // }
+        if (this.intersects(boss)) {
+            this.hurtByBoss();
+        }
     }
 }
 
