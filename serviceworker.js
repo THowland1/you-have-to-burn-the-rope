@@ -25,7 +25,7 @@ const ASSET_URLS = [
     './js/rope.js',
     './js/slides.js',
     './js/time-manager.js',
-    '.https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
     './sounds/axe-throw.mp3',
     './sounds/boss-explosion.mp3',
     './sounds/boss-fight.mp3',
