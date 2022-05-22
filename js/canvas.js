@@ -60,8 +60,8 @@ canvas.height = SCALE * FRAME_HEIGHT;
 canvas.width = SCALE * FRAME_WIDTH;
 
 function setSize() {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = window.outerWidth;
+    const height = window.outerWidth;
     const maxHeight = FRAME_HEIGHT;
     const maxWidth = FRAME_WIDTH;
 
