@@ -1,5 +1,6 @@
 import { Coordinates } from './coordinates.js';
 import { c } from './canvas.js';
+import { img } from './img.js';
 
 class FlammableBitOfRope extends Coordinates {
     constructor() {
@@ -10,8 +11,7 @@ class FlammableBitOfRope extends Coordinates {
 class Rope extends Coordinates {
     constructor() {
         super({ x: (132 * 32) + 12, y: 6 * 32, width: 8, height: 6 * 32 });
-        this.img = new Image();
-        this.img.src = './sprites/rope_8x192.png';
+        this.img = img(new URL('../sprites/rope_8x192.png', import.meta.url));
         this.show = true;
         this.flammableBitOfRope = new FlammableBitOfRope();
     }

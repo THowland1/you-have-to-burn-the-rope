@@ -10,6 +10,7 @@ import { phaseManager, PHASES } from './phase-manager.js';
 import { platforms } from './platforms.js';
 import { plumes } from './plumes.js';
 import { timeManager } from './time-manager.js';
+import { img } from './img.js';
 
 class KeyManager {
     constructor() {
@@ -96,13 +97,6 @@ class KeyManager {
 }
 const keys = new KeyManager();
 
-
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
-
 export class Player extends Coordinates {
     constructor({ x, y }) {
         super({ x, y, height: 36, width: 30 });
@@ -110,18 +104,18 @@ export class Player extends Coordinates {
         this.facingRight = true;
         /** px per frame */ this.velocity = { x: 0, y: 0 };
         this.images = {
-            fall: img('./sprites/player-fall_30x36.png'),
-            hit: img('./sprites/player-hit_30x36.png'),
-            jump: img('./sprites/player-jump_30x36.png'),
-            still: img('./sprites/player-still_30x36.png'),
-            throw: img('./sprites/player-throw_30x36.png'),
-            walk1: img('./sprites/player-walk-1_30x36.png'),
-            walk2: img('./sprites/player-walk-2_30x36.png'),
-            walk3: img('./sprites/player-walk-3_30x36.png'),
-            stick: img('./sprites/stick_30x6.png'),
-            flame1: img('./sprites/flame-1_28x28.png'),
-            flame2: img('./sprites/flame-2_28x28.png'),
-            flame3: img('./sprites/flame-3_28x28.png'),
+            fall: img(new URL('../sprites/player-fall_30x36.png', import.meta.url)),
+            hit: img(new URL('../sprites/player-hit_30x36.png', import.meta.url)),
+            jump: img(new URL('../sprites/player-jump_30x36.png', import.meta.url)),
+            still: img(new URL('../sprites/player-still_30x36.png', import.meta.url)),
+            throw: img(new URL('../sprites/player-throw_30x36.png', import.meta.url)),
+            walk1: img(new URL('../sprites/player-walk-1_30x36.png', import.meta.url)),
+            walk2: img(new URL('../sprites/player-walk-2_30x36.png', import.meta.url)),
+            walk3: img(new URL('../sprites/player-walk-3_30x36.png', import.meta.url)),
+            stick: img(new URL('../sprites/stick_30x6.png', import.meta.url)),
+            flame1: img(new URL('../sprites/flame-1_28x28.png', import.meta.url)),
+            flame2: img(new URL('../sprites/flame-2_28x28.png', import.meta.url)),
+            flame3: img(new URL('../sprites/flame-3_28x28.png', import.meta.url)),
         };
         this.walkFrames = new Frames({ fps: 12, images: [this.images.walk3, this.images.walk2, this.images.walk1] });
         this.flameFrames = new Frames({ fps: 12, images: [this.images.flame1, this.images.flame2, this.images.flame3] });

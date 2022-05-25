@@ -24,6 +24,16 @@ import { timeManager } from './js/time-manager.js';
 import { audioManager } from './js/audio-manager.js';
 import { buttonManager } from './js/button-manager.js';
 
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker
+            .register(new URL('./serviceworker.js',
+                import.meta.url))
+            .then((reg) => console.log('Success: ', reg.scope))
+            .catch((err) => console.log('Failure: ', err));
+    });
+}
+
 document.getElementById('show-info').addEventListener('click', () => {
     document.getElementById('info').classList.remove('hidden');
 });
@@ -39,7 +49,7 @@ document.getElementById('canvas').addEventListener('click', () => {
 class BG {
     constructor() {
         this.img = new Image();
-        this.img.src = './bg.png';
+        this.img.src = new URL('./bg.png', import.meta.url);
     }
     draw() {
         const sx = offset.x;
@@ -65,12 +75,10 @@ class BG {
 
 const bg = new BG();
 
-
 function animate() {
     const now = new Date().valueOf();
     timeManager.msPerFrame = now - timeManager.now;
     timeManager.now = now;
-
 
     if (DEBUG_DELAY) {
         setTimeout(() => {
@@ -166,43 +174,5 @@ function animate() {
         offset.y += player.velocity.y * timeManager.msPerFrame;
     }
 
-
-
-    // platforms.forEach(platform => {
-    //     if (player.right > platform.left && player.left < platform.right) {
-    //         if (
-    //             player.bottom <= platform.top &&
-    //             player.nextFrame.bottom >= platform.top
-    //         ) {
-    //             player.y = platform.y - player.height;
-    //             if (player.velocity.y > 20) {
-    //                 player.land();
-    //             }
-    //             player.velocity.y = 0;
-
-    //         } else if (
-    //             player.top >= platform.bottom &&
-    //             player.nextFrame.top <= platform.bottom
-    //         ) {
-    //             player.y = platform.bottom;
-    //             player.velocity.y = 0;
-    //         }
-    //     }
-
-    //     if (player.bottom > platform.top && player.top < platform.bottom) {
-    //         if (player.right <= platform.left &&
-    //             player.nextFrame.right >= platform.left
-    //         ) {
-    //             player.x = platform.left - player.width;
-    //             player.velocity.x = 0;
-    //         }
-    //         if (player.left >= platform.right &&
-    //             player.nextFrame.left <= platform.right
-    //         ) {
-    //             player.x = platform.right;
-    //             player.velocity.x = 0;
-    //         }
-    //     }
-    // });
 }
 animate();

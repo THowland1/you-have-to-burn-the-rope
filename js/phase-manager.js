@@ -7,12 +7,7 @@ import { chandelier } from './chandelier.js';
 import { rope } from './rope.js';
 import { audioManager } from './audio-manager.js';
 import { buttonManager } from './button-manager.js';
-
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
+import { img } from './img.js';
 
 async function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
@@ -28,7 +23,7 @@ export const PHASES = {
 };
 class PhaseManager {
     constructor() {
-        this.backDoorImage = img('./sprites/back-door_32x64.png');
+        this.backDoorImage = img(new URL('../sprites/back-door_32x64.png', import.meta.url));
         this.showBackDoor = false;
         this.phase = PHASES.clicktostart;
     }

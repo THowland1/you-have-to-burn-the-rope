@@ -4,12 +4,11 @@ import { CHANDELIER_GRAVITY } from './consts.js';
 import { timeManager } from './time-manager.js';
 import { phaseManager } from './phase-manager.js';
 import { boss } from './boss.js';
-
+import { img } from './img.js';
 class Chandelier extends Coordinates {
     constructor() {
         super({ x: 130 * 32, y: 12 * 32, width: 5 * 32, height: 3 * 32 });
-        this.img = new Image();
-        this.img.src = './sprites/chandelier_160x96.png';
+        this.img = img(new URL('../sprites/chandelier_160x96.png', import.meta.url));
         this.show = true;
         this.dropped = false;
         this.velocity = {

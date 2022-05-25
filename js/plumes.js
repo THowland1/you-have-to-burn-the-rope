@@ -2,20 +2,15 @@ import { Coordinates } from './coordinates.js';
 import { Frames } from './frames.js';
 import { audioManager } from './audio-manager.js';
 import { c } from './canvas.js';
-
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
+import { img } from './img.js';
 
 const plumeImages = [
-    img('./sprites/plume-1_43x21.png'),
-    img('./sprites/plume-2_43x21.png'),
-    img('./sprites/plume-3_43x21.png'),
-    img('./sprites/plume-4_43x21.png'),
-    img('./sprites/plume-5_43x21.png'),
-    img('./sprites/plume-6_43x21.png'),
+    img(new URL('../sprites/plume-1_43x21.png', import.meta.url)),
+    img(new URL('../sprites/plume-2_43x21.png', import.meta.url)),
+    img(new URL('../sprites/plume-3_43x21.png', import.meta.url)),
+    img(new URL('../sprites/plume-4_43x21.png', import.meta.url)),
+    img(new URL('../sprites/plume-5_43x21.png', import.meta.url)),
+    img(new URL('../sprites/plume-6_43x21.png', import.meta.url)),
 ];
 class Plumes {
     constructor() {

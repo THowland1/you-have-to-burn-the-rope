@@ -1,21 +1,16 @@
 import { Coordinates } from './coordinates.js';
 import { c } from './canvas.js';
 import { Frames } from './frames.js';
-
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
+import { img } from './img.js';
 
 const explosionImages = [
-    img('./sprites/explosion-1_36x36.png'),
-    img('./sprites/explosion-2_36x36.png'),
-    img('./sprites/explosion-3_36x36.png'),
-    img('./sprites/explosion-4_36x36.png'),
-    img('./sprites/explosion-5_36x36.png'),
-    img('./sprites/explosion-6_36x36.png'),
-    img('./sprites/explosion-7_36x36.png'),
+    img(new URL('../sprites/explosion-1_36x36.png', import.meta.url)),
+    img(new URL('../sprites/explosion-2_36x36.png', import.meta.url)),
+    img(new URL('../sprites/explosion-3_36x36.png', import.meta.url)),
+    img(new URL('../sprites/explosion-4_36x36.png', import.meta.url)),
+    img(new URL('../sprites/explosion-5_36x36.png', import.meta.url)),
+    img(new URL('../sprites/explosion-6_36x36.png', import.meta.url)),
+    img(new URL('../sprites/explosion-7_36x36.png', import.meta.url)),
 ];
 class Explosions {
     constructor() {

@@ -1,6 +1,6 @@
 class EndCreditsMusic {
     constructor() {
-        this.audio = new Audio('./sounds/now-youre-a-hero.mp3');
+        this.audio = new Audio(new URL('../sounds/now-youre-a-hero.mp3', import.meta.url));
         this.startTime = null;
     }
     play() {
@@ -45,20 +45,20 @@ class SFX {
 class AudioManager {
     constructor() {
         this.volume = 1;
-        this.tunnelMusic = new Audio('./sounds/tunnel.mp3');
+        this.tunnelMusic = new Audio(new URL('../sounds/tunnel.mp3', import.meta.url));
         this.tunnelMusic.loop = true;
         this.tunnelMusic.volume = this.volume;
-        this.bossFightMusic = new Audio('./sounds/boss-fight.mp3');
+        this.bossFightMusic = new Audio(new URL('../sounds/boss-fight.mp3', import.meta.url));
         this.bossFightMusic.loop = true;
         this.bossFightMusic.volume = this.volume;
-        this.axeThrowSound = new SFX('./sounds/axe-throw.mp3');
-        this.ropeExplosionSound = new SFX('./sounds/rope-explosion.mp3');
-        this.bossExplosionSound = new SFX('./sounds/boss-explosion.mp3');
-        this.doorSlamSound = new SFX('./sounds/door-slam.mp3');
-        this.laserSound = new SFX('./sounds/eye-laser.mp3');
-        this.deathSound = new SFX('./sounds/death.mp3');
-        this.jumpSound = new SFX('./sounds/jump.mp3');
-        this.landSound = new SFX('./sounds/land.mp3');
+        this.axeThrowSound = new SFX(new URL('../sounds/axe-throw.mp3', import.meta.url));
+        this.ropeExplosionSound = new SFX(new URL('../sounds/rope-explosion.mp3', import.meta.url));
+        this.bossExplosionSound = new SFX(new URL('../sounds/boss-explosion.mp3', import.meta.url));
+        this.doorSlamSound = new SFX(new URL('../sounds/door-slam.mp3', import.meta.url));
+        this.laserSound = new SFX(new URL('../sounds/eye-laser.mp3', import.meta.url));
+        this.deathSound = new SFX(new URL('../sounds/death.mp3', import.meta.url));
+        this.jumpSound = new SFX(new URL('../sounds/jump.mp3', import.meta.url));
+        this.landSound = new SFX(new URL('../sounds/land.mp3', import.meta.url));
         this.endCreditsMusic = new EndCreditsMusic();
 
         this.volume0Btn = document.getElementById('volume-0');

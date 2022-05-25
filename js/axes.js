@@ -5,14 +5,9 @@ import { healthBar } from './healthbar.js';
 import { timeManager } from './time-manager.js';
 import { audioManager } from './audio-manager.js';
 import { AXE_SPEED_X, AXE_SPEED_Y, AXE_GRAVITY } from './consts.js';
+import { img } from './img.js';
 
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
-
-const axeImg = img('./sprites/axe_18x18.png');
+const axeImg = img(new URL('../sprites/axe_18x18.png', import.meta.url));
 
 class Axes {
     constructor() {

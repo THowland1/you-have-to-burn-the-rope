@@ -1,12 +1,12 @@
 import { Coordinates } from './coordinates.js';
 import { timeManager } from './time-manager.js';
 import { c } from './canvas.js';
+import { img } from './img.js';
 
 export class Flame extends Coordinates {
     constructor({ left, top }) {
         super({ x: left, y: top, width: 1 * 32, height: 2 * 32 });
-        this.img = new Image();
-        this.img.src = './flame-sprites.png';
+        this.img = img(new URL('../flame-sprites.png', import.meta.url));
         this.framesPerSecond = 10;
         this.frameCount = 3;
         this.frameIndex = 0;

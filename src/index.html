@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>You have to burn the rope</title>
+    <style>
+      * {
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+      }
+      a {
+        color: inherit;
+      }
+      body {
+        margin: 0;
+        background: url('../sprites/page-bg_32x32.png');
+        position: absolute;
+        inset: 0;
+        touch-action: manipulation;
+        font-family: 'Inter';
+      }
+      #canvas {
+        margin: auto;
+        position: absolute;
+        inset: 0;
+      }
+      nav {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        top: 32px;
+        display: flex;
+        justify-content: flex-end;
+      }
+      nav button {
+        border: none;
+      }
+      #buttons {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 32px;
+        display: none;
+        justify-content: space-between;
+      }
+      button {
+        background-color: rgb(255 255 255 / 0);
+        border: solid 1px #999;
+        border-radius: 8px;
+        height: 64px;
+        width: 64px;
+        color: #999;
+        margin-left: 4px;
+        margin-right: 4px;
+        transition: all 0.3s;
+        font-size: 24px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+      }
+      button svg {
+        height: 1em;
+        width: 1em;
+      }
+
+      button:active,
+      button:focus {
+        outline: none;
+      }
+      button:hover {
+        background-color: rgb(255 255 255 / 0.25);
+      }
+      .hidden {
+        display: none !important;
+      }
+      #info {
+        position: absolute;
+        inset: 0;
+        background-color: rgb(0 0 0 / 0.75);
+        z-index: 1;
+        color: white;
+        font-size: 14px;
+        padding: 32px;
+        display: flex;
+      }
+      #info > div {
+        max-width: 400px;
+        max-height: 400px;
+        width: 100%;
+        height: 100%;
+        margin: auto;
+      }
+      #info .info-header {
+        font-weight: 600;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+        height: 1em;
+        align-items: center;
+      }
+      #info .info-subheader {
+        font-weight: 600;
+      }
+      #info .disclaimer {
+        font-style: italic;
+      }
+      #info button {
+        padding: 0;
+        border: none;
+        color: inherit;
+      }
+      .icon-button::before {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        content: '';
+        height: 1em;
+        width: 1em;
+      }
+      #volume-0::before {
+        background-image: url('../sprites/volume-0_999_64x64.svg');
+      }
+      #volume-1::before {
+        background-image: url('../sprites/volume-1_999_64x64.svg');
+      }
+      #show-info::before {
+        background-image: url('../sprites/info-circle_999_64x64.svg');
+      }
+      #jump::before {
+        background-image: url('../sprites/up-arrow_999_64x64.svg');
+      }
+      #attack::before {
+        background-image: url('../sprites/axe_999_64x64.svg');
+      }
+      #left::before {
+        background-image: url('../sprites/up-arrow_999_64x64.svg');
+        transform: rotate(-90deg);
+      }
+      #right::before {
+        background-image: url('../sprites/up-arrow_999_64x64.svg');
+        transform: rotate(90deg);
+      }
+      .version {
+        color: #999;
+      }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="You Have to Burn the Rope" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../favicon-16x16.png"
+    />
+    <link rel="manifest" href="../site.webmanifest" />
+    <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    <script src="../index.js" type="module"></script>
+  </head>
+  <body>
+    <nav>
+      <button class="icon-button" id="volume-0"></button>
+      <button class="icon-button hidden" id="volume-1"></button>
+      <button class="icon-button" id="show-info"></button>
+    </nav>
+    <div id="info" class="hidden">
+      <div>
+        <div class="info-header">
+          <div>You Have To Burn The Rope</div>
+          <button id="hide-info">x</button>
+        </div>
+        <br />
+        <div class="info-subheader">Originally created by</div>
+        <div>
+          Kian Bashiri <a href="http://mazapan.se">(http://mazapan.se)</a>
+        </div>
+        <br />
+        <div class="info-subheader">Converted to HTML/JS by</div>
+        <div>
+          Tom Howland
+          <a href="https://tomhowland.com">(https://tomhowland.com)</a>
+        </div>
+        <br />
+        <div class="version">version 0.4</div>
+      </div>
+    </div>
+
+    <canvas id="canvas"></canvas>
+    <div id="buttons" class="hidden">
+      <div>
+        <button class="icon-button" id="jump"></button>
+        <button class="icon-button" id="attack"></button>
+      </div>
+      <div>
+        <button class="icon-button" id="left"></button>
+        <button class="icon-button" id="right"></button>
+      </div>
+    </div>
+  </body>
+</html>

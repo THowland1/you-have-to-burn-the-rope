@@ -16,12 +16,7 @@ import { player } from './player.js';
 import { phaseManager, PHASES } from './phase-manager.js';
 import { lasers } from './lasers.js';
 import { timeManager } from './time-manager.js';
-
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
+import { img } from './img.js';
 
 class Boss extends Coordinates {
     /**
@@ -51,11 +46,11 @@ class Boss extends Coordinates {
             y: 0
         };
         this.images = {
-            attack: img('./sprites/boss-attack_204x256.png'),
-            die: img('./sprites/boss-die_192x256.png'),
-            lookup: img('./sprites/boss-lookup_192x256.png'),
-            move: img('./sprites/boss-move_204x256.png'),
-            still: img('./sprites/boss-still_204x256.png'),
+            attack: img(new URL('../sprites/boss-attack_204x256.png', import.meta.url)),
+            die: img(new URL('../sprites/boss-die_192x256.png', import.meta.url)),
+            lookup: img(new URL('../sprites/boss-lookup_192x256.png', import.meta.url)),
+            move: img(new URL('../sprites/boss-move_204x256.png', import.meta.url)),
+            still: img(new URL('../sprites/boss-still_204x256.png', import.meta.url)),
         };
         this.lastAttacked = 0;
         this.recalculateModeAt = 0;

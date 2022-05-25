@@ -6,21 +6,16 @@ import { audioManager } from './audio-manager.js';
 import { LASER_DURATION, LASER_SPEED } from './consts.js';
 import { player } from './player.js';
 import { explosions } from './explosions.js';
-
-function img(src) {
-    const result = new Image();
-    result.src = src;
-    return result;
-}
+import { img } from './img.js';
 
 const laserImages = [
-    img('./sprites/laser-1_20x20.png'),
-    img('./sprites/laser-2_20x20.png'),
-    img('./sprites/laser-3_20x20.png'),
-    img('./sprites/laser-4_20x20.png'),
-    img('./sprites/laser-5_20x20.png'),
-    img('./sprites/laser-6_20x20.png'),
-    img('./sprites/laser-7_20x20.png'),
+    img(new URL('../sprites/laser-1_20x20.png', import.meta.url)),
+    img(new URL('../sprites/laser-2_20x20.png', import.meta.url)),
+    img(new URL('../sprites/laser-3_20x20.png', import.meta.url)),
+    img(new URL('../sprites/laser-4_20x20.png', import.meta.url)),
+    img(new URL('../sprites/laser-5_20x20.png', import.meta.url)),
+    img(new URL('../sprites/laser-6_20x20.png', import.meta.url)),
+    img(new URL('../sprites/laser-7_20x20.png', import.meta.url)),
 ];
 
 class Lasers {
