@@ -18,6 +18,8 @@ import { lasers } from './lasers.js';
 import { timeManager } from './time-manager.js';
 import { img } from './img.js';
 
+import { ASSET_URLS } from './urls.js';
+
 class Boss extends Coordinates {
     /**
      * Boss pattern
@@ -46,11 +48,11 @@ class Boss extends Coordinates {
             y: 0
         };
         this.images = {
-            attack: img(new URL('../sprites/boss-attack_204x256.png', import.meta.url)),
-            die: img(new URL('../sprites/boss-die_192x256.png', import.meta.url)),
-            lookup: img(new URL('../sprites/boss-lookup_192x256.png', import.meta.url)),
-            move: img(new URL('../sprites/boss-move_204x256.png', import.meta.url)),
-            still: img(new URL('../sprites/boss-still_204x256.png', import.meta.url)),
+            attack: img(ASSET_URLS['../sprites/boss-attack_204x256.png']),
+            die: img(ASSET_URLS['../sprites/boss-die_192x256.png']),
+            lookup: img(ASSET_URLS['../sprites/boss-lookup_192x256.png']),
+            move: img(ASSET_URLS['../sprites/boss-move_204x256.png']),
+            still: img(ASSET_URLS['../sprites/boss-still_204x256.png']),
         };
         this.lastAttacked = 0;
         this.recalculateModeAt = 0;

@@ -2,6 +2,7 @@
 import { audioManager } from './audio-manager.js';
 import { FRAME_HEIGHT, FRAME_WIDTH, c, canvas } from './canvas.js';
 import { img } from './img.js';
+import { ASSET_URLS } from './urls.js';
 
 class TitleSlide {
     constructor({ timeIn, timeOut, fadeTime }) {
@@ -66,7 +67,7 @@ class LyricSlide {
 
 class ImageTextSlide {
     constructor({ heading, lines, src, timeIn, timeOut, fadeTime }) {
-        this.img = img(new URL(src, import.meta.url));
+        this.img = img(ASSET_URLS[src]);
         /** @type {string} */ this.heading = heading;
         /** @type {string[]} */ this.lines = lines;
         this.timeIn = timeIn;
@@ -98,7 +99,7 @@ class ImageTextSlide {
 }
 class TextImageSlide {
     constructor({ heading, lines, src, timeIn, timeOut, fadeTime }) {
-        this.img = img(new URL(src, import.meta.url));
+        this.img = img(ASSET_URLS[src]);
         this.timeIn = timeIn;
         this.timeOut = timeOut;
         this.fadeTime = fadeTime;
@@ -131,10 +132,10 @@ class TextImageSlide {
 // Design, Code, Graphics Kian Bashiri (mazapan.se)
 const slides = [
     new TitleSlide({ timeIn: 3.158386, timeOut: 10.540059, fadeTime: .45 }),
-    new ImageTextSlide({ heading: 'Design, Code, Graphics', lines: ['Kian Bashiri', '(mazapan.se)'], src: new URL('../sprites/credits-1_200x200.png', import.meta.url), timeIn: 11.89449, timeOut: 19.374947, fadeTime: .45 }),
-    new TextImageSlide({ heading: 'Music', lines: ['Henrik Nåmark', '(reachground.se)'], src: new URL('../sprites/credits-2_200x200.png', import.meta.url), timeIn: 20.633224, timeOut: 28.119119, fadeTime: .45 }),
-    new ImageTextSlide({ heading: 'Additional Design', lines: ['Henrik Nåmark', 'Christian Dryden'], src: new URL('../sprites/credits-3_200x200.png', import.meta.url), timeIn: 29.364552, timeOut: 36.967399, fadeTime: .45 }),
-    new TextImageSlide({ heading: 'Special thanks to', lines: ['Umami'], src: new URL('../sprites/credits-4_200x200.png', import.meta.url), timeIn: 38.17481, timeOut: 45.787413, fadeTime: .45 }),
+    new ImageTextSlide({ heading: 'Design, Code, Graphics', lines: ['Kian Bashiri', '(mazapan.se)'], src: ASSET_URLS['../sprites/credits-1_200x200.png'], timeIn: 11.89449, timeOut: 19.374947, fadeTime: .45 }),
+    new TextImageSlide({ heading: 'Music', lines: ['Henrik Nåmark', '(reachground.se)'], src: ASSET_URLS['../sprites/credits-2_200x200.png'], timeIn: 20.633224, timeOut: 28.119119, fadeTime: .45 }),
+    new ImageTextSlide({ heading: 'Additional Design', lines: ['Henrik Nåmark', 'Christian Dryden'], src: ASSET_URLS['../sprites/credits-3_200x200.png'], timeIn: 29.364552, timeOut: 36.967399, fadeTime: .45 }),
+    new TextImageSlide({ heading: 'Special thanks to', lines: ['Umami'], src: ASSET_URLS['../sprites/credits-4_200x200.png'], timeIn: 38.17481, timeOut: 45.787413, fadeTime: .45 }),
 
     new LyricSlide({ timeIn: 52.289314, timeOut: 53.952062, text: 'Now you\'re a hero' }),
     new LyricSlide({ timeIn: 53.952062, timeOut: 55.10938, text: 'You managed to' }),

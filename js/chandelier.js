@@ -5,10 +5,12 @@ import { timeManager } from './time-manager.js';
 import { phaseManager } from './phase-manager.js';
 import { boss } from './boss.js';
 import { img } from './img.js';
+
+import { ASSET_URLS } from './urls.js';
 class Chandelier extends Coordinates {
     constructor() {
         super({ x: 130 * 32, y: 12 * 32, width: 5 * 32, height: 3 * 32 });
-        this.img = img(new URL('../sprites/chandelier_160x96.png', import.meta.url));
+        this.img = img(ASSET_URLS['../sprites/chandelier_160x96.png']);
         this.show = true;
         this.dropped = false;
         this.velocity = {

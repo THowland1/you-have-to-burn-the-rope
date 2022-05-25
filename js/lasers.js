@@ -8,14 +8,16 @@ import { player } from './player.js';
 import { explosions } from './explosions.js';
 import { img } from './img.js';
 
+import { ASSET_URLS } from './urls.js';
+
 const laserImages = [
-    img(new URL('../sprites/laser-1_20x20.png', import.meta.url)),
-    img(new URL('../sprites/laser-2_20x20.png', import.meta.url)),
-    img(new URL('../sprites/laser-3_20x20.png', import.meta.url)),
-    img(new URL('../sprites/laser-4_20x20.png', import.meta.url)),
-    img(new URL('../sprites/laser-5_20x20.png', import.meta.url)),
-    img(new URL('../sprites/laser-6_20x20.png', import.meta.url)),
-    img(new URL('../sprites/laser-7_20x20.png', import.meta.url)),
+    img(ASSET_URLS['../sprites/laser-1_20x20.png']),
+    img(ASSET_URLS['../sprites/laser-2_20x20.png']),
+    img(ASSET_URLS['../sprites/laser-3_20x20.png']),
+    img(ASSET_URLS['../sprites/laser-4_20x20.png']),
+    img(ASSET_URLS['../sprites/laser-5_20x20.png']),
+    img(ASSET_URLS['../sprites/laser-6_20x20.png']),
+    img(ASSET_URLS['../sprites/laser-7_20x20.png']),
 ];
 
 class Lasers {

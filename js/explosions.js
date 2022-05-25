@@ -3,14 +3,16 @@ import { c } from './canvas.js';
 import { Frames } from './frames.js';
 import { img } from './img.js';
 
+import { ASSET_URLS } from './urls.js';
+
 const explosionImages = [
-    img(new URL('../sprites/explosion-1_36x36.png', import.meta.url)),
-    img(new URL('../sprites/explosion-2_36x36.png', import.meta.url)),
-    img(new URL('../sprites/explosion-3_36x36.png', import.meta.url)),
-    img(new URL('../sprites/explosion-4_36x36.png', import.meta.url)),
-    img(new URL('../sprites/explosion-5_36x36.png', import.meta.url)),
-    img(new URL('../sprites/explosion-6_36x36.png', import.meta.url)),
-    img(new URL('../sprites/explosion-7_36x36.png', import.meta.url)),
+    img(ASSET_URLS['../sprites/explosion-1_36x36.png']),
+    img(ASSET_URLS['../sprites/explosion-2_36x36.png']),
+    img(ASSET_URLS['../sprites/explosion-3_36x36.png']),
+    img(ASSET_URLS['../sprites/explosion-4_36x36.png']),
+    img(ASSET_URLS['../sprites/explosion-5_36x36.png']),
+    img(ASSET_URLS['../sprites/explosion-6_36x36.png']),
+    img(ASSET_URLS['../sprites/explosion-7_36x36.png']),
 ];
 class Explosions {
     constructor() {

@@ -7,7 +7,9 @@ import { audioManager } from './audio-manager.js';
 import { AXE_SPEED_X, AXE_SPEED_Y, AXE_GRAVITY } from './consts.js';
 import { img } from './img.js';
 
-const axeImg = img(new URL('../sprites/axe_18x18.png', import.meta.url));
+import { ASSET_URLS } from './urls.js';
+
+const axeImg = img(ASSET_URLS['../sprites/axe_18x18.png']);
 
 class Axes {
     constructor() {

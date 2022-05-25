@@ -4,13 +4,15 @@ import { audioManager } from './audio-manager.js';
 import { c } from './canvas.js';
 import { img } from './img.js';
 
+import { ASSET_URLS } from './urls.js';
+
 const plumeImages = [
-    img(new URL('../sprites/plume-1_43x21.png', import.meta.url)),
-    img(new URL('../sprites/plume-2_43x21.png', import.meta.url)),
-    img(new URL('../sprites/plume-3_43x21.png', import.meta.url)),
-    img(new URL('../sprites/plume-4_43x21.png', import.meta.url)),
-    img(new URL('../sprites/plume-5_43x21.png', import.meta.url)),
-    img(new URL('../sprites/plume-6_43x21.png', import.meta.url)),
+    img(ASSET_URLS['../sprites/plume-1_43x21.png']),
+    img(ASSET_URLS['../sprites/plume-2_43x21.png']),
+    img(ASSET_URLS['../sprites/plume-3_43x21.png']),
+    img(ASSET_URLS['../sprites/plume-4_43x21.png']),
+    img(ASSET_URLS['../sprites/plume-5_43x21.png']),
+    img(ASSET_URLS['../sprites/plume-6_43x21.png']),
 ];
 class Plumes {
     constructor() {

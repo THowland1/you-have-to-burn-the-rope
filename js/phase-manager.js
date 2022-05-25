@@ -9,6 +9,8 @@ import { audioManager } from './audio-manager.js';
 import { buttonManager } from './button-manager.js';
 import { img } from './img.js';
 
+import { ASSET_URLS } from './urls.js';
+
 async function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 
 export const PHASES = {
@@ -23,7 +25,7 @@ export const PHASES = {
 };
 class PhaseManager {
     constructor() {
-        this.backDoorImage = img(new URL('../sprites/back-door_32x64.png', import.meta.url));
+        this.backDoorImage = img(ASSET_URLS['../sprites/back-door_32x64.png']);
         this.showBackDoor = false;
         this.phase = PHASES.clicktostart;
     }

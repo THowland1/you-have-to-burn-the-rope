@@ -3,10 +3,12 @@ import { timeManager } from './time-manager.js';
 import { c } from './canvas.js';
 import { img } from './img.js';
 
+import { ASSET_URLS } from './urls.js';
+
 export class Flame extends Coordinates {
     constructor({ left, top }) {
         super({ x: left, y: top, width: 1 * 32, height: 2 * 32 });
-        this.img = img(new URL('../flame-sprites.png', import.meta.url));
+        this.img = img(ASSET_URLS['../sprites/flame-sprites.png']);
         this.framesPerSecond = 10;
         this.frameCount = 3;
         this.frameIndex = 0;

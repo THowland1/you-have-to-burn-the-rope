@@ -23,12 +23,12 @@ import { slides } from './js/slides.js';
 import { timeManager } from './js/time-manager.js';
 import { audioManager } from './js/audio-manager.js';
 import { buttonManager } from './js/button-manager.js';
+import { ASSET_URLS } from './js/urls.js';
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-            .register(new URL('./serviceworker.js',
-                import.meta.url))
+            .register(ASSET_URLS['../serviceworker.js'], { type: 'module' })
             .then((reg) => console.log('Success: ', reg.scope))
             .catch((err) => console.log('Failure: ', err));
     });
@@ -49,7 +49,8 @@ document.getElementById('canvas').addEventListener('click', () => {
 class BG {
     constructor() {
         this.img = new Image();
-        this.img.src = new URL('./bg.png', import.meta.url);
+        this.img.src = ASSET_URLS['../sprites/bg.png'];
+        console.log(ASSET_URLS['../sprites/bg.png']);
     }
     draw() {
         const sx = offset.x;
