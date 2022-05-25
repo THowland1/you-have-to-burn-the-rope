@@ -526,10 +526,10 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"fiTDl":[function(require,module,exports) {
-var _urlsJs = require("./js/urls.js");
+var _urls = require("./js/urls");
 const CACHE_NAME = 'version-0.1';
 const OFFLINE_URL = 'index.html';
-const assetUrls = Object.values(_urlsJs.ASSET_URLS);
+const assetUrls = Object.values(_urls.ASSET_URLS);
 self.addEventListener('install', function(event) {
     console.log('[ServiceWorker] Install');
     event.waitUntil((async ()=>{
@@ -562,84 +562,84 @@ self.addEventListener('fetch', function(event) {
     })());
 });
 
-},{"./js/urls.js":"ki4j8"}],"ki4j8":[function(require,module,exports) {
+},{"./js/urls":"8OWkF"}],"8OWkF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ASSET_URLS", ()=>ASSET_URLS
 );
 const ASSET_URLS = {
-    '../serviceworker.js': new URL(require("3c36f07cce4de438")),
-    './index.js': new URL(require("308aaa700d9ac33f")),
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("adad38975974dcd7")),
-    '../audio/axe-throw.mp3': new URL(require("276eccf37794b08")),
-    '../audio/boss-explosion.mp3': new URL(require("b475c8cab88c5336")),
-    '../audio/boss-fight.mp3': new URL(require("4ad82c4e8be05464")),
-    '../audio/death.mp3': new URL(require("ca8b1dae55606be9")),
-    '../audio/door-slam.mp3': new URL(require("d9f1df6bcc3dc4ee")),
-    '../audio/eye-laser.mp3': new URL(require("3ba879e52243017c")),
-    '../audio/jump.mp3': new URL(require("ca43fe38a10d6b13")),
-    '../audio/land.mp3': new URL(require("e18be15545078789")),
-    '../audio/now-youre-a-hero.mp3': new URL(require("97b8d787b92b4c09")),
-    '../audio/rope-explosion.mp3': new URL(require("5d020da195c20bf2")),
-    '../audio/tunnel.mp3': new URL(require("b750a357c60df1b5")),
-    '../img/axe_18x18.png': new URL(require("87247644b3a7a88a")),
-    '../img/axe_999_64x64.svg': new URL(require("396b5b11e5c86fea")),
-    '../img/back-door_32x64.png': new URL(require("fb9f2690d40a8bf9")),
-    '../img/boss-attack_204x256.png': new URL(require("c65245d1ee827c71")),
-    '../img/boss-die_192x256.png': new URL(require("42a72b7755c6498b")),
-    '../img/boss-lookup_192x256.png': new URL(require("fde782d934ea79d3")),
-    '../img/boss-move_204x256.png': new URL(require("48dbb5d316bd3988")),
-    '../img/boss-still_204x256.png': new URL(require("e6ecf7be898d2b94")),
-    '../img/chandelier_160x96.png': new URL(require("805595210ad79098")),
-    '../img/credits-1_200x200.png': new URL(require("41920263ad6e2773")),
-    '../img/credits-2_200x200.png': new URL(require("2e8ed2795a83ea16")),
-    '../img/credits-3_200x200.png': new URL(require("579617441f5a8e6f")),
-    '../img/credits-4_200x200.png': new URL(require("1ec052dc3afc3103")),
-    '../img/credits-bg_704x512.png': new URL(require("1a89809d5ed07023")),
-    '../img/explosion-1_36x36.png': new URL(require("1d5d4a24793eeb95")),
-    '../img/explosion-2_36x36.png': new URL(require("c31caa2b2ccf5570")),
-    '../img/explosion-3_36x36.png': new URL(require("1635172a4eed68a9")),
-    '../img/explosion-4_36x36.png': new URL(require("e87fe54be77bdc4a")),
-    '../img/explosion-5_36x36.png': new URL(require("243d99757e4dbaf6")),
-    '../img/explosion-6_36x36.png': new URL(require("da219837b4e73c6a")),
-    '../img/explosion-7_36x36.png': new URL(require("e3026c998b856249")),
-    '../img/flame-sprites.png': new URL(require("cd5b90f58ea04ec6")),
-    '../img/flame-1_28x28.png': new URL(require("6b12c379e459f5a0")),
-    '../img/flame-2_28x28.png': new URL(require("be57e3f43ae4dbfc")),
-    '../img/flame-3_28x28.png': new URL(require("d6d66d7261099ab")),
-    '../img/info-circle_999_64x64.svg': new URL(require("f8ab4caabcf828eb")),
-    '../img/laser-1_20x20.png': new URL(require("cb26072e90bd692d")),
-    '../img/laser-2_20x20.png': new URL(require("e7da8aa9ff48c6c8")),
-    '../img/laser-3_20x20.png': new URL(require("76b090dd0ea6d021")),
-    '../img/laser-4_20x20.png': new URL(require("5b694e3994ab3a5a")),
-    '../img/laser-5_20x20.png': new URL(require("7e9066c1d1279d67")),
-    '../img/laser-6_20x20.png': new URL(require("f9af3119980a6329")),
-    '../img/laser-7_20x20.png': new URL(require("dbbe02123dfdbca")),
-    '../img/page-bg_32x32.png': new URL(require("c58df0bb569b9e32")),
-    '../img/player-fall_30x36.png': new URL(require("7cfd066581934182")),
-    '../img/player-hit_30x36.png': new URL(require("488d8d31375c1399")),
-    '../img/player-jump_30x36.png': new URL(require("a294ccf09816f08f")),
-    '../img/player-still_30x36.png': new URL(require("ef6bc6fd035318fb")),
-    '../img/player-throw_30x36.png': new URL(require("cddd9b061f39a436")),
-    '../img/player-walk-1_30x36.png': new URL(require("86a8c63c23fd4e3f")),
-    '../img/player-walk-2_30x36.png': new URL(require("8d22c4e584b4e818")),
-    '../img/player-walk-3_30x36.png': new URL(require("5e97299569052fb0")),
-    '../img/plume-1_43x21.png': new URL(require("8a4a5b8124a869fa")),
-    '../img/plume-2_43x21.png': new URL(require("c200f5e10f1c64f8")),
-    '../img/plume-3_43x21.png': new URL(require("aebcdecc266054d0")),
-    '../img/plume-4_43x21.png': new URL(require("8d67c17c93a32004")),
-    '../img/plume-5_43x21.png': new URL(require("961acaa10c40a510")),
-    '../img/plume-6_43x21.png': new URL(require("1ceb93fc27896ee2")),
-    '../img/rope_8x192.png': new URL(require("c046d30d4a87e8dd")),
-    '../img/stick_30x6.png': new URL(require("248a638bf4e0a107")),
-    '../img/up-arrow_999_64x64.svg': new URL(require("d33d0c3e7412bca6")),
-    '../img/volume-0_999_64x64.svg': new URL(require("ee865d0e87d56a6d")),
-    '../img/volume-1_999_64x64.svg': new URL(require("3ed0256a573b1e54")),
-    '../img/bg.png': new URL(require("8fe8bcf6ef889bc0")),
-    '../img/rope.png': new URL(require("ba24449b1d4964c3"))
+    '../serviceworker.js': new URL(require("12598dbdb868850f")),
+    './index.js': new URL(require("c7bdd7e9e353a412")),
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("83b7d5f789511615")),
+    '../audio/axe-throw.mp3': new URL(require("ef611db54e3dee4f")),
+    '../audio/boss-explosion.mp3': new URL(require("2fa3e31ddced57e9")),
+    '../audio/boss-fight.mp3': new URL(require("eb4a90b4e9500517")),
+    '../audio/death.mp3': new URL(require("938761b684182af1")),
+    '../audio/door-slam.mp3': new URL(require("4283bdfb26d29b1e")),
+    '../audio/eye-laser.mp3': new URL(require("92cb31807985c857")),
+    '../audio/jump.mp3': new URL(require("e9371211ecb03429")),
+    '../audio/land.mp3': new URL(require("d52aff1d687cf8ee")),
+    '../audio/now-youre-a-hero.mp3': new URL(require("a2279bbd83b0e70a")),
+    '../audio/rope-explosion.mp3': new URL(require("4a5a8b662d1f6f09")),
+    '../audio/tunnel.mp3': new URL(require("7271d57ce7da033f")),
+    '../img/axe_18x18.png': new URL(require("9bc6fb652764c13a")),
+    '../img/axe_999_64x64.svg': new URL(require("d7b83b70e6592bdb")),
+    '../img/back-door_32x64.png': new URL(require("72de858084fa02be")),
+    '../img/boss-attack_204x256.png': new URL(require("cd5f32171301a805")),
+    '../img/boss-die_192x256.png': new URL(require("1345a573c343a341")),
+    '../img/boss-lookup_192x256.png': new URL(require("82b00d5f6456e9ad")),
+    '../img/boss-move_204x256.png': new URL(require("2c8ff0e0c05efc28")),
+    '../img/boss-still_204x256.png': new URL(require("3f98b60277fd7b66")),
+    '../img/chandelier_160x96.png': new URL(require("98fee3b149974ca9")),
+    '../img/credits-1_200x200.png': new URL(require("edf6e79e9b4882e3")),
+    '../img/credits-2_200x200.png': new URL(require("e503115f39badf28")),
+    '../img/credits-3_200x200.png': new URL(require("7f8a1d9696ce940a")),
+    '../img/credits-4_200x200.png': new URL(require("c487a497b1efa3bc")),
+    '../img/credits-bg_704x512.png': new URL(require("cefe40fa15010f90")),
+    '../img/explosion-1_36x36.png': new URL(require("ad14f91c823e549a")),
+    '../img/explosion-2_36x36.png': new URL(require("9623141b49264b9f")),
+    '../img/explosion-3_36x36.png': new URL(require("a560e9f774468634")),
+    '../img/explosion-4_36x36.png': new URL(require("d61b6ba086adcc2b")),
+    '../img/explosion-5_36x36.png': new URL(require("fc6ff2e9d0776084")),
+    '../img/explosion-6_36x36.png': new URL(require("49d49d949b4fa210")),
+    '../img/explosion-7_36x36.png': new URL(require("ddcd0c58537b16bf")),
+    '../img/flame-sprites.png': new URL(require("b7083691210ba588")),
+    '../img/flame-1_28x28.png': new URL(require("a80917f444244687")),
+    '../img/flame-2_28x28.png': new URL(require("260f2762902d877a")),
+    '../img/flame-3_28x28.png': new URL(require("ab5192c0f2f9ef49")),
+    '../img/info-circle_999_64x64.svg': new URL(require("27ad87d87fda90ea")),
+    '../img/laser-1_20x20.png': new URL(require("b533e5384b54f8c1")),
+    '../img/laser-2_20x20.png': new URL(require("b4059c2e34ae5e2f")),
+    '../img/laser-3_20x20.png': new URL(require("c805683a32a0f7b2")),
+    '../img/laser-4_20x20.png': new URL(require("925efa060855a93f")),
+    '../img/laser-5_20x20.png': new URL(require("e2cc0bb7680d12f6")),
+    '../img/laser-6_20x20.png': new URL(require("88011022ea06ee33")),
+    '../img/laser-7_20x20.png': new URL(require("38f8d45e24d12ee2")),
+    '../img/page-bg_32x32.png': new URL(require("41c0cfc1fed69d12")),
+    '../img/player-fall_30x36.png': new URL(require("34d8afbdb4ac3d5e")),
+    '../img/player-hit_30x36.png': new URL(require("12cebfce04fdf60")),
+    '../img/player-jump_30x36.png': new URL(require("33ca6d2c4e9cfda4")),
+    '../img/player-still_30x36.png': new URL(require("87640417fca58364")),
+    '../img/player-throw_30x36.png': new URL(require("9d63b073ae256418")),
+    '../img/player-walk-1_30x36.png': new URL(require("52bab78fba5bf111")),
+    '../img/player-walk-2_30x36.png': new URL(require("3601a3015750be48")),
+    '../img/player-walk-3_30x36.png': new URL(require("d7b5753638ee0521")),
+    '../img/plume-1_43x21.png': new URL(require("c5ab14b1cde9566e")),
+    '../img/plume-2_43x21.png': new URL(require("d3e05fe56561de51")),
+    '../img/plume-3_43x21.png': new URL(require("95c4d7c727d87042")),
+    '../img/plume-4_43x21.png': new URL(require("be13a19c622683aa")),
+    '../img/plume-5_43x21.png': new URL(require("d4c3c2c2e7dc31af")),
+    '../img/plume-6_43x21.png': new URL(require("789a9897de5bf741")),
+    '../img/rope_8x192.png': new URL(require("97a322445b6dc7c3")),
+    '../img/stick_30x6.png': new URL(require("34041894fe39b81a")),
+    '../img/up-arrow_999_64x64.svg': new URL(require("c235fec3d0587fcb")),
+    '../img/volume-0_999_64x64.svg': new URL(require("48adc2dd52cfcae4")),
+    '../img/volume-1_999_64x64.svg': new URL(require("a5d9b054ef12d754")),
+    '../img/bg.png': new URL(require("ad23dad22f63b285")),
+    '../img/rope.png': new URL(require("82ff9f0d479476e6"))
 };
 
-},{"3c36f07cce4de438":"ld6g2","308aaa700d9ac33f":"bxiGM","adad38975974dcd7":"eFyOJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","276eccf37794b08":"8G4cH","b475c8cab88c5336":"2wLy4","4ad82c4e8be05464":"jaEqy","ca8b1dae55606be9":"bJcna","d9f1df6bcc3dc4ee":"cOBx9","3ba879e52243017c":"5F5k6","ca43fe38a10d6b13":"6auCl","e18be15545078789":"ay6Yf","97b8d787b92b4c09":"6Z7FG","5d020da195c20bf2":"37Npb","b750a357c60df1b5":"esMJa","87247644b3a7a88a":"4qfhT","396b5b11e5c86fea":"7FfX0","fb9f2690d40a8bf9":"1D2VR","c65245d1ee827c71":"jZJ8y","42a72b7755c6498b":"kpuJ4","fde782d934ea79d3":"cQqtC","48dbb5d316bd3988":"68dFl","e6ecf7be898d2b94":"6ATE5","805595210ad79098":"bcVz0","41920263ad6e2773":"lpubY","2e8ed2795a83ea16":"lNwyT","579617441f5a8e6f":"j46sC","1ec052dc3afc3103":"fvrwX","1a89809d5ed07023":"7ly1I","1d5d4a24793eeb95":"lVCnp","c31caa2b2ccf5570":"56jTQ","1635172a4eed68a9":"7F1ag","e87fe54be77bdc4a":"flsAs","243d99757e4dbaf6":"iQ139","da219837b4e73c6a":"cNqEB","e3026c998b856249":"fR06x","cd5b90f58ea04ec6":"75ONh","6b12c379e459f5a0":"afajq","be57e3f43ae4dbfc":"PIWQy","d6d66d7261099ab":"a2pgN","f8ab4caabcf828eb":"6ADP5","cb26072e90bd692d":"eKAVb","e7da8aa9ff48c6c8":"9EPnV","76b090dd0ea6d021":"3iuk1","5b694e3994ab3a5a":"6jWfz","7e9066c1d1279d67":"3VuW6","f9af3119980a6329":"kR70m","dbbe02123dfdbca":"5WU6w","c58df0bb569b9e32":"7R5mF","7cfd066581934182":"1TtBE","488d8d31375c1399":"2MHMB","a294ccf09816f08f":"gt2mk","ef6bc6fd035318fb":"94bmi","cddd9b061f39a436":"8U28w","86a8c63c23fd4e3f":"crOGG","8d22c4e584b4e818":"2sMLW","5e97299569052fb0":"agWu4","8a4a5b8124a869fa":"kAzoh","c200f5e10f1c64f8":"7MrLw","aebcdecc266054d0":"jem1m","8d67c17c93a32004":"a5Fzf","961acaa10c40a510":"3Y8uZ","1ceb93fc27896ee2":"lmR9V","c046d30d4a87e8dd":"d1gIV","248a638bf4e0a107":"5DrDO","d33d0c3e7412bca6":"nlcIK","ee865d0e87d56a6d":"fxYTD","3ed0256a573b1e54":"C71mP","8fe8bcf6ef889bc0":"1RGW7","ba24449b1d4964c3":"2nr7z"}],"ld6g2":[function(require,module,exports) {
+},{"12598dbdb868850f":"ld6g2","c7bdd7e9e353a412":"bxiGM","83b7d5f789511615":"eFyOJ","ef611db54e3dee4f":"8G4cH","2fa3e31ddced57e9":"2wLy4","eb4a90b4e9500517":"jaEqy","938761b684182af1":"bJcna","4283bdfb26d29b1e":"cOBx9","92cb31807985c857":"5F5k6","e9371211ecb03429":"6auCl","d52aff1d687cf8ee":"ay6Yf","a2279bbd83b0e70a":"6Z7FG","4a5a8b662d1f6f09":"37Npb","7271d57ce7da033f":"esMJa","9bc6fb652764c13a":"4qfhT","d7b83b70e6592bdb":"7FfX0","72de858084fa02be":"1D2VR","cd5f32171301a805":"jZJ8y","1345a573c343a341":"kpuJ4","82b00d5f6456e9ad":"cQqtC","2c8ff0e0c05efc28":"68dFl","3f98b60277fd7b66":"6ATE5","98fee3b149974ca9":"bcVz0","edf6e79e9b4882e3":"lpubY","e503115f39badf28":"lNwyT","7f8a1d9696ce940a":"j46sC","c487a497b1efa3bc":"fvrwX","cefe40fa15010f90":"7ly1I","ad14f91c823e549a":"lVCnp","9623141b49264b9f":"56jTQ","a560e9f774468634":"7F1ag","d61b6ba086adcc2b":"flsAs","fc6ff2e9d0776084":"iQ139","49d49d949b4fa210":"cNqEB","ddcd0c58537b16bf":"fR06x","b7083691210ba588":"75ONh","a80917f444244687":"afajq","260f2762902d877a":"PIWQy","ab5192c0f2f9ef49":"a2pgN","27ad87d87fda90ea":"6ADP5","b533e5384b54f8c1":"eKAVb","b4059c2e34ae5e2f":"9EPnV","c805683a32a0f7b2":"3iuk1","925efa060855a93f":"6jWfz","e2cc0bb7680d12f6":"3VuW6","88011022ea06ee33":"kR70m","38f8d45e24d12ee2":"5WU6w","41c0cfc1fed69d12":"7R5mF","34d8afbdb4ac3d5e":"1TtBE","12cebfce04fdf60":"2MHMB","33ca6d2c4e9cfda4":"gt2mk","87640417fca58364":"94bmi","9d63b073ae256418":"8U28w","52bab78fba5bf111":"crOGG","3601a3015750be48":"2sMLW","d7b5753638ee0521":"agWu4","c5ab14b1cde9566e":"kAzoh","d3e05fe56561de51":"7MrLw","95c4d7c727d87042":"jem1m","be13a19c622683aa":"a5Fzf","d4c3c2c2e7dc31af":"3Y8uZ","789a9897de5bf741":"lmR9V","97a322445b6dc7c3":"d1gIV","34041894fe39b81a":"5DrDO","c235fec3d0587fcb":"nlcIK","48adc2dd52cfcae4":"fxYTD","a5d9b054ef12d754":"C71mP","ad23dad22f63b285":"1RGW7","82ff9f0d479476e6":"2nr7z","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ld6g2":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "serviceworker.968110bd.js" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -681,36 +681,6 @@ module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "yhtbtr
 
 },{"./helpers/bundle-url":"lgJ39"}],"eFyOJ":[function(require,module,exports) {
 module.exports = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
-
-},{}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
 
 },{}],"8G4cH":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "axe-throw.19644f0b.mp3" + "?" + Date.now();
@@ -910,6 +880,36 @@ module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "bg.6c7
 },{"./helpers/bundle-url":"lgJ39"}],"2nr7z":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "rope.442217df.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}]},["iohiW","fiTDl"], "fiTDl", "parcelRequiref536")
+},{"./helpers/bundle-url":"lgJ39"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}]},["iohiW","fiTDl"], "fiTDl", "parcelRequiref536")
 
 //# sourceMappingURL=serviceworker.968110bd.js.map

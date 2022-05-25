@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"2bjFo":[function(require,module,exports) {
+})({"7mgxS":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "8f687a133542e8cb";
+module.bundle.HMR_BUNDLE_ID = "5c1b77e3b71e74eb";
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -525,13 +525,13 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"8lqZg":[function(require,module,exports) {
+},{}],"h7u1C":[function(require,module,exports) {
 var _axesJs = require("./js/axes.js");
 var _bossJs = require("./js/boss.js");
 var _canvasJs = require("./js/canvas.js");
 var _chandelierJs = require("./js/chandelier.js");
-var _consts = require("./js/consts");
-var _coordinates = require("./js/coordinates");
+var _constsJs = require("./js/consts.js");
+var _coordinatesJs = require("./js/coordinates.js");
 var _debugMenuJs = require("./js/debug-menu.js");
 var _explosionsJs = require("./js/explosions.js");
 var _flamesJs = require("./js/flames.js");
@@ -543,12 +543,12 @@ var _playerJs = require("./js/player.js");
 var _plumesJs = require("./js/plumes.js");
 var _ropeJs = require("./js/rope.js");
 var _slidesJs = require("./js/slides.js");
-var _timeManager = require("./js/time-manager");
+var _timeManagerJs = require("./js/time-manager.js");
 var _audioManagerJs = require("./js/audio-manager.js");
 var _buttonManagerJs = require("./js/button-manager.js");
-var _urls = require("./js/urls");
+var _urlsJs = require("./js/urls.js");
 if ('serviceWorker' in navigator) window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register(_urls.ASSET_URLS['../serviceworker.js'], {
+    navigator.serviceWorker.register(_urlsJs.ASSET_URLS['../serviceworker.js'], {
         type: 'module'
     }).then((reg)=>console.log('Success: ', reg.scope)
     ).catch((err)=>console.log('Failure: ', err)
@@ -566,11 +566,11 @@ document.getElementById('canvas').addEventListener('click', ()=>{
 class BG {
     constructor(){
         this.img = new Image();
-        this.img.src = _urls.ASSET_URLS['../img/bg.png'];
+        this.img.src = _urlsJs.ASSET_URLS['../img/bg.png'];
     }
     draw() {
-        const sx = _coordinates.offset.x;
-        const sy = _coordinates.offset.y;
+        const sx = _coordinatesJs.offset.x;
+        const sy = _coordinatesJs.offset.y;
         const sw = _canvasJs.FRAME_WIDTH;
         const sh = _canvasJs.FRAME_HEIGHT;
         const dx = 0;
@@ -583,11 +583,11 @@ class BG {
 const bg = new BG();
 function animate() {
     const now = new Date().valueOf();
-    _timeManager.timeManager.msPerFrame = now - _timeManager.timeManager.now;
-    _timeManager.timeManager.now = now;
-    if (_consts.DEBUG_DELAY) setTimeout(()=>{
+    _timeManagerJs.timeManager.msPerFrame = now - _timeManagerJs.timeManager.now;
+    _timeManagerJs.timeManager.now = now;
+    if (_constsJs.DEBUG_DELAY) setTimeout(()=>{
         requestAnimationFrame(animate);
-    }, _consts.DEBUG_DELAY);
+    }, _constsJs.DEBUG_DELAY);
     else requestAnimationFrame(animate);
     _canvasJs.c.clearRect(0, 0, _canvasJs.canvas.width, _canvasJs.canvas.height);
     if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.clicktostart) {
@@ -626,42 +626,42 @@ function animate() {
         _playerJs.player.hasFlame = false;
         _phaseManagerJs.phaseManager.startRopeBurningPhase();
     }
-    if (_consts.SHOW_PLATFORMS) _platformsJs.platforms.forEach((platform)=>platform.draw()
+    if (_constsJs.SHOW_PLATFORMS) _platformsJs.platforms.forEach((platform)=>platform.draw()
     );
-    if (_consts.SHOW_DEBUGMENU) _debugMenuJs.debugMenu.draw();
-    if (_consts.SHOW_GRIDLINES) {
+    if (_constsJs.SHOW_DEBUGMENU) _debugMenuJs.debugMenu.draw();
+    if (_constsJs.SHOW_GRIDLINES) {
         _canvasJs.c.fillStyle = 'white';
-        Array.from(Array(_consts.COURSE_WIDTH / 128)).forEach((_, x)=>{
-            _canvasJs.c.fillRect(x * 128 - _coordinates.offset.x, 0, 1, _canvasJs.FRAME_HEIGHT);
-            _canvasJs.c.fillText(`${x * 4}`, x * 128 - _coordinates.offset.x, 10);
+        Array.from(Array(_constsJs.COURSE_WIDTH / 128)).forEach((_, x)=>{
+            _canvasJs.c.fillRect(x * 128 - _coordinatesJs.offset.x, 0, 1, _canvasJs.FRAME_HEIGHT);
+            _canvasJs.c.fillText(`${x * 4}`, x * 128 - _coordinatesJs.offset.x, 10);
         });
-        Array.from(Array(_consts.COURSE_HEIGHT / 160)).forEach((_, y)=>{
-            _canvasJs.c.fillRect(0, y * 160 - _coordinates.offset.y, _canvasJs.FRAME_WIDTH, 1);
-            _canvasJs.c.fillText(`${y * 5}`, 10, y * 160 - _coordinates.offset.y);
+        Array.from(Array(_constsJs.COURSE_HEIGHT / 160)).forEach((_, y)=>{
+            _canvasJs.c.fillRect(0, y * 160 - _coordinatesJs.offset.y, _canvasJs.FRAME_WIDTH, 1);
+            _canvasJs.c.fillText(`${y * 5}`, 10, y * 160 - _coordinatesJs.offset.y);
         });
     }
-    if (_playerJs.player.localRight > 400 && _coordinates.offset.x + _canvasJs.FRAME_WIDTH < _consts.COURSE_WIDTH && _playerJs.player.velocity.x > 0) _coordinates.offset.x += _playerJs.player.velocity.x * _timeManager.timeManager.msPerFrame;
-    else if (_playerJs.player.localLeft < 200 && _coordinates.offset.x > 0 && _playerJs.player.velocity.x < 0) _coordinates.offset.x += _playerJs.player.velocity.x * _timeManager.timeManager.msPerFrame;
-    if (_playerJs.player.localTop < 175 && _coordinates.offset.y > 0 && _playerJs.player.velocity.y < 0) _coordinates.offset.y += _playerJs.player.velocity.y * _timeManager.timeManager.msPerFrame;
-    else if (_playerJs.player.localBottom > 200 && _coordinates.offset.y + _canvasJs.FRAME_HEIGHT < _consts.COURSE_HEIGHT && _playerJs.player.velocity.y > 0) _coordinates.offset.y += _playerJs.player.velocity.y * _timeManager.timeManager.msPerFrame;
+    if (_playerJs.player.localRight > 400 && _coordinatesJs.offset.x + _canvasJs.FRAME_WIDTH < _constsJs.COURSE_WIDTH && _playerJs.player.velocity.x > 0) _coordinatesJs.offset.x += _playerJs.player.velocity.x * _timeManagerJs.timeManager.msPerFrame;
+    else if (_playerJs.player.localLeft < 200 && _coordinatesJs.offset.x > 0 && _playerJs.player.velocity.x < 0) _coordinatesJs.offset.x += _playerJs.player.velocity.x * _timeManagerJs.timeManager.msPerFrame;
+    if (_playerJs.player.localTop < 175 && _coordinatesJs.offset.y > 0 && _playerJs.player.velocity.y < 0) _coordinatesJs.offset.y += _playerJs.player.velocity.y * _timeManagerJs.timeManager.msPerFrame;
+    else if (_playerJs.player.localBottom > 200 && _coordinatesJs.offset.y + _canvasJs.FRAME_HEIGHT < _constsJs.COURSE_HEIGHT && _playerJs.player.velocity.y > 0) _coordinatesJs.offset.y += _playerJs.player.velocity.y * _timeManagerJs.timeManager.msPerFrame;
 }
 animate();
 
-},{"./js/axes.js":"6UenL","./js/boss.js":"jiKqO","./js/canvas.js":"jvBLU","./js/chandelier.js":"2oThl","./js/debug-menu.js":"bcbWB","./js/explosions.js":"ensJg","./js/flames.js":"3rfbG","./js/healthbar.js":"2uxWm","./js/lasers.js":"awXIj","./js/phase-manager.js":"73f18","./js/platforms.js":"3eULH","./js/player.js":"2k4ca","./js/plumes.js":"dtlaX","./js/rope.js":"OzOSK","./js/slides.js":"dKMrO","./js/audio-manager.js":"gwz40","./js/button-manager.js":"jLViv","./js/coordinates":"96akj","./js/time-manager":"g5oF1","./js/consts":"i99Dc","./js/urls":"8OWkF"}],"6UenL":[function(require,module,exports) {
+},{"./js/axes.js":"6UenL","./js/boss.js":"jiKqO","./js/canvas.js":"jvBLU","./js/chandelier.js":"2oThl","./js/consts.js":"2J0f1","./js/coordinates.js":"dsbsK","./js/debug-menu.js":"bcbWB","./js/explosions.js":"ensJg","./js/flames.js":"3rfbG","./js/healthbar.js":"2uxWm","./js/lasers.js":"awXIj","./js/phase-manager.js":"73f18","./js/platforms.js":"3eULH","./js/player.js":"2k4ca","./js/plumes.js":"dtlaX","./js/rope.js":"OzOSK","./js/slides.js":"dKMrO","./js/time-manager.js":"hIoYz","./js/audio-manager.js":"gwz40","./js/button-manager.js":"jLViv","./js/urls.js":"ki4j8"}],"6UenL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "axes", ()=>axes
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _canvasJs = require("./canvas.js");
 var _bossJs = require("./boss.js");
 var _healthbarJs = require("./healthbar.js");
-var _timeManager = require("./time-manager");
+var _timeManagerJs = require("./time-manager.js");
 var _audioManagerJs = require("./audio-manager.js");
-var _consts = require("./consts");
-var _img = require("./img");
-var _urls = require("./urls");
-const axeImg = _img.img(_urls.ASSET_URLS['../img/axe_18x18.png']);
+var _constsJs = require("./consts.js");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
+const axeImg = _imgJs.img(_urlsJs.ASSET_URLS['../img/axe_18x18.png']);
 class Axes {
     constructor(){
         /** @type {Axe[]} */ this.axes = [];
@@ -675,13 +675,13 @@ class Axes {
         _audioManagerJs.audioManager.playAxeThrowSound();
     }
     update() {
-        this.axes = this.axes.filter((axe)=>_timeManager.timeManager.now - axe.startTime < 6000 && !axe.hitBoss
+        this.axes = this.axes.filter((axe)=>_timeManagerJs.timeManager.now - axe.startTime < 6000 && !axe.hitBoss
         );
         this.axes.forEach((axe)=>axe.update()
         );
     }
 }
-class Axe extends _coordinates.Coordinates {
+class Axe extends _coordinatesJs.Coordinates {
     constructor({ left , top , shootRight  }){
         super({
             x: left,
@@ -693,7 +693,7 @@ class Axe extends _coordinates.Coordinates {
         this.startTime = new Date().valueOf();
         this.angle = 0;
         this.finished = false;
-        this.velocity = -_consts.AXE_SPEED_Y;
+        this.velocity = -_constsJs.AXE_SPEED_Y;
         this.turnsPerSecond = .25;
         this.shootRight = shootRight;
         this.hitBoss = false;
@@ -703,10 +703,10 @@ class Axe extends _coordinates.Coordinates {
             this.hitBoss = true;
             _healthbarJs.healthBar.health -= .01;
         }
-        this.x += _consts.AXE_SPEED_X * _timeManager.timeManager.msPerFrame * (this.shootRight ? 1 : -1);
-        this.velocity += _consts.AXE_GRAVITY * _timeManager.timeManager.msPerFrame;
-        this.y += this.velocity * _timeManager.timeManager.msPerFrame;
-        this.angle += 2 * Math.PI * this.turnsPerSecond * (_timeManager.timeManager.now - this.startTime) / 1000;
+        this.x += _constsJs.AXE_SPEED_X * _timeManagerJs.timeManager.msPerFrame * (this.shootRight ? 1 : -1);
+        this.velocity += _constsJs.AXE_GRAVITY * _timeManagerJs.timeManager.msPerFrame;
+        this.y += this.velocity * _timeManagerJs.timeManager.msPerFrame;
+        this.angle += 2 * Math.PI * this.turnsPerSecond * (_timeManagerJs.timeManager.now - this.startTime) / 1000;
         this.draw();
     }
     draw() {
@@ -719,7 +719,112 @@ class Axe extends _coordinates.Coordinates {
 }
 const axes = new Axes();
 
-},{"./canvas.js":"jvBLU","./boss.js":"jiKqO","./healthbar.js":"2uxWm","./audio-manager.js":"gwz40","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./time-manager":"g5oF1","./consts":"i99Dc","./img":"hlH8y","./urls":"8OWkF"}],"jvBLU":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./boss.js":"jiKqO","./healthbar.js":"2uxWm","./time-manager.js":"hIoYz","./audio-manager.js":"gwz40","./consts.js":"2J0f1","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsbsK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "offset", ()=>offset
+);
+// rope
+// export const offset = {
+//     x: 124 * 32,
+//     y: 5 * 32
+// };
+// end
+// export const offset = {
+//     x: 144 * 32,
+//     y: 15 * 32
+// };
+parcelHelpers.export(exports, "Coordinates", ()=>Coordinates
+);
+const offset = {
+    x: 0,
+    y: 0
+};
+class Coordinates {
+    constructor({ x , y , height , width  }){
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+    }
+    get left() {
+        return this.x;
+    }
+    get right() {
+        return this.left + this.width;
+    }
+    get center() {
+        return this.left + 0.5 * this.width;
+    }
+    get yCenter() {
+        return this.top + 0.5 * this.height;
+    }
+    get top() {
+        return this.y;
+    }
+    get bottom() {
+        return this.top + this.height;
+    }
+    get localLeft() {
+        return this.x - offset.x;
+    }
+    get localRight() {
+        return this.localLeft + this.width;
+    }
+    get localTop() {
+        return this.y - offset.y;
+    }
+    get localBottom() {
+        return this.localTop + this.height;
+    }
+    intersectsX({ left , right  }) {
+        return this.right >= left && this.right <= right || this.left >= left && this.right <= right;
+    }
+    intersectsY({ top , bottom  }) {
+        return this.bottom <= bottom && this.bottom >= top || this.top <= bottom && this.top >= top;
+    }
+    intersects({ left , right , top , bottom  }) {
+        return this.intersectsX({
+            left,
+            right
+        }) && this.intersectsY({
+            top,
+            bottom
+        });
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"jvBLU":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "canvas", ()=>canvas
@@ -807,51 +912,21 @@ function setSize() {
 setSize();
 addEventListener('resize', setSize);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"jiKqO":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jiKqO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "boss", ()=>boss
 );
 var _canvasJs = require("./canvas.js");
-var _consts = require("./consts");
-var _coordinates = require("./coordinates");
+var _constsJs = require("./consts.js");
+var _coordinatesJs = require("./coordinates.js");
 var _playerJs = require("./player.js");
 var _phaseManagerJs = require("./phase-manager.js");
 var _lasersJs = require("./lasers.js");
-var _timeManager = require("./time-manager");
-var _img = require("./img");
-var _urls = require("./urls");
-class Boss extends _coordinates.Coordinates {
+var _timeManagerJs = require("./time-manager.js");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
+class Boss extends _coordinatesJs.Coordinates {
     /**
      * Boss pattern
      * If player is X blocks away, do nothing (no changing mode, no acting)
@@ -877,11 +952,11 @@ class Boss extends _coordinates.Coordinates {
             y: 0
         };
         this.images = {
-            attack: _img.img(_urls.ASSET_URLS['../img/boss-attack_204x256.png']),
-            die: _img.img(_urls.ASSET_URLS['../img/boss-die_192x256.png']),
-            lookup: _img.img(_urls.ASSET_URLS['../img/boss-lookup_192x256.png']),
-            move: _img.img(_urls.ASSET_URLS['../img/boss-move_204x256.png']),
-            still: _img.img(_urls.ASSET_URLS['../img/boss-still_204x256.png'])
+            attack: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-attack_204x256.png']),
+            die: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-die_192x256.png']),
+            lookup: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-lookup_192x256.png']),
+            move: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-move_204x256.png']),
+            still: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-still_204x256.png'])
         };
         this.lastAttacked = 0;
         this.recalculateModeAt = 0;
@@ -911,10 +986,10 @@ class Boss extends _coordinates.Coordinates {
         if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.end) return;
         this.draw();
         if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.bossdying) return;
-        if (_playerJs.player.left > _consts.ATTACKZONE_LEFT && _playerJs.player.right < _consts.ATTACKZONE_RIGHT) {
-            if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.ropeburning || _phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.ropefalling || _playerJs.player.bottom <= _consts.RAFTERS_BOTTOM && (_playerJs.player.left < boss.left || _playerJs.player.right > boss.right)) this.mode = 'move';
-            else if (_timeManager.timeManager.now > this.recalculateModeAt) {
-                this.recalculateModeAt = _timeManager.timeManager.now + _consts.BOSS_MAXMODEDURATION * Math.random();
+        if (_playerJs.player.left > _constsJs.ATTACKZONE_LEFT && _playerJs.player.right < _constsJs.ATTACKZONE_RIGHT) {
+            if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.ropeburning || _phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.ropefalling || _playerJs.player.bottom <= _constsJs.RAFTERS_BOTTOM && (_playerJs.player.left < boss.left || _playerJs.player.right > boss.right)) this.mode = 'move';
+            else if (_timeManagerJs.timeManager.now > this.recalculateModeAt) {
+                this.recalculateModeAt = _timeManagerJs.timeManager.now + _constsJs.BOSS_MAXMODEDURATION * Math.random();
                 this.mode = [
                     'move',
                     'attack',
@@ -925,23 +1000,102 @@ class Boss extends _coordinates.Coordinates {
         this.facingRight = _playerJs.player.center > this.center;
         switch(this.mode){
             case 'attack':
-                if (_timeManager.timeManager.now > this.lastAttacked + _consts.BOSS_ATTACKINTERVAL) {
+                if (_timeManagerJs.timeManager.now > this.lastAttacked + _constsJs.BOSS_ATTACKINTERVAL) {
                     _lasersJs.lasers.add({
                         left: this.facingRight ? this.right - 32 : this.left + 16,
                         top: this.top + 108
                     });
-                    this.lastAttacked = _timeManager.timeManager.now;
+                    this.lastAttacked = _timeManagerJs.timeManager.now;
                 }
                 break;
             case 'move':
-                if (this.facingRight && this.right <= _consts.BOSS_MAXRIGHT) this.x += _consts.BOSS_SPEED;
-                else if (!this.facingRight && this.left >= _consts.BOSS_MAXLEFT) this.x -= _consts.BOSS_SPEED;
+                if (this.facingRight && this.right <= _constsJs.BOSS_MAXRIGHT) this.x += _constsJs.BOSS_SPEED;
+                else if (!this.facingRight && this.left >= _constsJs.BOSS_MAXLEFT) this.x -= _constsJs.BOSS_SPEED;
         }
     }
 }
 const boss = new Boss();
 
-},{"./canvas.js":"jvBLU","./player.js":"2k4ca","./phase-manager.js":"73f18","./lasers.js":"awXIj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./time-manager":"g5oF1","./consts":"i99Dc","./img":"hlH8y","./urls":"8OWkF"}],"2k4ca":[function(require,module,exports) {
+},{"./canvas.js":"jvBLU","./consts.js":"2J0f1","./coordinates.js":"dsbsK","./player.js":"2k4ca","./phase-manager.js":"73f18","./lasers.js":"awXIj","./time-manager.js":"hIoYz","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2J0f1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "COURSE_WIDTH", ()=>COURSE_WIDTH
+);
+parcelHelpers.export(exports, "COURSE_HEIGHT", ()=>COURSE_HEIGHT
+);
+parcelHelpers.export(exports, "BOSS_SPEED", ()=>BOSS_SPEED
+);
+parcelHelpers.export(exports, "BOSS_MAXLEFT", ()=>BOSS_MAXLEFT
+);
+parcelHelpers.export(exports, "BOSS_MAXRIGHT", ()=>BOSS_MAXRIGHT
+);
+parcelHelpers.export(exports, "ATTACKZONE_LEFT", ()=>ATTACKZONE_LEFT
+);
+parcelHelpers.export(exports, "ATTACKZONE_RIGHT", ()=>ATTACKZONE_RIGHT
+);
+parcelHelpers.export(exports, "RAFTERS_BOTTOM", ()=>RAFTERS_BOTTOM
+);
+parcelHelpers.export(exports, "BOSS_ATTACKINTERVAL", ()=>BOSS_ATTACKINTERVAL
+);
+parcelHelpers.export(exports, "BOSS_MAXMODEDURATION", ()=>BOSS_MAXMODEDURATION
+);
+parcelHelpers.export(exports, "SHOW_GRIDLINES", ()=>SHOW_GRIDLINES
+);
+parcelHelpers.export(exports, "SHOW_PLATFORMS", ()=>SHOW_PLATFORMS
+);
+parcelHelpers.export(exports, "SHOW_DEBUGMENU", ()=>SHOW_DEBUGMENU
+);
+parcelHelpers.export(exports, "DEBUG_DELAY", ()=>DEBUG_DELAY
+);
+parcelHelpers.export(exports, "PLAYER_GRAVITY", ()=>PLAYER_GRAVITY
+);
+parcelHelpers.export(exports, "WALKING_SPEED", ()=>WALKING_SPEED
+);
+parcelHelpers.export(exports, "JUMP_SPEED", ()=>JUMP_SPEED
+);
+parcelHelpers.export(exports, "CHANDELIER_GRAVITY", ()=>CHANDELIER_GRAVITY
+);
+parcelHelpers.export(exports, "LASER_SPEED", ()=>LASER_SPEED
+);
+parcelHelpers.export(exports, "LASER_DURATION", ()=>LASER_DURATION
+);
+parcelHelpers.export(exports, "AXE_SPEED_Y", ()=>AXE_SPEED_Y
+);
+parcelHelpers.export(exports, "AXE_SPEED_X", ()=>AXE_SPEED_X
+);
+parcelHelpers.export(exports, "AXE_GRAVITY", ()=>AXE_GRAVITY
+);
+parcelHelpers.export(exports, "PLAYER_ATTACKINTERVAL", ()=>PLAYER_ATTACKINTERVAL
+);
+parcelHelpers.export(exports, "VOLUME", ()=>VOLUME
+);
+const COURSE_WIDTH = 5120;
+const COURSE_HEIGHT = 960;
+const BOSS_SPEED = 2;
+const BOSS_MAXLEFT = 3840;
+const BOSS_MAXRIGHT = 4640;
+const ATTACKZONE_LEFT = 3616;
+const ATTACKZONE_RIGHT = 4864;
+const RAFTERS_BOTTOM = 320;
+const BOSS_ATTACKINTERVAL = 150;
+const BOSS_MAXMODEDURATION = 2000;
+const SHOW_GRIDLINES = false;
+const SHOW_PLATFORMS = false;
+const SHOW_DEBUGMENU = false;
+const DEBUG_DELAY = 0;
+const PLAYER_GRAVITY = 2.1 / 900;
+const WALKING_SPEED = 8 / 30;
+const JUMP_SPEED = 25 / 30;
+const CHANDELIER_GRAVITY = .001;
+const LASER_SPEED = 3;
+const LASER_DURATION = 2000;
+const AXE_SPEED_Y = .7;
+const AXE_SPEED_X = 7 / 30;
+const AXE_GRAVITY = .1 / 30;
+const PLAYER_ATTACKINTERVAL = 150;
+const VOLUME = .2;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2k4ca":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Player", ()=>Player
@@ -951,17 +1105,17 @@ parcelHelpers.export(exports, "player", ()=>player
 var _audioManagerJs = require("./audio-manager.js");
 var _axesJs = require("./axes.js");
 var _canvasJs = require("./canvas.js");
-var _consts = require("./consts");
-var _coordinates = require("./coordinates");
+var _constsJs = require("./consts.js");
+var _coordinatesJs = require("./coordinates.js");
 var _flamesJs = require("./flames.js");
 var _bossJs = require("./boss.js");
 var _framesJs = require("./frames.js");
 var _phaseManagerJs = require("./phase-manager.js");
 var _platformsJs = require("./platforms.js");
 var _plumesJs = require("./plumes.js");
-var _timeManager = require("./time-manager");
-var _img = require("./img");
-var _urls = require("./urls");
+var _timeManagerJs = require("./time-manager.js");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
 class KeyManager {
     constructor(){
         this.keys = {
@@ -980,7 +1134,7 @@ class KeyManager {
         };
         const jump = ()=>{
             if (!player.stunned && player.velocity.y === 0) {
-                player.velocity.y -= _consts.JUMP_SPEED;
+                player.velocity.y -= _constsJs.JUMP_SPEED;
                 _audioManagerJs.audioManager.playJumpSound();
             }
         };
@@ -1001,7 +1155,7 @@ class KeyManager {
         const stopLeft = ()=>this.keys.left.pressed = false
         ;
         const attack = ()=>{
-            if (!player.stunned && _timeManager.timeManager.now > player.lastAttack + _consts.PLAYER_ATTACKINTERVAL) player.attack();
+            if (!player.stunned && _timeManagerJs.timeManager.now > player.lastAttack + _constsJs.PLAYER_ATTACKINTERVAL) player.attack();
         };
         addEventListener('keydown', (e)=>{
             if (_phaseManagerJs.phaseManager.phase >= _phaseManagerJs.PHASES.ropeburning) return;
@@ -1038,7 +1192,7 @@ class KeyManager {
     }
 }
 const keys = new KeyManager();
-class Player extends _coordinates.Coordinates {
+class Player extends _coordinatesJs.Coordinates {
     constructor({ x , y  }){
         super({
             x,
@@ -1053,18 +1207,18 @@ class Player extends _coordinates.Coordinates {
             y: 0
         };
         this.images = {
-            fall: _img.img(_urls.ASSET_URLS['../img/player-fall_30x36.png']),
-            hit: _img.img(_urls.ASSET_URLS['../img/player-hit_30x36.png']),
-            jump: _img.img(_urls.ASSET_URLS['../img/player-jump_30x36.png']),
-            still: _img.img(_urls.ASSET_URLS['../img/player-still_30x36.png']),
-            throw: _img.img(_urls.ASSET_URLS['../img/player-throw_30x36.png']),
-            walk1: _img.img(_urls.ASSET_URLS['../img/player-walk-1_30x36.png']),
-            walk2: _img.img(_urls.ASSET_URLS['../img/player-walk-2_30x36.png']),
-            walk3: _img.img(_urls.ASSET_URLS['../img/player-walk-3_30x36.png']),
-            stick: _img.img(_urls.ASSET_URLS['../img/stick_30x6.png']),
-            flame1: _img.img(_urls.ASSET_URLS['../img/flame-1_28x28.png']),
-            flame2: _img.img(_urls.ASSET_URLS['../img/flame-2_28x28.png']),
-            flame3: _img.img(_urls.ASSET_URLS['../img/flame-3_28x28.png'])
+            fall: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-fall_30x36.png']),
+            hit: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-hit_30x36.png']),
+            jump: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-jump_30x36.png']),
+            still: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-still_30x36.png']),
+            throw: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-throw_30x36.png']),
+            walk1: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-walk-1_30x36.png']),
+            walk2: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-walk-2_30x36.png']),
+            walk3: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-walk-3_30x36.png']),
+            stick: _imgJs.img(_urlsJs.ASSET_URLS['../img/stick_30x6.png']),
+            flame1: _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-1_28x28.png']),
+            flame2: _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-2_28x28.png']),
+            flame3: _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-3_28x28.png'])
         };
         this.walkFrames = new _framesJs.Frames({
             fps: 12,
@@ -1086,18 +1240,18 @@ class Player extends _coordinates.Coordinates {
         this.lastHit = 0;
     }
     get flying() {
-        return _timeManager.timeManager.now - this.lastHit < 500;
+        return _timeManagerJs.timeManager.now - this.lastHit < 500;
     }
     get stunned() {
-        return _timeManager.timeManager.now - this.lastHit < 1500;
+        return _timeManagerJs.timeManager.now - this.lastHit < 1500;
     }
     get blinking() {
-        return _timeManager.timeManager.now - this.lastHit < 2000;
+        return _timeManagerJs.timeManager.now - this.lastHit < 2000;
     }
     get nextFrame() {
-        return new _coordinates.Coordinates({
-            x: this.x + this.velocity.x * _timeManager.timeManager.msPerFrame,
-            y: this.y + this.velocity.y * _timeManager.timeManager.msPerFrame,
+        return new _coordinatesJs.Coordinates({
+            x: this.x + this.velocity.x * _timeManagerJs.timeManager.msPerFrame,
+            y: this.y + this.velocity.y * _timeManagerJs.timeManager.msPerFrame,
             width: this.width,
             height: this.height
         });
@@ -1126,12 +1280,12 @@ class Player extends _coordinates.Coordinates {
     hurtByBoss() {
         this.hasFlame = false;
         this.lastHit = new Date().valueOf();
-        this.velocity.x = (this.facingRight ? -1 : 1) * _consts.JUMP_SPEED;
+        this.velocity.x = (this.facingRight ? -1 : 1) * _constsJs.JUMP_SPEED;
     }
     hurtByLaser() {
         this.hasFlame = false;
         if (!this.blinking) {
-            this.velocity.y = -_consts.JUMP_SPEED;
+            this.velocity.y = -_constsJs.JUMP_SPEED;
             this.lastHit = new Date().valueOf();
         }
     }
@@ -1142,7 +1296,7 @@ class Player extends _coordinates.Coordinates {
         };
         let img;
         if (this.flying) img = this.images.hit;
-        else if (_timeManager.timeManager.now - this.lastAttack < 100) img = this.images.throw;
+        else if (_timeManagerJs.timeManager.now - this.lastAttack < 100) img = this.images.throw;
         else if (this.velocity.y > 0) {
             img = this.images.fall;
             torchOffset.x = 1;
@@ -1155,7 +1309,7 @@ class Player extends _coordinates.Coordinates {
             torchOffset.x = 1;
         } else img = this.images.still;
         if (this.blinking) {
-            const sinceHit = _timeManager.timeManager.now - this.lastHit;
+            const sinceHit = _timeManagerJs.timeManager.now - this.lastHit;
             if (sinceHit % 500 > 300) return;
         }
         if (this.facingRight) {
@@ -1177,17 +1331,17 @@ class Player extends _coordinates.Coordinates {
     }
     update() {
         // Update Y velocity
-        this.velocity.y += _consts.PLAYER_GRAVITY * _timeManager.timeManager.msPerFrame;
+        this.velocity.y += _constsJs.PLAYER_GRAVITY * _timeManagerJs.timeManager.msPerFrame;
         // Update X velocity
         if (this.flying) this.velocity.x *= .9;
-        else if (keys.keys.right.pressed) this.velocity.x = _consts.WALKING_SPEED;
-        else if (keys.keys.left.pressed) this.velocity.x = -_consts.WALKING_SPEED;
+        else if (keys.keys.right.pressed) this.velocity.x = _constsJs.WALKING_SPEED;
+        else if (keys.keys.left.pressed) this.velocity.x = -_constsJs.WALKING_SPEED;
         else this.velocity.x = 0;
         _platformsJs.platforms.forEach((platform)=>{
             if (this.right > platform.left && this.left < platform.right || this.nextFrame.right > platform.left && this.nextFrame.left < platform.right) {
                 if (this.bottom <= platform.top && this.nextFrame.bottom >= platform.top) {
                     this.y = platform.y - this.height;
-                    if (this.velocity.y > 0.1 * _timeManager.timeManager.msPerFrame) this.land();
+                    if (this.velocity.y > 0.1 * _timeManagerJs.timeManager.msPerFrame) this.land();
                     this.velocity.y = 0;
                 } else if (this.top >= platform.bottom && this.nextFrame.top <= platform.bottom) {
                     this.y = platform.bottom;
@@ -1205,8 +1359,8 @@ class Player extends _coordinates.Coordinates {
                 }
             }
         });
-        this.x += this.velocity.x * _timeManager.timeManager.msPerFrame;
-        this.y += this.velocity.y * _timeManager.timeManager.msPerFrame;
+        this.x += this.velocity.x * _timeManagerJs.timeManager.msPerFrame;
+        this.y += this.velocity.y * _timeManagerJs.timeManager.msPerFrame;
         if (!this.hasFlame) this.hasFlame = _flamesJs.flames.some((flame)=>this.intersects(flame)
         );
         this.draw();
@@ -1227,15 +1381,15 @@ const player = new Player({
  //     y: 23.5 * 32,
  // });
 
-},{"./audio-manager.js":"gwz40","./axes.js":"6UenL","./canvas.js":"jvBLU","./flames.js":"3rfbG","./boss.js":"jiKqO","./frames.js":"8i0FU","./phase-manager.js":"73f18","./platforms.js":"3eULH","./plumes.js":"dtlaX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./time-manager":"g5oF1","./consts":"i99Dc","./img":"hlH8y","./urls":"8OWkF"}],"gwz40":[function(require,module,exports) {
+},{"./audio-manager.js":"gwz40","./axes.js":"6UenL","./canvas.js":"jvBLU","./consts.js":"2J0f1","./coordinates.js":"dsbsK","./flames.js":"3rfbG","./boss.js":"jiKqO","./frames.js":"8i0FU","./phase-manager.js":"73f18","./platforms.js":"3eULH","./plumes.js":"dtlaX","./time-manager.js":"hIoYz","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gwz40":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "audioManager", ()=>audioManager
 );
-var _urls = require("./urls");
+var _urlsJs = require("./urls.js");
 class EndCreditsMusic {
     constructor(){
-        this.audio = new Audio(_urls.ASSET_URLS['../audio/now-youre-a-hero.mp3']);
+        this.audio = new Audio(_urlsJs.ASSET_URLS['../audio/now-youre-a-hero.mp3']);
         this.startTime = null;
     }
     play() {
@@ -1274,20 +1428,20 @@ class SFX {
 class AudioManager {
     constructor(){
         this.volume = 1;
-        this.tunnelMusic = new Audio(_urls.ASSET_URLS['../audio/tunnel.mp3']);
+        this.tunnelMusic = new Audio(_urlsJs.ASSET_URLS['../audio/tunnel.mp3']);
         this.tunnelMusic.loop = true;
         this.tunnelMusic.volume = this.volume;
-        this.bossFightMusic = new Audio(_urls.ASSET_URLS['../audio/boss-fight.mp3']);
+        this.bossFightMusic = new Audio(_urlsJs.ASSET_URLS['../audio/boss-fight.mp3']);
         this.bossFightMusic.loop = true;
         this.bossFightMusic.volume = this.volume;
-        this.axeThrowSound = new SFX(_urls.ASSET_URLS['../audio/axe-throw.mp3']);
-        this.ropeExplosionSound = new SFX(_urls.ASSET_URLS['../audio/rope-explosion.mp3']);
-        this.bossExplosionSound = new SFX(_urls.ASSET_URLS['../audio/boss-explosion.mp3']);
-        this.doorSlamSound = new SFX(_urls.ASSET_URLS['../audio/door-slam.mp3']);
-        this.laserSound = new SFX(_urls.ASSET_URLS['../audio/eye-laser.mp3']);
-        this.deathSound = new SFX(_urls.ASSET_URLS['../audio/death.mp3']);
-        this.jumpSound = new SFX(_urls.ASSET_URLS['../audio/jump.mp3']);
-        this.landSound = new SFX(_urls.ASSET_URLS['../audio/land.mp3']);
+        this.axeThrowSound = new SFX(_urlsJs.ASSET_URLS['../audio/axe-throw.mp3']);
+        this.ropeExplosionSound = new SFX(_urlsJs.ASSET_URLS['../audio/rope-explosion.mp3']);
+        this.bossExplosionSound = new SFX(_urlsJs.ASSET_URLS['../audio/boss-explosion.mp3']);
+        this.doorSlamSound = new SFX(_urlsJs.ASSET_URLS['../audio/door-slam.mp3']);
+        this.laserSound = new SFX(_urlsJs.ASSET_URLS['../audio/eye-laser.mp3']);
+        this.deathSound = new SFX(_urlsJs.ASSET_URLS['../audio/death.mp3']);
+        this.jumpSound = new SFX(_urlsJs.ASSET_URLS['../audio/jump.mp3']);
+        this.landSound = new SFX(_urlsJs.ASSET_URLS['../audio/land.mp3']);
         this.endCreditsMusic = new EndCreditsMusic();
         this.volume0Btn = document.getElementById('volume-0');
         this.volume1Btn = document.getElementById('volume-1');
@@ -1336,85 +1490,85 @@ class AudioManager {
 }
 const audioManager = new AudioManager();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./urls":"8OWkF"}],"8OWkF":[function(require,module,exports) {
+},{"./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ki4j8":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ASSET_URLS", ()=>ASSET_URLS
 );
 const ASSET_URLS = {
-    '../serviceworker.js': new URL(require("12598dbdb868850f")),
-    './index.js': new URL(require("c7bdd7e9e353a412")),
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("83b7d5f789511615")),
-    '../audio/axe-throw.mp3': new URL(require("ef611db54e3dee4f")),
-    '../audio/boss-explosion.mp3': new URL(require("2fa3e31ddced57e9")),
-    '../audio/boss-fight.mp3': new URL(require("eb4a90b4e9500517")),
-    '../audio/death.mp3': new URL(require("938761b684182af1")),
-    '../audio/door-slam.mp3': new URL(require("4283bdfb26d29b1e")),
-    '../audio/eye-laser.mp3': new URL(require("92cb31807985c857")),
-    '../audio/jump.mp3': new URL(require("e9371211ecb03429")),
-    '../audio/land.mp3': new URL(require("d52aff1d687cf8ee")),
-    '../audio/now-youre-a-hero.mp3': new URL(require("a2279bbd83b0e70a")),
-    '../audio/rope-explosion.mp3': new URL(require("4a5a8b662d1f6f09")),
-    '../audio/tunnel.mp3': new URL(require("7271d57ce7da033f")),
-    '../img/axe_18x18.png': new URL(require("9bc6fb652764c13a")),
-    '../img/axe_999_64x64.svg': new URL(require("d7b83b70e6592bdb")),
-    '../img/back-door_32x64.png': new URL(require("72de858084fa02be")),
-    '../img/boss-attack_204x256.png': new URL(require("cd5f32171301a805")),
-    '../img/boss-die_192x256.png': new URL(require("1345a573c343a341")),
-    '../img/boss-lookup_192x256.png': new URL(require("82b00d5f6456e9ad")),
-    '../img/boss-move_204x256.png': new URL(require("2c8ff0e0c05efc28")),
-    '../img/boss-still_204x256.png': new URL(require("3f98b60277fd7b66")),
-    '../img/chandelier_160x96.png': new URL(require("98fee3b149974ca9")),
-    '../img/credits-1_200x200.png': new URL(require("edf6e79e9b4882e3")),
-    '../img/credits-2_200x200.png': new URL(require("e503115f39badf28")),
-    '../img/credits-3_200x200.png': new URL(require("7f8a1d9696ce940a")),
-    '../img/credits-4_200x200.png': new URL(require("c487a497b1efa3bc")),
-    '../img/credits-bg_704x512.png': new URL(require("cefe40fa15010f90")),
-    '../img/explosion-1_36x36.png': new URL(require("ad14f91c823e549a")),
-    '../img/explosion-2_36x36.png': new URL(require("9623141b49264b9f")),
-    '../img/explosion-3_36x36.png': new URL(require("a560e9f774468634")),
-    '../img/explosion-4_36x36.png': new URL(require("d61b6ba086adcc2b")),
-    '../img/explosion-5_36x36.png': new URL(require("fc6ff2e9d0776084")),
-    '../img/explosion-6_36x36.png': new URL(require("49d49d949b4fa210")),
-    '../img/explosion-7_36x36.png': new URL(require("ddcd0c58537b16bf")),
-    '../img/flame-sprites.png': new URL(require("b7083691210ba588")),
-    '../img/flame-1_28x28.png': new URL(require("a80917f444244687")),
-    '../img/flame-2_28x28.png': new URL(require("260f2762902d877a")),
-    '../img/flame-3_28x28.png': new URL(require("ab5192c0f2f9ef49")),
-    '../img/info-circle_999_64x64.svg': new URL(require("27ad87d87fda90ea")),
-    '../img/laser-1_20x20.png': new URL(require("b533e5384b54f8c1")),
-    '../img/laser-2_20x20.png': new URL(require("b4059c2e34ae5e2f")),
-    '../img/laser-3_20x20.png': new URL(require("c805683a32a0f7b2")),
-    '../img/laser-4_20x20.png': new URL(require("925efa060855a93f")),
-    '../img/laser-5_20x20.png': new URL(require("e2cc0bb7680d12f6")),
-    '../img/laser-6_20x20.png': new URL(require("88011022ea06ee33")),
-    '../img/laser-7_20x20.png': new URL(require("38f8d45e24d12ee2")),
-    '../img/page-bg_32x32.png': new URL(require("41c0cfc1fed69d12")),
-    '../img/player-fall_30x36.png': new URL(require("34d8afbdb4ac3d5e")),
-    '../img/player-hit_30x36.png': new URL(require("12cebfce04fdf60")),
-    '../img/player-jump_30x36.png': new URL(require("33ca6d2c4e9cfda4")),
-    '../img/player-still_30x36.png': new URL(require("87640417fca58364")),
-    '../img/player-throw_30x36.png': new URL(require("9d63b073ae256418")),
-    '../img/player-walk-1_30x36.png': new URL(require("52bab78fba5bf111")),
-    '../img/player-walk-2_30x36.png': new URL(require("3601a3015750be48")),
-    '../img/player-walk-3_30x36.png': new URL(require("d7b5753638ee0521")),
-    '../img/plume-1_43x21.png': new URL(require("c5ab14b1cde9566e")),
-    '../img/plume-2_43x21.png': new URL(require("d3e05fe56561de51")),
-    '../img/plume-3_43x21.png': new URL(require("95c4d7c727d87042")),
-    '../img/plume-4_43x21.png': new URL(require("be13a19c622683aa")),
-    '../img/plume-5_43x21.png': new URL(require("d4c3c2c2e7dc31af")),
-    '../img/plume-6_43x21.png': new URL(require("789a9897de5bf741")),
-    '../img/rope_8x192.png': new URL(require("97a322445b6dc7c3")),
-    '../img/stick_30x6.png': new URL(require("34041894fe39b81a")),
-    '../img/up-arrow_999_64x64.svg': new URL(require("c235fec3d0587fcb")),
-    '../img/volume-0_999_64x64.svg': new URL(require("48adc2dd52cfcae4")),
-    '../img/volume-1_999_64x64.svg': new URL(require("a5d9b054ef12d754")),
-    '../img/bg.png': new URL(require("ad23dad22f63b285")),
-    '../img/rope.png': new URL(require("82ff9f0d479476e6"))
+    '../serviceworker.js': new URL(require("3c36f07cce4de438")),
+    './index.ts': new URL(require("42a03ed5dacf8a2c")),
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("adad38975974dcd7")),
+    '../audio/axe-throw.mp3': new URL(require("276eccf37794b08")),
+    '../audio/boss-explosion.mp3': new URL(require("b475c8cab88c5336")),
+    '../audio/boss-fight.mp3': new URL(require("4ad82c4e8be05464")),
+    '../audio/death.mp3': new URL(require("ca8b1dae55606be9")),
+    '../audio/door-slam.mp3': new URL(require("d9f1df6bcc3dc4ee")),
+    '../audio/eye-laser.mp3': new URL(require("3ba879e52243017c")),
+    '../audio/jump.mp3': new URL(require("ca43fe38a10d6b13")),
+    '../audio/land.mp3': new URL(require("e18be15545078789")),
+    '../audio/now-youre-a-hero.mp3': new URL(require("97b8d787b92b4c09")),
+    '../audio/rope-explosion.mp3': new URL(require("5d020da195c20bf2")),
+    '../audio/tunnel.mp3': new URL(require("b750a357c60df1b5")),
+    '../img/axe_18x18.png': new URL(require("87247644b3a7a88a")),
+    '../img/axe_999_64x64.svg': new URL(require("396b5b11e5c86fea")),
+    '../img/back-door_32x64.png': new URL(require("fb9f2690d40a8bf9")),
+    '../img/boss-attack_204x256.png': new URL(require("c65245d1ee827c71")),
+    '../img/boss-die_192x256.png': new URL(require("42a72b7755c6498b")),
+    '../img/boss-lookup_192x256.png': new URL(require("fde782d934ea79d3")),
+    '../img/boss-move_204x256.png': new URL(require("48dbb5d316bd3988")),
+    '../img/boss-still_204x256.png': new URL(require("e6ecf7be898d2b94")),
+    '../img/chandelier_160x96.png': new URL(require("805595210ad79098")),
+    '../img/credits-1_200x200.png': new URL(require("41920263ad6e2773")),
+    '../img/credits-2_200x200.png': new URL(require("2e8ed2795a83ea16")),
+    '../img/credits-3_200x200.png': new URL(require("579617441f5a8e6f")),
+    '../img/credits-4_200x200.png': new URL(require("1ec052dc3afc3103")),
+    '../img/credits-bg_704x512.png': new URL(require("1a89809d5ed07023")),
+    '../img/explosion-1_36x36.png': new URL(require("1d5d4a24793eeb95")),
+    '../img/explosion-2_36x36.png': new URL(require("c31caa2b2ccf5570")),
+    '../img/explosion-3_36x36.png': new URL(require("1635172a4eed68a9")),
+    '../img/explosion-4_36x36.png': new URL(require("e87fe54be77bdc4a")),
+    '../img/explosion-5_36x36.png': new URL(require("243d99757e4dbaf6")),
+    '../img/explosion-6_36x36.png': new URL(require("da219837b4e73c6a")),
+    '../img/explosion-7_36x36.png': new URL(require("e3026c998b856249")),
+    '../img/flame-sprites.png': new URL(require("cd5b90f58ea04ec6")),
+    '../img/flame-1_28x28.png': new URL(require("6b12c379e459f5a0")),
+    '../img/flame-2_28x28.png': new URL(require("be57e3f43ae4dbfc")),
+    '../img/flame-3_28x28.png': new URL(require("d6d66d7261099ab")),
+    '../img/info-circle_999_64x64.svg': new URL(require("f8ab4caabcf828eb")),
+    '../img/laser-1_20x20.png': new URL(require("cb26072e90bd692d")),
+    '../img/laser-2_20x20.png': new URL(require("e7da8aa9ff48c6c8")),
+    '../img/laser-3_20x20.png': new URL(require("76b090dd0ea6d021")),
+    '../img/laser-4_20x20.png': new URL(require("5b694e3994ab3a5a")),
+    '../img/laser-5_20x20.png': new URL(require("7e9066c1d1279d67")),
+    '../img/laser-6_20x20.png': new URL(require("f9af3119980a6329")),
+    '../img/laser-7_20x20.png': new URL(require("dbbe02123dfdbca")),
+    '../img/page-bg_32x32.png': new URL(require("c58df0bb569b9e32")),
+    '../img/player-fall_30x36.png': new URL(require("7cfd066581934182")),
+    '../img/player-hit_30x36.png': new URL(require("488d8d31375c1399")),
+    '../img/player-jump_30x36.png': new URL(require("a294ccf09816f08f")),
+    '../img/player-still_30x36.png': new URL(require("ef6bc6fd035318fb")),
+    '../img/player-throw_30x36.png': new URL(require("cddd9b061f39a436")),
+    '../img/player-walk-1_30x36.png': new URL(require("86a8c63c23fd4e3f")),
+    '../img/player-walk-2_30x36.png': new URL(require("8d22c4e584b4e818")),
+    '../img/player-walk-3_30x36.png': new URL(require("5e97299569052fb0")),
+    '../img/plume-1_43x21.png': new URL(require("8a4a5b8124a869fa")),
+    '../img/plume-2_43x21.png': new URL(require("c200f5e10f1c64f8")),
+    '../img/plume-3_43x21.png': new URL(require("aebcdecc266054d0")),
+    '../img/plume-4_43x21.png': new URL(require("8d67c17c93a32004")),
+    '../img/plume-5_43x21.png': new URL(require("961acaa10c40a510")),
+    '../img/plume-6_43x21.png': new URL(require("1ceb93fc27896ee2")),
+    '../img/rope_8x192.png': new URL(require("c046d30d4a87e8dd")),
+    '../img/stick_30x6.png': new URL(require("248a638bf4e0a107")),
+    '../img/up-arrow_999_64x64.svg': new URL(require("d33d0c3e7412bca6")),
+    '../img/volume-0_999_64x64.svg': new URL(require("ee865d0e87d56a6d")),
+    '../img/volume-1_999_64x64.svg': new URL(require("3ed0256a573b1e54")),
+    '../img/bg.png': new URL(require("8fe8bcf6ef889bc0")),
+    '../img/rope.png': new URL(require("ba24449b1d4964c3"))
 };
 
-},{"12598dbdb868850f":"fVsAJ","c7bdd7e9e353a412":"cEfQD","83b7d5f789511615":"eFyOJ","ef611db54e3dee4f":"2PYvG","2fa3e31ddced57e9":"2hS1H","eb4a90b4e9500517":"hrmAA","938761b684182af1":"hCvUQ","4283bdfb26d29b1e":"jmXnA","92cb31807985c857":"5boR3","e9371211ecb03429":"gEeCO","d52aff1d687cf8ee":"3Fhbu","a2279bbd83b0e70a":"c4jy3","4a5a8b662d1f6f09":"fIfQd","7271d57ce7da033f":"cmV21","9bc6fb652764c13a":"gub7G","d7b83b70e6592bdb":"7twAb","72de858084fa02be":"farOR","cd5f32171301a805":"8G9QR","1345a573c343a341":"bCAED","82b00d5f6456e9ad":"flmvw","2c8ff0e0c05efc28":"c0ycc","3f98b60277fd7b66":"gie9b","98fee3b149974ca9":"dxuCJ","edf6e79e9b4882e3":"ldYpu","e503115f39badf28":"d0ONg","7f8a1d9696ce940a":"4iK09","c487a497b1efa3bc":"7fmxt","cefe40fa15010f90":"15Xb1","ad14f91c823e549a":"kcYW9","9623141b49264b9f":"cSM1b","a560e9f774468634":"bRLiT","d61b6ba086adcc2b":"6crv3","fc6ff2e9d0776084":"3pC9u","49d49d949b4fa210":"20zdb","ddcd0c58537b16bf":"dTH1K","b7083691210ba588":"aQEIT","a80917f444244687":"f4IsI","260f2762902d877a":"cmLwM","ab5192c0f2f9ef49":"ljXgl","27ad87d87fda90ea":"f5GvH","b533e5384b54f8c1":"iDvyl","b4059c2e34ae5e2f":"2gRa0","c805683a32a0f7b2":"jmr4e","925efa060855a93f":"hJ66J","e2cc0bb7680d12f6":"6ThyT","88011022ea06ee33":"gEPuq","38f8d45e24d12ee2":"14WpW","41c0cfc1fed69d12":"dz67s","34d8afbdb4ac3d5e":"7hirY","12cebfce04fdf60":"6q5sP","33ca6d2c4e9cfda4":"eYjUk","87640417fca58364":"104Or","9d63b073ae256418":"l6cYx","52bab78fba5bf111":"knsJ9","3601a3015750be48":"14p6I","d7b5753638ee0521":"iRipv","c5ab14b1cde9566e":"a3S7g","d3e05fe56561de51":"fSkQh","95c4d7c727d87042":"9J5B4","be13a19c622683aa":"5TMXs","d4c3c2c2e7dc31af":"3lvzo","789a9897de5bf741":"jfK8j","97a322445b6dc7c3":"Jeeep","34041894fe39b81a":"3h3t5","c235fec3d0587fcb":"8UMcS","48adc2dd52cfcae4":"8LufU","a5d9b054ef12d754":"4lpFX","ad23dad22f63b285":"9Z46f","82ff9f0d479476e6":"5JGwJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fVsAJ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "serviceworker.968110bd.js" + "?" + Date.now();
+},{"3c36f07cce4de438":"qbaWg","adad38975974dcd7":"eFyOJ","276eccf37794b08":"kAsHj","b475c8cab88c5336":"lpxuW","4ad82c4e8be05464":"76ebO","ca8b1dae55606be9":"dk9wx","d9f1df6bcc3dc4ee":"76m8c","3ba879e52243017c":"haFPw","ca43fe38a10d6b13":"aWElV","e18be15545078789":"679cf","97b8d787b92b4c09":"H8jfG","5d020da195c20bf2":"dc19g","b750a357c60df1b5":"6d2M0","87247644b3a7a88a":"d1Eeb","396b5b11e5c86fea":"l99iv","fb9f2690d40a8bf9":"ljW8M","c65245d1ee827c71":"aAoWi","42a72b7755c6498b":"4y7WK","fde782d934ea79d3":"l0ckg","48dbb5d316bd3988":"cSj19","e6ecf7be898d2b94":"bl1r3","805595210ad79098":"8mEm1","41920263ad6e2773":"jOEyT","2e8ed2795a83ea16":"aTL8s","579617441f5a8e6f":"4EyJZ","1ec052dc3afc3103":"Lu2C7","1a89809d5ed07023":"MKRDx","1d5d4a24793eeb95":"02E0J","c31caa2b2ccf5570":"4o4gr","1635172a4eed68a9":"dhYx5","e87fe54be77bdc4a":"gSy8u","243d99757e4dbaf6":"9kV93","da219837b4e73c6a":"6A6cc","e3026c998b856249":"aFWyU","cd5b90f58ea04ec6":"17B85","6b12c379e459f5a0":"lvyCo","be57e3f43ae4dbfc":"iyTTP","d6d66d7261099ab":"gJVjl","f8ab4caabcf828eb":"jEmbQ","cb26072e90bd692d":"88jC8","e7da8aa9ff48c6c8":"deODV","76b090dd0ea6d021":"1LerJ","5b694e3994ab3a5a":"3docn","7e9066c1d1279d67":"6NxbV","f9af3119980a6329":"7j39L","dbbe02123dfdbca":"84d66","c58df0bb569b9e32":"bWW0T","7cfd066581934182":"ktE5y","488d8d31375c1399":"9IVgJ","a294ccf09816f08f":"6ZGqK","ef6bc6fd035318fb":"91uDY","cddd9b061f39a436":"dAfA1","86a8c63c23fd4e3f":"d9jz3","8d22c4e584b4e818":"4lWNg","5e97299569052fb0":"1CsM1","8a4a5b8124a869fa":"aGiYb","c200f5e10f1c64f8":"5WLYe","aebcdecc266054d0":"hz1tx","8d67c17c93a32004":"hJVF7","961acaa10c40a510":"hBZDf","1ceb93fc27896ee2":"6vJn7","c046d30d4a87e8dd":"60uEu","248a638bf4e0a107":"f2y9P","d33d0c3e7412bca6":"5GVQf","ee865d0e87d56a6d":"5YJBi","3ed0256a573b1e54":"2hfG2","8fe8bcf6ef889bc0":"1OCW8","ba24449b1d4964c3":"3HriH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","42a03ed5dacf8a2c":"1SPBh"}],"qbaWg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "serviceworker.968110bd.js" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
@@ -1450,209 +1604,209 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"cEfQD":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "yhtbtr.3542e8cb.js" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"eFyOJ":[function(require,module,exports) {
+},{}],"eFyOJ":[function(require,module,exports) {
 module.exports = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 
-},{}],"2PYvG":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "axe-throw.19644f0b.mp3" + "?" + Date.now();
+},{}],"kAsHj":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "axe-throw.19644f0b.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2hS1H":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-explosion.8d9a9616.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"lpxuW":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-explosion.8d9a9616.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hrmAA":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-fight.5c4ea7da.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"76ebO":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-fight.5c4ea7da.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hCvUQ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "death.3b262421.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"dk9wx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "death.3b262421.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jmXnA":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "door-slam.28921a26.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"76m8c":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "door-slam.28921a26.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"5boR3":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "eye-laser.9344eca2.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"haFPw":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "eye-laser.9344eca2.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"gEeCO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "jump.b63de5dd.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"aWElV":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "jump.b63de5dd.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3Fhbu":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "land.ca0e75c7.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"679cf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "land.ca0e75c7.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"c4jy3":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "now-youre-a-hero.3c44a24a.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"H8jfG":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "now-youre-a-hero.3c44a24a.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"fIfQd":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "rope-explosion.f840ef73.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"dc19g":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "rope-explosion.f840ef73.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"cmV21":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "tunnel.ebe09e95.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"6d2M0":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "tunnel.ebe09e95.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"gub7G":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "axe_18x18.fcdf3570.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"d1Eeb":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "axe_18x18.fcdf3570.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7twAb":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "axe_999_64x64.099a5152.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"l99iv":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "axe_999_64x64.099a5152.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"farOR":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "back-door_32x64.7a09db5e.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"ljW8M":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "back-door_32x64.7a09db5e.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8G9QR":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-attack_204x256.bcdcdfd7.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"aAoWi":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-attack_204x256.bcdcdfd7.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"bCAED":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-die_192x256.6c158fec.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"4y7WK":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-die_192x256.6c158fec.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"flmvw":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-lookup_192x256.9a6acfc8.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"l0ckg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-lookup_192x256.9a6acfc8.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"c0ycc":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-move_204x256.080c3954.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"cSj19":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-move_204x256.080c3954.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"gie9b":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "boss-still_204x256.4921a578.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"bl1r3":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "boss-still_204x256.4921a578.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"dxuCJ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "chandelier_160x96.dd8ddea5.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"8mEm1":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "chandelier_160x96.dd8ddea5.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"ldYpu":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "credits-1_200x200.92006a72.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"jOEyT":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "credits-1_200x200.92006a72.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"d0ONg":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "credits-2_200x200.cf3cd7ca.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"aTL8s":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "credits-2_200x200.cf3cd7ca.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"4iK09":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "credits-3_200x200.7e245838.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"4EyJZ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "credits-3_200x200.7e245838.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7fmxt":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "credits-4_200x200.5899dcb1.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"Lu2C7":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "credits-4_200x200.5899dcb1.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"15Xb1":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "credits-bg_704x512.1658d947.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"MKRDx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "credits-bg_704x512.1658d947.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"kcYW9":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-1_36x36.7b1a0e48.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"02E0J":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-1_36x36.7b1a0e48.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"cSM1b":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-2_36x36.579838ec.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"4o4gr":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-2_36x36.579838ec.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"bRLiT":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-3_36x36.9891171f.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"dhYx5":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-3_36x36.9891171f.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"6crv3":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-4_36x36.3547290d.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"gSy8u":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-4_36x36.3547290d.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3pC9u":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-5_36x36.ab5d876f.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"9kV93":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-5_36x36.ab5d876f.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"20zdb":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-6_36x36.51bf4011.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"6A6cc":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-6_36x36.51bf4011.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"dTH1K":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "explosion-7_36x36.0264933b.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"aFWyU":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "explosion-7_36x36.0264933b.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"aQEIT":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "flame-sprites.f91fe31a.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"17B85":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "flame-sprites.f91fe31a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"f4IsI":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "flame-1_28x28.3249f52f.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"lvyCo":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "flame-1_28x28.3249f52f.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"cmLwM":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "flame-2_28x28.840ce506.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"iyTTP":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "flame-2_28x28.840ce506.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"ljXgl":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "flame-3_28x28.fbe9e0aa.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"gJVjl":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "flame-3_28x28.fbe9e0aa.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"f5GvH":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "info-circle_999_64x64.77d50b73.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"jEmbQ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "info-circle_999_64x64.77d50b73.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"iDvyl":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-1_20x20.2aca8a4c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"88jC8":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-1_20x20.2aca8a4c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2gRa0":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-2_20x20.0e2f2874.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"deODV":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-2_20x20.0e2f2874.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jmr4e":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-3_20x20.c66db600.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"1LerJ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-3_20x20.c66db600.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hJ66J":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-4_20x20.28267968.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"3docn":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-4_20x20.28267968.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"6ThyT":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-5_20x20.c09879b7.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"6NxbV":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-5_20x20.c09879b7.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"gEPuq":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-6_20x20.1b42d5a7.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"7j39L":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-6_20x20.1b42d5a7.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"14WpW":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "laser-7_20x20.143a3c1d.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"84d66":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "laser-7_20x20.143a3c1d.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"dz67s":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "page-bg_32x32.79edeaeb.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"bWW0T":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "page-bg_32x32.79edeaeb.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7hirY":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-fall_30x36.f6a65da8.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"ktE5y":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-fall_30x36.f6a65da8.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"6q5sP":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-hit_30x36.6fa2c063.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"9IVgJ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-hit_30x36.6fa2c063.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"eYjUk":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-jump_30x36.4ae24b1c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"6ZGqK":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-jump_30x36.4ae24b1c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"104Or":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-still_30x36.70e3cb1c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"91uDY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-still_30x36.70e3cb1c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"l6cYx":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-throw_30x36.271ee8d0.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"dAfA1":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-throw_30x36.271ee8d0.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"knsJ9":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-walk-1_30x36.634aa84e.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"d9jz3":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-walk-1_30x36.634aa84e.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"14p6I":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-walk-2_30x36.e47fb20e.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"4lWNg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-walk-2_30x36.e47fb20e.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"iRipv":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "player-walk-3_30x36.2dd7f43a.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"1CsM1":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "player-walk-3_30x36.2dd7f43a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"a3S7g":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "plume-1_43x21.a62df3fb.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"aGiYb":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "plume-1_43x21.a62df3fb.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"fSkQh":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "plume-2_43x21.34a58c38.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"5WLYe":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "plume-2_43x21.34a58c38.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"9J5B4":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "plume-3_43x21.b02289c3.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"hz1tx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "plume-3_43x21.b02289c3.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"5TMXs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "plume-4_43x21.b3d68f96.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"hJVF7":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "plume-4_43x21.b3d68f96.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3lvzo":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "plume-5_43x21.fd37d6ec.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"hBZDf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "plume-5_43x21.fd37d6ec.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jfK8j":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "plume-6_43x21.bc80017a.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"6vJn7":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "plume-6_43x21.bc80017a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"Jeeep":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "rope_8x192.b79637bf.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"60uEu":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "rope_8x192.b79637bf.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3h3t5":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "stick_30x6.684425d4.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"f2y9P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "stick_30x6.684425d4.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8UMcS":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "up-arrow_999_64x64.d68cd5b8.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"5GVQf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "up-arrow_999_64x64.d68cd5b8.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8LufU":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "volume-0_999_64x64.7e4bfc2d.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"5YJBi":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "volume-0_999_64x64.7e4bfc2d.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"4lpFX":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "volume-1_999_64x64.81168351.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"2hfG2":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "volume-1_999_64x64.81168351.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"9Z46f":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "bg.6c772103.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"1OCW8":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "bg.6c772103.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"5JGwJ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('cjmcd') + "rope.442217df.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"lgJ39"}],"3HriH":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "rope.442217df.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"1SPBh":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "yhtbtr.799891e4.js" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"3rfbG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1661,12 +1815,12 @@ parcelHelpers.export(exports, "Flame", ()=>Flame
 );
 parcelHelpers.export(exports, "flames", ()=>flames
 );
-var _coordinates = require("./coordinates");
-var _timeManager = require("./time-manager");
+var _coordinatesJs = require("./coordinates.js");
+var _timeManagerJs = require("./time-manager.js");
 var _canvasJs = require("./canvas.js");
-var _img = require("./img");
-var _urls = require("./urls");
-class Flame extends _coordinates.Coordinates {
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
+class Flame extends _coordinatesJs.Coordinates {
     constructor({ left , top  }){
         super({
             x: left,
@@ -1674,16 +1828,16 @@ class Flame extends _coordinates.Coordinates {
             width: 32,
             height: 64
         });
-        this.img = _img.img(_urls.ASSET_URLS['../img/flame-sprites.png']);
+        this.img = _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-sprites.png']);
         this.framesPerSecond = 10;
         this.frameCount = 3;
         this.frameIndex = 0;
         this.frameUpdated = new Date().valueOf();
     }
     draw() {
-        if (_timeManager.timeManager.now - this.frameUpdated > 1000 / this.framesPerSecond) {
+        if (_timeManagerJs.timeManager.now - this.frameUpdated > 1000 / this.framesPerSecond) {
             this.frameIndex = (this.frameIndex + 1) % this.frameCount;
-            this.frameUpdated = _timeManager.timeManager.now;
+            this.frameUpdated = _timeManagerJs.timeManager.now;
         }
         const sx = this.frameIndex * 32;
         const sy = 0;
@@ -1723,72 +1877,7 @@ const flames = [
     }), 
 ];
 
-},{"./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./time-manager":"g5oF1","./img":"hlH8y","./urls":"8OWkF"}],"96akj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "offset", ()=>offset
-);
-parcelHelpers.export(exports, "Coordinates", ()=>Coordinates
-);
-const offset = {
-    x: 0,
-    y: 0
-};
-class Coordinates {
-    constructor({ x , y , height , width  }){
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-    }
-    get left() {
-        return this.x;
-    }
-    get right() {
-        return this.left + this.width;
-    }
-    get center() {
-        return this.left + 0.5 * this.width;
-    }
-    get yCenter() {
-        return this.top + 0.5 * this.height;
-    }
-    get top() {
-        return this.y;
-    }
-    get bottom() {
-        return this.top + this.height;
-    }
-    get localLeft() {
-        return this.x - offset.x;
-    }
-    get localRight() {
-        return this.localLeft + this.width;
-    }
-    get localTop() {
-        return this.y - offset.y;
-    }
-    get localBottom() {
-        return this.localTop + this.height;
-    }
-    intersectsX({ left , right  }) {
-        return this.right >= left && this.right <= right || this.left >= left && this.right <= right;
-    }
-    intersectsY({ top , bottom  }) {
-        return this.bottom <= bottom && this.bottom >= top || this.top <= bottom && this.top >= top;
-    }
-    intersects({ left , right , top , bottom  }) {
-        return this.intersectsX({
-            left,
-            right
-        }) && this.intersectsY({
-            top,
-            bottom
-        });
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"g5oF1":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./time-manager.js":"hIoYz","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hIoYz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "timeManager", ()=>timeManager
@@ -1798,7 +1887,7 @@ const timeManager = {
     msPerFrame: 1000 / 60
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hlH8y":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"durFA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "img", ()=>img
@@ -1842,13 +1931,13 @@ var _healthbarJs = require("./healthbar.js");
 var _platformsJs = require("./platforms.js");
 var _explosionsJs = require("./explosions.js");
 var _canvasJs = require("./canvas.js");
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _chandelierJs = require("./chandelier.js");
 var _ropeJs = require("./rope.js");
 var _audioManagerJs = require("./audio-manager.js");
 var _buttonManagerJs = require("./button-manager.js");
-var _img = require("./img");
-var _urls = require("./urls");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
 async function wait(ms) {
     return new Promise((resolve)=>setTimeout(resolve, ms)
     );
@@ -1865,7 +1954,7 @@ const PHASES = {
 };
 class PhaseManager {
     constructor(){
-        this.backDoorImage = _img.img(_urls.ASSET_URLS['../img/back-door_32x64.png']);
+        this.backDoorImage = _imgJs.img(_urlsJs.ASSET_URLS['../img/back-door_32x64.png']);
         this.showBackDoor = false;
         this.phase = PHASES.clicktostart;
     }
@@ -2157,12 +2246,12 @@ class PhaseManager {
         _audioManagerJs.audioManager.endCreditsMusic.play();
     }
     drawBackDoor() {
-        _canvasJs.c.drawImage(this.backDoorImage, 3424 - _coordinates.offset.x, 800 - _coordinates.offset.y, 32, 64);
+        _canvasJs.c.drawImage(this.backDoorImage, 3424 - _coordinatesJs.offset.x, 800 - _coordinatesJs.offset.y, 32, 64);
     }
 }
 const phaseManager = new PhaseManager();
 
-},{"./healthbar.js":"2uxWm","./platforms.js":"3eULH","./explosions.js":"ensJg","./canvas.js":"jvBLU","./chandelier.js":"2oThl","./rope.js":"OzOSK","./audio-manager.js":"gwz40","./button-manager.js":"jLViv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./img":"hlH8y","./urls":"8OWkF"}],"2uxWm":[function(require,module,exports) {
+},{"./healthbar.js":"2uxWm","./platforms.js":"3eULH","./explosions.js":"ensJg","./canvas.js":"jvBLU","./coordinates.js":"dsbsK","./chandelier.js":"2oThl","./rope.js":"OzOSK","./audio-manager.js":"gwz40","./button-manager.js":"jLViv","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2uxWm":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "healthBar", ()=>healthBar
@@ -2208,9 +2297,9 @@ parcelHelpers.export(exports, "LeftPlatform", ()=>LeftPlatform
 );
 parcelHelpers.export(exports, "platforms", ()=>platforms
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _canvasJs = require("./canvas.js");
-class Platform extends _coordinates.Coordinates {
+class Platform extends _coordinatesJs.Coordinates {
     constructor({ left , top , right , bottom  }){
         super({
             x: left,
@@ -2766,24 +2855,24 @@ const platforms = [
     })
 ];
 
-},{"./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj"}],"ensJg":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ensJg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "explosions", ()=>explosions
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _canvasJs = require("./canvas.js");
 var _framesJs = require("./frames.js");
-var _img = require("./img");
-var _urls = require("./urls");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
 const explosionImages = [
-    _img.img(_urls.ASSET_URLS['../img/explosion-1_36x36.png']),
-    _img.img(_urls.ASSET_URLS['../img/explosion-2_36x36.png']),
-    _img.img(_urls.ASSET_URLS['../img/explosion-3_36x36.png']),
-    _img.img(_urls.ASSET_URLS['../img/explosion-4_36x36.png']),
-    _img.img(_urls.ASSET_URLS['../img/explosion-5_36x36.png']),
-    _img.img(_urls.ASSET_URLS['../img/explosion-6_36x36.png']),
-    _img.img(_urls.ASSET_URLS['../img/explosion-7_36x36.png']), 
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-1_36x36.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-2_36x36.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-3_36x36.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-4_36x36.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-5_36x36.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-6_36x36.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-7_36x36.png']), 
 ];
 class Explosions {
     constructor(){
@@ -2805,7 +2894,7 @@ class Explosions {
         );
     }
 }
-class Explosion extends _coordinates.Coordinates {
+class Explosion extends _coordinatesJs.Coordinates {
     constructor({ left , top  }){
         super({
             x: left,
@@ -2824,20 +2913,20 @@ class Explosion extends _coordinates.Coordinates {
 }
 const explosions = new Explosions();
 
-},{"./canvas.js":"jvBLU","./frames.js":"8i0FU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./img":"hlH8y","./urls":"8OWkF"}],"2oThl":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./frames.js":"8i0FU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2oThl":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "chandelier", ()=>chandelier
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _canvasJs = require("./canvas.js");
-var _consts = require("./consts");
-var _timeManager = require("./time-manager");
+var _constsJs = require("./consts.js");
+var _timeManagerJs = require("./time-manager.js");
 var _phaseManagerJs = require("./phase-manager.js");
 var _bossJs = require("./boss.js");
-var _img = require("./img");
-var _urls = require("./urls");
-class Chandelier extends _coordinates.Coordinates {
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
+class Chandelier extends _coordinatesJs.Coordinates {
     constructor(){
         super({
             x: 4160,
@@ -2845,7 +2934,7 @@ class Chandelier extends _coordinates.Coordinates {
             width: 160,
             height: 96
         });
-        this.img = _img.img(_urls.ASSET_URLS['../img/chandelier_160x96.png']);
+        this.img = _imgJs.img(_urlsJs.ASSET_URLS['../img/chandelier_160x96.png']);
         this.show = true;
         this.dropped = false;
         this.velocity = {
@@ -2858,8 +2947,8 @@ class Chandelier extends _coordinates.Coordinates {
     update() {
         if (!this.show) return;
         if (this.dropped) {
-            this.velocity.y += _consts.CHANDELIER_GRAVITY * _timeManager.timeManager.msPerFrame;
-            this.y += this.velocity.y * _timeManager.timeManager.msPerFrame;
+            this.velocity.y += _constsJs.CHANDELIER_GRAVITY * _timeManagerJs.timeManager.msPerFrame;
+            this.y += this.velocity.y * _timeManagerJs.timeManager.msPerFrame;
             if (this.yCenter > _bossJs.boss.yCenter) _phaseManagerJs.phaseManager.startBossDyingPhase();
         }
         this.draw();
@@ -2867,95 +2956,16 @@ class Chandelier extends _coordinates.Coordinates {
 }
 const chandelier = new Chandelier();
 
-},{"./canvas.js":"jvBLU","./phase-manager.js":"73f18","./boss.js":"jiKqO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./time-manager":"g5oF1","./consts":"i99Dc","./img":"hlH8y","./urls":"8OWkF"}],"i99Dc":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "COURSE_WIDTH", ()=>COURSE_WIDTH
-);
-parcelHelpers.export(exports, "COURSE_HEIGHT", ()=>COURSE_HEIGHT
-);
-parcelHelpers.export(exports, "BOSS_SPEED", ()=>BOSS_SPEED
-);
-parcelHelpers.export(exports, "BOSS_MAXLEFT", ()=>BOSS_MAXLEFT
-);
-parcelHelpers.export(exports, "BOSS_MAXRIGHT", ()=>BOSS_MAXRIGHT
-);
-parcelHelpers.export(exports, "ATTACKZONE_LEFT", ()=>ATTACKZONE_LEFT
-);
-parcelHelpers.export(exports, "ATTACKZONE_RIGHT", ()=>ATTACKZONE_RIGHT
-);
-parcelHelpers.export(exports, "RAFTERS_BOTTOM", ()=>RAFTERS_BOTTOM
-);
-parcelHelpers.export(exports, "BOSS_ATTACKINTERVAL", ()=>BOSS_ATTACKINTERVAL
-);
-parcelHelpers.export(exports, "BOSS_MAXMODEDURATION", ()=>BOSS_MAXMODEDURATION
-);
-parcelHelpers.export(exports, "SHOW_GRIDLINES", ()=>SHOW_GRIDLINES
-);
-parcelHelpers.export(exports, "SHOW_PLATFORMS", ()=>SHOW_PLATFORMS
-);
-parcelHelpers.export(exports, "SHOW_DEBUGMENU", ()=>SHOW_DEBUGMENU
-);
-parcelHelpers.export(exports, "DEBUG_DELAY", ()=>DEBUG_DELAY
-);
-parcelHelpers.export(exports, "PLAYER_GRAVITY", ()=>PLAYER_GRAVITY
-);
-parcelHelpers.export(exports, "WALKING_SPEED", ()=>WALKING_SPEED
-);
-parcelHelpers.export(exports, "JUMP_SPEED", ()=>JUMP_SPEED
-);
-parcelHelpers.export(exports, "CHANDELIER_GRAVITY", ()=>CHANDELIER_GRAVITY
-);
-parcelHelpers.export(exports, "LASER_SPEED", ()=>LASER_SPEED
-);
-parcelHelpers.export(exports, "LASER_DURATION", ()=>LASER_DURATION
-);
-parcelHelpers.export(exports, "AXE_SPEED_Y", ()=>AXE_SPEED_Y
-);
-parcelHelpers.export(exports, "AXE_SPEED_X", ()=>AXE_SPEED_X
-);
-parcelHelpers.export(exports, "AXE_GRAVITY", ()=>AXE_GRAVITY
-);
-parcelHelpers.export(exports, "PLAYER_ATTACKINTERVAL", ()=>PLAYER_ATTACKINTERVAL
-);
-parcelHelpers.export(exports, "VOLUME", ()=>VOLUME
-);
-const COURSE_WIDTH = 5120;
-const COURSE_HEIGHT = 960;
-const BOSS_SPEED = 2;
-const BOSS_MAXLEFT = 3840;
-const BOSS_MAXRIGHT = 4640;
-const ATTACKZONE_LEFT = 3616;
-const ATTACKZONE_RIGHT = 4864;
-const RAFTERS_BOTTOM = 320;
-const BOSS_ATTACKINTERVAL = 150;
-const BOSS_MAXMODEDURATION = 2000;
-const SHOW_GRIDLINES = false;
-const SHOW_PLATFORMS = false;
-const SHOW_DEBUGMENU = false;
-const DEBUG_DELAY = 0;
-const PLAYER_GRAVITY = 2.1 / 900;
-const WALKING_SPEED = 8 / 30;
-const JUMP_SPEED = 25 / 30;
-const CHANDELIER_GRAVITY = 0.001;
-const LASER_SPEED = 3;
-const LASER_DURATION = 2000;
-const AXE_SPEED_Y = 0.7;
-const AXE_SPEED_X = 7 / 30;
-const AXE_GRAVITY = 0.1 / 30;
-const PLAYER_ATTACKINTERVAL = 150;
-const VOLUME = 0.2;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"OzOSK":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./consts.js":"2J0f1","./time-manager.js":"hIoYz","./phase-manager.js":"73f18","./boss.js":"jiKqO","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"OzOSK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "rope", ()=>rope
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _canvasJs = require("./canvas.js");
-var _img = require("./img");
-var _urls = require("./urls");
-class FlammableBitOfRope extends _coordinates.Coordinates {
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
+class FlammableBitOfRope extends _coordinatesJs.Coordinates {
     constructor(){
         super({
             x: 4236,
@@ -2965,7 +2975,7 @@ class FlammableBitOfRope extends _coordinates.Coordinates {
         });
     }
 }
-class Rope extends _coordinates.Coordinates {
+class Rope extends _coordinatesJs.Coordinates {
     constructor(){
         super({
             x: 4236,
@@ -2973,7 +2983,7 @@ class Rope extends _coordinates.Coordinates {
             width: 8,
             height: 192
         });
-        this.img = _img.img(_urls.ASSET_URLS['../img/rope_8x192.png']);
+        this.img = _imgJs.img(_urlsJs.ASSET_URLS['../img/rope_8x192.png']);
         this.show = true;
         this.flammableBitOfRope = new FlammableBitOfRope();
     }
@@ -2991,7 +3001,7 @@ class Rope extends _coordinates.Coordinates {
 }
 const rope = new Rope();
 
-},{"./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./img":"hlH8y","./urls":"8OWkF"}],"jLViv":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jLViv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "buttonManager", ()=>buttonManager
@@ -3017,19 +3027,19 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "plumes", ()=>plumes
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _framesJs = require("./frames.js");
 var _audioManagerJs = require("./audio-manager.js");
 var _canvasJs = require("./canvas.js");
-var _img = require("./img");
-var _urls = require("./urls");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
 const plumeImages = [
-    _img.img(_urls.ASSET_URLS['../img/plume-1_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-2_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-3_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-4_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-5_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-6_43x21.png']), 
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-1_43x21.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-2_43x21.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-3_43x21.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-4_43x21.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-5_43x21.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-6_43x21.png']), 
 ];
 class Plumes {
     constructor(){
@@ -3053,7 +3063,7 @@ class Plumes {
         );
     }
 }
-class Plume extends _coordinates.Coordinates {
+class Plume extends _coordinatesJs.Coordinates {
     constructor({ left , bottom , facingRight  }){
         super({
             x: left,
@@ -3080,29 +3090,29 @@ class Plume extends _coordinates.Coordinates {
 }
 const plumes = new Plumes();
 
-},{"./frames.js":"8i0FU","./audio-manager.js":"gwz40","./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./img":"hlH8y","./urls":"8OWkF"}],"awXIj":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./frames.js":"8i0FU","./audio-manager.js":"gwz40","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"awXIj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "lasers", ()=>lasers
 );
-var _coordinates = require("./coordinates");
+var _coordinatesJs = require("./coordinates.js");
 var _canvasJs = require("./canvas.js");
 var _framesJs = require("./frames.js");
-var _timeManager = require("./time-manager");
+var _timeManagerJs = require("./time-manager.js");
 var _audioManagerJs = require("./audio-manager.js");
-var _consts = require("./consts");
+var _constsJs = require("./consts.js");
 var _playerJs = require("./player.js");
 var _explosionsJs = require("./explosions.js");
-var _img = require("./img");
-var _urls = require("./urls");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
 const laserImages = [
-    _img.img(_urls.ASSET_URLS['../img/laser-1_20x20.png']),
-    _img.img(_urls.ASSET_URLS['../img/laser-2_20x20.png']),
-    _img.img(_urls.ASSET_URLS['../img/laser-3_20x20.png']),
-    _img.img(_urls.ASSET_URLS['../img/laser-4_20x20.png']),
-    _img.img(_urls.ASSET_URLS['../img/laser-5_20x20.png']),
-    _img.img(_urls.ASSET_URLS['../img/laser-6_20x20.png']),
-    _img.img(_urls.ASSET_URLS['../img/laser-7_20x20.png']), 
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-1_20x20.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-2_20x20.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-3_20x20.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-4_20x20.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-5_20x20.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-6_20x20.png']),
+    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-7_20x20.png']), 
 ];
 class Lasers {
     constructor(){
@@ -3122,7 +3132,7 @@ class Lasers {
         );
     }
 }
-class Laser extends _coordinates.Coordinates {
+class Laser extends _coordinatesJs.Coordinates {
     constructor({ left , top  }){
         super({
             x: left,
@@ -3134,21 +3144,21 @@ class Laser extends _coordinates.Coordinates {
             fps: 24,
             images: laserImages
         });
-        this.startTime = _timeManager.timeManager.now;
+        this.startTime = _timeManagerJs.timeManager.now;
         this.finished = false;
         this.hitPlayer = false;
         const gapX = _playerJs.player.x - this.x;
         const gapY = _playerJs.player.y - this.y;
         const gap = Math.sqrt(Math.pow(gapX, 2) + Math.pow(gapY, 2));
-        this.dx = _consts.LASER_SPEED * gapX / gap;
-        this.dy = _consts.LASER_SPEED * gapY / gap;
+        this.dx = _constsJs.LASER_SPEED * gapX / gap;
+        this.dy = _constsJs.LASER_SPEED * gapY / gap;
     }
     update() {
         if (this.intersects(_playerJs.player)) {
             _playerJs.player.hurtByLaser();
             this.hitPlayer = true;
         }
-        if (_timeManager.timeManager.now - this.startTime > _consts.LASER_DURATION) {
+        if (_timeManagerJs.timeManager.now - this.startTime > _constsJs.LASER_DURATION) {
             this.finished = true;
             _explosionsJs.explosions.add({
                 left: this.left,
@@ -3165,13 +3175,13 @@ class Laser extends _coordinates.Coordinates {
 }
 const lasers = new Lasers();
 
-},{"./canvas.js":"jvBLU","./frames.js":"8i0FU","./audio-manager.js":"gwz40","./player.js":"2k4ca","./explosions.js":"ensJg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./coordinates":"96akj","./time-manager":"g5oF1","./consts":"i99Dc","./img":"hlH8y","./urls":"8OWkF"}],"bcbWB":[function(require,module,exports) {
+},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./frames.js":"8i0FU","./time-manager.js":"hIoYz","./audio-manager.js":"gwz40","./consts.js":"2J0f1","./player.js":"2k4ca","./explosions.js":"ensJg","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bcbWB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "debugMenu", ()=>debugMenu
 );
 var _canvasJs = require("./canvas.js");
-var _timeManager = require("./time-manager");
+var _timeManagerJs = require("./time-manager.js");
 var _playerJs = require("./player.js");
 class DebugMenu {
     constructor(){}
@@ -3184,7 +3194,7 @@ class DebugMenu {
         _canvasJs.c.fillText('ms per frame', 58, 48);
         _canvasJs.c.textAlign = 'right';
         _canvasJs.c.fillStyle = 'white';
-        _canvasJs.c.fillText(_timeManager.timeManager.msPerFrame, 28, 48);
+        _canvasJs.c.fillText(_timeManagerJs.timeManager.msPerFrame, 28, 48);
         _canvasJs.c.fillStyle = '#bbb';
         _canvasJs.c.textAlign = 'left';
         _canvasJs.c.font = 'bold 14px Inter';
@@ -3193,7 +3203,7 @@ class DebugMenu {
 }
 const debugMenu = new DebugMenu();
 
-},{"./canvas.js":"jvBLU","./player.js":"2k4ca","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./time-manager":"g5oF1"}],"dKMrO":[function(require,module,exports) {
+},{"./canvas.js":"jvBLU","./time-manager.js":"hIoYz","./player.js":"2k4ca","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dKMrO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "slides", ()=>slides
@@ -3248,8 +3258,8 @@ parcelHelpers.export(exports, "slides", ()=>slides
 ;
 var _audioManagerJs = require("./audio-manager.js");
 var _canvasJs = require("./canvas.js");
-var _img = require("./img");
-var _urls = require("./urls");
+var _imgJs = require("./img.js");
+var _urlsJs = require("./urls.js");
 class TitleSlide {
     constructor({ timeIn , timeOut , fadeTime  }){
         this.timeIn = timeIn;
@@ -3299,7 +3309,7 @@ class LyricSlide {
 }
 class ImageTextSlide {
     constructor({ heading , lines , src , timeIn , timeOut , fadeTime  }){
-        this.img = _img.img(_urls.ASSET_URLS[src]);
+        this.img = _imgJs.img(_urlsJs.ASSET_URLS[src]);
         /** @type {string} */ this.heading = heading;
         /** @type {string[]} */ this.lines = lines;
         this.timeIn = timeIn;
@@ -3325,7 +3335,7 @@ class ImageTextSlide {
 }
 class TextImageSlide {
     constructor({ heading , lines , src , timeIn , timeOut , fadeTime  }){
-        this.img = _img.img(_urls.ASSET_URLS[src]);
+        this.img = _imgJs.img(_urlsJs.ASSET_URLS[src]);
         this.timeIn = timeIn;
         this.timeOut = timeOut;
         this.fadeTime = fadeTime;
@@ -3362,7 +3372,7 @@ const slides = [
             'Kian Bashiri',
             '(mazapan.se)'
         ],
-        src: _urls.ASSET_URLS['../img/credits-1_200x200.png'],
+        src: _urlsJs.ASSET_URLS['../img/credits-1_200x200.png'],
         timeIn: 11.89449,
         timeOut: 19.374947,
         fadeTime: .45
@@ -3373,7 +3383,7 @@ const slides = [
             'Henrik Nåmark',
             '(reachground.se)'
         ],
-        src: _urls.ASSET_URLS['../img/credits-2_200x200.png'],
+        src: _urlsJs.ASSET_URLS['../img/credits-2_200x200.png'],
         timeIn: 20.633224,
         timeOut: 28.119119,
         fadeTime: .45
@@ -3384,7 +3394,7 @@ const slides = [
             'Henrik Nåmark',
             'Christian Dryden'
         ],
-        src: _urls.ASSET_URLS['../img/credits-3_200x200.png'],
+        src: _urlsJs.ASSET_URLS['../img/credits-3_200x200.png'],
         timeIn: 29.364552,
         timeOut: 36.967399,
         fadeTime: .45
@@ -3394,7 +3404,7 @@ const slides = [
         lines: [
             'Umami'
         ],
-        src: _urls.ASSET_URLS['../img/credits-4_200x200.png'],
+        src: _urlsJs.ASSET_URLS['../img/credits-4_200x200.png'],
         timeIn: 38.17481,
         timeOut: 45.787413,
         fadeTime: .45
@@ -3571,6 +3581,6 @@ const slides = [
     })
 ];
 
-},{"./audio-manager.js":"gwz40","./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img":"hlH8y","./urls":"8OWkF"}]},["2bjFo","8lqZg"], "8lqZg", "parcelRequiref536")
+},{"./audio-manager.js":"gwz40","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["7mgxS","h7u1C"], "h7u1C", "parcelRequiref536")
 
-//# sourceMappingURL=yhtbtr.3542e8cb.js.map
+//# sourceMappingURL=index.b71e74eb.js.map
