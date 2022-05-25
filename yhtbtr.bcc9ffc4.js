@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"aPJuQ":[function(require,module,exports) {
+})({"bSipi":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
-var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "0a8ecb283d214d75";
+var HMR_ENV_HASH = "767298212a9fba37";
+module.bundle.HMR_BUNDLE_ID = "115223b3bcc9ffc4";
 function _toConsumableArray(arr) {
     return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -525,7 +525,7 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"bB7Pu":[function(require,module,exports) {
+},{}],"b5VdI":[function(require,module,exports) {
 var _axesJs = require("./js/axes.js");
 var _bossJs = require("./js/boss.js");
 var _canvasJs = require("./js/canvas.js");
@@ -548,9 +548,7 @@ var _audioManagerJs = require("./js/audio-manager.js");
 var _buttonManagerJs = require("./js/button-manager.js");
 var _urlsJs = require("./js/urls.js");
 if ('serviceWorker' in navigator) window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register(_urlsJs.ASSET_URLS['../serviceworker.js'], {
-        type: 'module'
-    }).then((reg)=>console.log('Success: ', reg.scope)
+    navigator.serviceWorker.register(require("84a56a3159969eaa")).then((reg)=>console.log('Success: ', reg.scope)
     ).catch((err)=>console.log('Failure: ', err)
     );
 });
@@ -648,7 +646,7 @@ function animate() {
 }
 animate();
 
-},{"./js/axes.js":"3Mg37","./js/boss.js":"bFf1O","./js/canvas.js":"13tVG","./js/chandelier.js":"bkAY2","./js/consts.js":"fWdKl","./js/coordinates.js":"6LQZI","./js/debug-menu.js":"iniOa","./js/explosions.js":"3K9Vs","./js/flames.js":"9HgUM","./js/healthbar.js":"eblPy","./js/lasers.js":"03zEE","./js/phase-manager.js":"1vKeu","./js/platforms.js":"gxePh","./js/player.js":"fBCT6","./js/plumes.js":"hc3pz","./js/rope.js":"chIhe","./js/slides.js":"dwqLw","./js/time-manager.js":"hcjEB","./js/audio-manager.js":"eHiBI","./js/button-manager.js":"kCO8j","./js/urls.js":"cJeMZ"}],"3Mg37":[function(require,module,exports) {
+},{"./js/axes.js":"41T7T","./js/boss.js":"X0joP","./js/canvas.js":"eTVCG","./js/chandelier.js":"hHt1H","./js/consts.js":"3GOLi","./js/coordinates.js":"1Przq","./js/debug-menu.js":"egCPC","./js/explosions.js":"lgZ6l","./js/flames.js":"az6Mf","./js/healthbar.js":"3ubdR","./js/lasers.js":"jIbrz","./js/phase-manager.js":"4n7ZT","./js/platforms.js":"3XP2n","./js/player.js":"c37gX","./js/plumes.js":"3IzEq","./js/rope.js":"cbVoA","./js/slides.js":"1GJzH","./js/time-manager.js":"lLX8e","./js/audio-manager.js":"37hFB","./js/button-manager.js":"kZiUA","./js/urls.js":"cCez6","84a56a3159969eaa":"5emP5"}],"41T7T":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "axes", ()=>axes
@@ -720,7 +718,7 @@ class Axe extends _coordinatesJs.Coordinates {
 }
 const axes = new Axes();
 
-},{"./coordinates.js":"6LQZI","./canvas.js":"13tVG","./boss.js":"bFf1O","./healthbar.js":"eblPy","./time-manager.js":"hcjEB","./audio-manager.js":"eHiBI","./consts.js":"fWdKl","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"6LQZI":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./canvas.js":"eTVCG","./boss.js":"X0joP","./healthbar.js":"3ubdR","./time-manager.js":"lLX8e","./audio-manager.js":"37hFB","./consts.js":"3GOLi","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"1Przq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "offset", ()=>offset
@@ -795,7 +793,7 @@ class Coordinates {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"jRKQF":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -825,7 +823,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"13tVG":[function(require,module,exports) {
+},{}],"eTVCG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "canvas", ()=>canvas
@@ -913,7 +911,7 @@ function setSize() {
 setSize();
 addEventListener('resize', setSize);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bFf1O":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"X0joP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "boss", ()=>boss
@@ -1017,7 +1015,7 @@ class Boss extends _coordinatesJs.Coordinates {
 }
 const boss = new Boss();
 
-},{"./canvas.js":"13tVG","./consts.js":"fWdKl","./coordinates.js":"6LQZI","./player.js":"fBCT6","./phase-manager.js":"1vKeu","./lasers.js":"03zEE","./time-manager.js":"hcjEB","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"fWdKl":[function(require,module,exports) {
+},{"./canvas.js":"eTVCG","./consts.js":"3GOLi","./coordinates.js":"1Przq","./player.js":"c37gX","./phase-manager.js":"4n7ZT","./lasers.js":"jIbrz","./time-manager.js":"lLX8e","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"3GOLi":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "COURSE_WIDTH", ()=>COURSE_WIDTH
@@ -1096,7 +1094,7 @@ const AXE_GRAVITY = .1 / 30;
 const PLAYER_ATTACKINTERVAL = 150;
 const VOLUME = .2;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fBCT6":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"c37gX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Player", ()=>Player
@@ -1382,7 +1380,7 @@ const player = new Player({
  //     y: 23.5 * 32,
  // });
 
-},{"./audio-manager.js":"eHiBI","./axes.js":"3Mg37","./canvas.js":"13tVG","./consts.js":"fWdKl","./coordinates.js":"6LQZI","./flames.js":"9HgUM","./boss.js":"bFf1O","./frames.js":"atydd","./phase-manager.js":"1vKeu","./platforms.js":"gxePh","./plumes.js":"hc3pz","./time-manager.js":"hcjEB","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"eHiBI":[function(require,module,exports) {
+},{"./audio-manager.js":"37hFB","./axes.js":"41T7T","./canvas.js":"eTVCG","./consts.js":"3GOLi","./coordinates.js":"1Przq","./flames.js":"az6Mf","./boss.js":"X0joP","./frames.js":"1fIgI","./phase-manager.js":"4n7ZT","./platforms.js":"3XP2n","./plumes.js":"3IzEq","./time-manager.js":"lLX8e","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"37hFB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "audioManager", ()=>audioManager
@@ -1491,7 +1489,7 @@ class AudioManager {
 }
 const audioManager = new AudioManager();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./urls.js":"cJeMZ"}],"cJeMZ":[function(require,module,exports) {
+},{"./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"cCez6":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ASSET_URLS", ()=>ASSET_URLS
@@ -1568,10 +1566,10 @@ const ASSET_URLS = {
     '../sprites/rope.png': new URL(require("430f7406c999d8a9"))
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","5e29055134cf728e":"2tshA","cb06cd8dfb1f6b86":"5xVJv","14051505ab82d018":"eFyOJ","72346e65da1a3b4a":"4s7ro","c315bb0fb01bbe57":"9gIjB","dfa673022b08cd1e":"e7KJ0","5217c402b8d980ad":"dq4zL","bad73e8fd4d18f0":"9qhj7","79aef5c37c4884d6":"jevlf","ed80f316305bec25":"5ZeFX","f965ab77eb56b976":"fH7S7","6d2316825c27d88e":"2ZmJF","aa4ac57ba8abbde4":"5iHRm","39e4690785d9e6b7":"1GKSX","e25ca4c15d530666":"7IU2z","226e692ed5ed08d8":"cW29U","bffb3bf61e5598bf":"hfTns","cd666ff7bfd307c9":"42c3v","cda314662884549d":"itH32","7bb52930141fa4c8":"4WfPX","4122067cd53045fb":"7e0sy","49dcfc25192540d2":"iLVc8","373fe718a772a5d":"dL1YQ","a6e036d2a8cb8b97":"k7DaZ","86b4a4b70c1f4e8f":"bhjCq","e80d7327ba09c4e7":"7bsLN","a218a2cd7b8237f1":"kLWpG","f538cda93e5e505b":"b8xHA","b8fbce8ded11c530":"5Cpjj","3f5a1fe7bc226db6":"liTmV","d7bd9dd9319b272a":"akN5F","4b6052bd007ae687":"bDOo8","fa4fa1258801c790":"2zgYO","47f11608baa9a9b9":"2EHsk","2f6dd958b5eac1d9":"eyW1L","3f38a386c47b05b0":"fytrn","d08db23e33335a80":"hSaeM","817d6cbe68df9e8a":"aK79l","a451b2c5fabcc2f2":"jsBAR","d0c63ad5f0daa197":"jTxj4","8ded7f16183331e0":"gFao4","1fc5c97170736d5e":"kKnMd","728e07e032723cfd":"bJ8Rl","20d091adcda6bfa2":"2mJLT","4ec585b0a81cdb6c":"uPxiJ","a24fa691472fb103":"4JqpW","fc30e16686cb571":"l1FnL","6f2af5199b1885f":"aZM0a","e372ba4ec6859c81":"3pUGe","4d3c600875371924":"eBGkK","c50a94a855aa6bed":"7By78","e96fb801a30e0bf8":"9NPbP","8d91a93242884f1a":"a5pM6","c1961420b84d5a0b":"hu7Kp","235cdd0cbc114180":"j2Xsu","fbe37286818a3ed9":"8pjuQ","2c1137990ecbd5b":"420GO","185e534bd2df7320":"1bwID","409aa6367b1d3a1e":"dtBDs","74687a065e145f16":"7YJqm","564e3d85b961c7a0":"3ZHXC","a98ad6de15af377c":"irThX","e0bceaf8a624eb80":"a1NZh","4225d4ecbc686a0a":"8eFW8","50e5bdcd1b4a23d6":"7uuH7","a7b4a144fb4e169":"4JARx","54b9dd92ebe1b35e":"iFdFz","9c45708c617a256a":"hEeK5","430f7406c999d8a9":"7djz4"}],"2tshA":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "serviceworker.6a8b1a75.js" + "?" + Date.now();
+},{"5e29055134cf728e":"5emP5","cb06cd8dfb1f6b86":"48ohw","14051505ab82d018":"5Tcfx","72346e65da1a3b4a":"hK12P","c315bb0fb01bbe57":"79gMe","dfa673022b08cd1e":"6SfHo","5217c402b8d980ad":"dosWa","bad73e8fd4d18f0":"77j6v","79aef5c37c4884d6":"26TI4","ed80f316305bec25":"cmSGQ","f965ab77eb56b976":"2WER9","6d2316825c27d88e":"98Tku","aa4ac57ba8abbde4":"2XQFf","39e4690785d9e6b7":"lahaB","e25ca4c15d530666":"MOyIP","226e692ed5ed08d8":"98UjJ","bffb3bf61e5598bf":"7DC8I","cd666ff7bfd307c9":"2Gy7O","cda314662884549d":"3ZmBZ","7bb52930141fa4c8":"cvAQo","4122067cd53045fb":"j5Fi8","49dcfc25192540d2":"9VTbl","373fe718a772a5d":"c7f6B","a6e036d2a8cb8b97":"1LFvf","86b4a4b70c1f4e8f":"cB0Rt","e80d7327ba09c4e7":"kNao9","a218a2cd7b8237f1":"280XP","f538cda93e5e505b":"iZyme","b8fbce8ded11c530":"50M9I","3f5a1fe7bc226db6":"chUNk","d7bd9dd9319b272a":"jvUbn","4b6052bd007ae687":"77Mli","fa4fa1258801c790":"fxxEX","47f11608baa9a9b9":"9Fp9A","2f6dd958b5eac1d9":"cKsqV","3f38a386c47b05b0":"i5Hrz","d08db23e33335a80":"gB8Mx","817d6cbe68df9e8a":"2bwaY","a451b2c5fabcc2f2":"4SY76","d0c63ad5f0daa197":"eiFBH","8ded7f16183331e0":"6NMPQ","1fc5c97170736d5e":"lqMT7","728e07e032723cfd":"024Dn","20d091adcda6bfa2":"dEnw5","4ec585b0a81cdb6c":"imqnq","a24fa691472fb103":"7gXDK","fc30e16686cb571":"daRQq","6f2af5199b1885f":"4aXjJ","e372ba4ec6859c81":"33AoV","4d3c600875371924":"lsi0W","c50a94a855aa6bed":"12kHY","e96fb801a30e0bf8":"lCRN0","8d91a93242884f1a":"1GpeF","c1961420b84d5a0b":"knubs","235cdd0cbc114180":"65sZD","fbe37286818a3ed9":"jdPIL","2c1137990ecbd5b":"k9j0x","185e534bd2df7320":"54zFf","409aa6367b1d3a1e":"2Ev5n","74687a065e145f16":"1waw3","564e3d85b961c7a0":"2CH8t","a98ad6de15af377c":"5GiPY","e0bceaf8a624eb80":"hWVHQ","4225d4ecbc686a0a":"9F0uL","50e5bdcd1b4a23d6":"hzbME","a7b4a144fb4e169":"5ziWg","54b9dd92ebe1b35e":"gQYBf","9c45708c617a256a":"1XI2w","430f7406c999d8a9":"gdsIz","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"5emP5":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "up_/serviceworker.js" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+},{"./helpers/bundle-url":"f7hvf"}],"f7hvf":[function(require,module,exports) {
 "use strict";
 var bundleURL = {};
 function getBundleURLCached(id) {
@@ -1605,211 +1603,211 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"5xVJv":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "yhtbtr.af7f0a10.js" + "?" + Date.now();
+},{}],"48ohw":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "yhtbtr.bcc9ffc4.js" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"eFyOJ":[function(require,module,exports) {
+},{"./helpers/bundle-url":"f7hvf"}],"5Tcfx":[function(require,module,exports) {
 module.exports = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 
-},{}],"4s7ro":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "axe-throw.0fab099b.mp3" + "?" + Date.now();
+},{}],"hK12P":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "axe-throw.c3dcef22.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"9gIjB":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-explosion.ce943d8d.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"79gMe":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-explosion.0bdf8842.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"e7KJ0":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-fight.183ae9cb.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"6SfHo":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-fight.942b110e.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"dq4zL":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "death.b20f46fd.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"dosWa":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "death.664f3da7.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"9qhj7":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "door-slam.0bc106ff.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"77j6v":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "door-slam.cc0859d7.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jevlf":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "eye-laser.e75c92bc.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"26TI4":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "eye-laser.022300db.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"5ZeFX":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "jump.0b3b2451.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"cmSGQ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "jump.298cc5df.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"fH7S7":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "land.5b9f2593.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"2WER9":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "land.dc769343.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2ZmJF":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "now-youre-a-hero.1ef41fb6.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"98Tku":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "now-youre-a-hero.8d528aa0.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"5iHRm":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "rope-explosion.2a94fd21.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"2XQFf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "rope-explosion.9049fa72.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"1GKSX":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "tunnel.5b89bf3c.mp3" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"lahaB":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "tunnel.957f5cbf.mp3" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7IU2z":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "axe_18x18.4945c118.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"MOyIP":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "axe_18x18.f129016c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"cW29U":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "axe_999_64x64.2f5130f4.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"98UjJ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "axe_999_64x64.5ae113fe.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hfTns":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "back-door_32x64.ac3f454a.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"7DC8I":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "back-door_32x64.3880d100.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"42c3v":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-attack_204x256.4718320b.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"2Gy7O":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-attack_204x256.ac09bf9b.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"itH32":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-die_192x256.17de9b0e.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"3ZmBZ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-die_192x256.58ac59e7.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"4WfPX":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-lookup_192x256.2f64a053.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"cvAQo":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-lookup_192x256.ec55cc2f.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7e0sy":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-move_204x256.1a714fee.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"j5Fi8":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-move_204x256.85990b7f.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"iLVc8":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "boss-still_204x256.b60c7493.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"9VTbl":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "boss-still_204x256.1ad2256e.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"dL1YQ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "chandelier_160x96.e9922bca.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"c7f6B":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "chandelier_160x96.fe36f821.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"k7DaZ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "credits-1_200x200.c32602b7.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"1LFvf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "credits-1_200x200.6307e7d8.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"bhjCq":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "credits-2_200x200.202d94a2.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"cB0Rt":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "credits-2_200x200.33fd326c.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7bsLN":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "credits-3_200x200.b3274e7b.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"kNao9":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "credits-3_200x200.f550499b.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"kLWpG":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "credits-4_200x200.5d252344.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"280XP":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "credits-4_200x200.c77f12aa.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"b8xHA":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "credits-bg_704x512.005cdb66.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"iZyme":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "credits-bg_704x512.73e18059.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"5Cpjj":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-1_36x36.9a4748d7.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"50M9I":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-1_36x36.d38de4de.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"liTmV":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-2_36x36.19e97f50.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"chUNk":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-2_36x36.4c857b04.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"akN5F":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-3_36x36.8303a588.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"jvUbn":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-3_36x36.cdf2a231.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"bDOo8":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-4_36x36.bcd86c90.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"77Mli":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-4_36x36.0e626b09.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2zgYO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-5_36x36.8bbd79b8.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"fxxEX":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-5_36x36.7806ec9d.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2EHsk":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-6_36x36.6cf88ddd.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"9Fp9A":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-6_36x36.48698a39.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"eyW1L":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "explosion-7_36x36.81574fac.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"cKsqV":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "explosion-7_36x36.655f4710.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"fytrn":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "flame-sprites.5aeaf950.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"i5Hrz":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "flame-sprites.6036e7d9.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hSaeM":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "flame-1_28x28.77931933.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"gB8Mx":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "flame-1_28x28.f5cd5017.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"aK79l":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "flame-2_28x28.24a728cb.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"2bwaY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "flame-2_28x28.1e2b0ecb.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jsBAR":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "flame-3_28x28.b57bb939.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"4SY76":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "flame-3_28x28.3348cab1.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"jTxj4":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "info-circle_999_64x64.019b935d.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"eiFBH":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "info-circle_999_64x64.d29f52c8.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"gFao4":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-1_20x20.f639e46c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"6NMPQ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-1_20x20.96999082.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"kKnMd":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-2_20x20.e652230c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"lqMT7":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-2_20x20.380b23b7.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"bJ8Rl":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-3_20x20.b6e1853b.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"024Dn":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-3_20x20.51663a5b.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"2mJLT":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-4_20x20.07e3396c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"dEnw5":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-4_20x20.63933777.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"uPxiJ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-5_20x20.0e4b0c90.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"imqnq":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-5_20x20.cd0ee708.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"4JqpW":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-6_20x20.d4d4b3db.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"7gXDK":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-6_20x20.36fb4920.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"l1FnL":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "laser-7_20x20.c603b95c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"daRQq":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "laser-7_20x20.c244b80a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"aZM0a":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "page-bg_32x32.b1f18b9a.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"4aXjJ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "page-bg_32x32.08ff5a41.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3pUGe":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-fall_30x36.95a2b8f6.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"33AoV":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-fall_30x36.165fe1be.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"eBGkK":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-hit_30x36.60b08eb9.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"lsi0W":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-hit_30x36.9e7b8033.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7By78":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-jump_30x36.3301285d.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"12kHY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-jump_30x36.059c702a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"9NPbP":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-still_30x36.efa1f6df.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"lCRN0":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-still_30x36.e0f76c40.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"a5pM6":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-throw_30x36.8db3d76a.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"1GpeF":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-throw_30x36.2a059e69.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hu7Kp":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-walk-1_30x36.0ccab93e.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"knubs":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-walk-1_30x36.698d62c7.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"j2Xsu":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-walk-2_30x36.e3b3852f.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"65sZD":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-walk-2_30x36.0977c7f6.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8pjuQ":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "player-walk-3_30x36.6abc9d2f.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"jdPIL":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "player-walk-3_30x36.6641d79f.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"420GO":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "plume-1_43x21.40945f8f.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"k9j0x":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "plume-1_43x21.e31a005a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"1bwID":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "plume-2_43x21.496edfbb.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"54zFf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "plume-2_43x21.f0fc7651.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"dtBDs":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "plume-3_43x21.b0eccb52.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"2Ev5n":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "plume-3_43x21.2bbc28bc.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7YJqm":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "plume-4_43x21.8d0daff0.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"1waw3":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "plume-4_43x21.2750b00e.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3ZHXC":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "plume-5_43x21.abed5e33.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"2CH8t":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "plume-5_43x21.bc5c5a57.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"irThX":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "plume-6_43x21.619d7b32.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"5GiPY":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "plume-6_43x21.a37a9f3a.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"a1NZh":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "rope_8x192.2125e88c.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"hWVHQ":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "rope_8x192.2c7b54bc.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"8eFW8":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "stick_30x6.3d79df12.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"9F0uL":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "stick_30x6.75865b20.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7uuH7":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "up-arrow_999_64x64.cd93c66e.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"hzbME":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "up-arrow_999_64x64.9d9eae33.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"4JARx":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "volume-0_999_64x64.96fa3484.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"5ziWg":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "volume-0_999_64x64.61762cfb.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"iFdFz":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "volume-1_999_64x64.3d9a6ade.svg" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"gQYBf":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "volume-1_999_64x64.f19b14b1.svg" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"hEeK5":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "bg.a8f4c1ed.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"1XI2w":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "bg.20eef395.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"7djz4":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('UckoE') + "rope.bacdb35b.png" + "?" + Date.now();
+},{"./helpers/bundle-url":"f7hvf"}],"gdsIz":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('1ucj6') + "rope.b3694ca9.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"9HgUM":[function(require,module,exports) {
+},{"./helpers/bundle-url":"f7hvf"}],"az6Mf":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Flame", ()=>Flame
@@ -1878,7 +1876,7 @@ const flames = [
     }), 
 ];
 
-},{"./coordinates.js":"6LQZI","./time-manager.js":"hcjEB","./canvas.js":"13tVG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"hcjEB":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./time-manager.js":"lLX8e","./canvas.js":"eTVCG","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"lLX8e":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "timeManager", ()=>timeManager
@@ -1888,7 +1886,7 @@ const timeManager = {
     msPerFrame: 1000 / 60
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fEvZx":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"344AO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "img", ()=>img
@@ -1899,7 +1897,7 @@ function img(src) {
     return result;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"atydd":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"1fIgI":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Frames", ()=>Frames
@@ -1921,7 +1919,7 @@ class Frames {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1vKeu":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"4n7ZT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "PHASES", ()=>PHASES
@@ -2252,7 +2250,7 @@ class PhaseManager {
 }
 const phaseManager = new PhaseManager();
 
-},{"./healthbar.js":"eblPy","./platforms.js":"gxePh","./explosions.js":"3K9Vs","./canvas.js":"13tVG","./coordinates.js":"6LQZI","./chandelier.js":"bkAY2","./rope.js":"chIhe","./audio-manager.js":"eHiBI","./button-manager.js":"kCO8j","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"eblPy":[function(require,module,exports) {
+},{"./healthbar.js":"3ubdR","./platforms.js":"3XP2n","./explosions.js":"lgZ6l","./canvas.js":"eTVCG","./coordinates.js":"1Przq","./chandelier.js":"hHt1H","./rope.js":"cbVoA","./audio-manager.js":"37hFB","./button-manager.js":"kZiUA","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"3ubdR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "healthBar", ()=>healthBar
@@ -2291,7 +2289,7 @@ class HealthBar {
 }
 const healthBar = new HealthBar();
 
-},{"./canvas.js":"13tVG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gxePh":[function(require,module,exports) {
+},{"./canvas.js":"eTVCG","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"3XP2n":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LeftPlatform", ()=>LeftPlatform
@@ -2856,7 +2854,7 @@ const platforms = [
     })
 ];
 
-},{"./coordinates.js":"6LQZI","./canvas.js":"13tVG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3K9Vs":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./canvas.js":"eTVCG","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"lgZ6l":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "explosions", ()=>explosions
@@ -2914,7 +2912,7 @@ class Explosion extends _coordinatesJs.Coordinates {
 }
 const explosions = new Explosions();
 
-},{"./coordinates.js":"6LQZI","./canvas.js":"13tVG","./frames.js":"atydd","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"bkAY2":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./canvas.js":"eTVCG","./frames.js":"1fIgI","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"hHt1H":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "chandelier", ()=>chandelier
@@ -2957,7 +2955,7 @@ class Chandelier extends _coordinatesJs.Coordinates {
 }
 const chandelier = new Chandelier();
 
-},{"./coordinates.js":"6LQZI","./canvas.js":"13tVG","./consts.js":"fWdKl","./time-manager.js":"hcjEB","./phase-manager.js":"1vKeu","./boss.js":"bFf1O","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"chIhe":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./canvas.js":"eTVCG","./consts.js":"3GOLi","./time-manager.js":"lLX8e","./phase-manager.js":"4n7ZT","./boss.js":"X0joP","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"cbVoA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "rope", ()=>rope
@@ -3002,7 +3000,7 @@ class Rope extends _coordinatesJs.Coordinates {
 }
 const rope = new Rope();
 
-},{"./coordinates.js":"6LQZI","./canvas.js":"13tVG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"kCO8j":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./canvas.js":"eTVCG","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"kZiUA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "buttonManager", ()=>buttonManager
@@ -3023,7 +3021,7 @@ class ButtonManager {
 }
 const buttonManager = new ButtonManager();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hc3pz":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"3IzEq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "plumes", ()=>plumes
@@ -3091,7 +3089,7 @@ class Plume extends _coordinatesJs.Coordinates {
 }
 const plumes = new Plumes();
 
-},{"./coordinates.js":"6LQZI","./frames.js":"atydd","./audio-manager.js":"eHiBI","./canvas.js":"13tVG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"03zEE":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./frames.js":"1fIgI","./audio-manager.js":"37hFB","./canvas.js":"eTVCG","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"jIbrz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "lasers", ()=>lasers
@@ -3176,7 +3174,7 @@ class Laser extends _coordinatesJs.Coordinates {
 }
 const lasers = new Lasers();
 
-},{"./coordinates.js":"6LQZI","./canvas.js":"13tVG","./frames.js":"atydd","./time-manager.js":"hcjEB","./audio-manager.js":"eHiBI","./consts.js":"fWdKl","./player.js":"fBCT6","./explosions.js":"3K9Vs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}],"iniOa":[function(require,module,exports) {
+},{"./coordinates.js":"1Przq","./canvas.js":"eTVCG","./frames.js":"1fIgI","./time-manager.js":"lLX8e","./audio-manager.js":"37hFB","./consts.js":"3GOLi","./player.js":"c37gX","./explosions.js":"lgZ6l","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"egCPC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "debugMenu", ()=>debugMenu
@@ -3204,7 +3202,7 @@ class DebugMenu {
 }
 const debugMenu = new DebugMenu();
 
-},{"./canvas.js":"13tVG","./time-manager.js":"hcjEB","./player.js":"fBCT6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dwqLw":[function(require,module,exports) {
+},{"./canvas.js":"eTVCG","./time-manager.js":"lLX8e","./player.js":"c37gX","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}],"1GJzH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "slides", ()=>slides
@@ -3582,6 +3580,6 @@ const slides = [
     })
 ];
 
-},{"./audio-manager.js":"eHiBI","./canvas.js":"13tVG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./img.js":"fEvZx","./urls.js":"cJeMZ"}]},["aPJuQ","bB7Pu"], "bB7Pu", "parcelRequiref536")
+},{"./audio-manager.js":"37hFB","./canvas.js":"eTVCG","./img.js":"344AO","./urls.js":"cCez6","@parcel/transformer-js/src/esmodule-helpers.js":"jRKQF"}]},["bSipi","b5VdI"], "b5VdI", "parcelRequiref536")
 
-//# sourceMappingURL=index.3d214d75.js.map
+//# sourceMappingURL=yhtbtr.bcc9ffc4.js.map
