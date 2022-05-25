@@ -1,6 +1,6 @@
 
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 class EndCreditsMusic {
     constructor() {
         this.audio = new Audio(ASSET_URLS['../audio/now-youre-a-hero.mp3']);

@@ -1,13 +1,13 @@
-import { Coordinates } from './coordinates.js';
+import { Coordinates } from './coordinates';
 import { c } from './canvas.js';
 import { boss } from './boss.js';
 import { healthBar } from './healthbar.js';
-import { timeManager } from './time-manager.js';
+import { timeManager } from './time-manager';
 import { audioManager } from './audio-manager.js';
-import { AXE_SPEED_X, AXE_SPEED_Y, AXE_GRAVITY } from './consts.js';
-import { img } from './img.js';
+import { AXE_SPEED_X, AXE_SPEED_Y, AXE_GRAVITY } from './consts';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 const axeImg = img(ASSET_URLS['../img/axe_18x18.png']);
 

@@ -10,15 +10,15 @@ import {
     ATTACKZONE_LEFT,
     ATTACKZONE_RIGHT,
     RAFTERS_BOTTOM
-} from './consts.js';
-import { Coordinates } from './coordinates.js';
+} from './consts';
+import { Coordinates } from './coordinates';
 import { player } from './player.js';
 import { phaseManager, PHASES } from './phase-manager.js';
 import { lasers } from './lasers.js';
-import { timeManager } from './time-manager.js';
-import { img } from './img.js';
+import { timeManager } from './time-manager';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 class Boss extends Coordinates {
     /**

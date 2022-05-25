@@ -1,9 +1,9 @@
-import { Coordinates } from './coordinates.js';
-import { timeManager } from './time-manager.js';
+import { Coordinates } from './coordinates';
+import { timeManager } from './time-manager';
 import { c } from './canvas.js';
-import { img } from './img.js';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 export class Flame extends Coordinates {
     constructor({ left, top }) {

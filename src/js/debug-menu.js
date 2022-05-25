@@ -1,5 +1,5 @@
 import { c, FRAME_WIDTH } from './canvas.js';
-import { timeManager } from './time-manager.js';
+import { timeManager } from './time-manager';
 import { player } from './player.js';
 
 class DebugMenu {

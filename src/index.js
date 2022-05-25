@@ -7,8 +7,8 @@ import { chandelier } from './js/chandelier.js';
 import {
     COURSE_HEIGHT, COURSE_WIDTH, JUMP_SPEED, PLAYER_ATTACKINTERVAL, SHOW_GRIDLINES,
     SHOW_PLATFORMS, WALKING_SPEED, SHOW_DEBUGMENU, DEBUG_DELAY
-} from './js/consts.js';
-import { offset } from './js/coordinates.js';
+} from './js/consts';
+import { offset } from './js/coordinates';
 import { debugMenu } from './js/debug-menu.js';
 import { explosions } from './js/explosions.js';
 import { flames } from './js/flames.js';
@@ -20,10 +20,10 @@ import { player } from './js/player.js';
 import { plumes } from './js/plumes.js';
 import { rope } from './js/rope.js';
 import { slides } from './js/slides.js';
-import { timeManager } from './js/time-manager.js';
+import { timeManager } from './js/time-manager';
 import { audioManager } from './js/audio-manager.js';
 import { buttonManager } from './js/button-manager.js';
-import { ASSET_URLS } from './js/urls.js';
+import { ASSET_URLS } from './js/urls';
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

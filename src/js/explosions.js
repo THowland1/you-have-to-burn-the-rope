@@ -1,9 +1,9 @@
-import { Coordinates } from './coordinates.js';
+import { Coordinates } from './coordinates';
 import { c } from './canvas.js';
 import { Frames } from './frames.js';
-import { img } from './img.js';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 const explosionImages = [
     img(ASSET_URLS['../img/explosion-1_36x36.png']),

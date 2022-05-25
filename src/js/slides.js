@@ -1,8 +1,8 @@
 
 import { audioManager } from './audio-manager.js';
 import { FRAME_HEIGHT, FRAME_WIDTH, c, canvas } from './canvas.js';
-import { img } from './img.js';
-import { ASSET_URLS } from './urls.js';
+import { img } from './img';
+import { ASSET_URLS } from './urls';
 
 class TitleSlide {
     constructor({ timeIn, timeOut, fadeTime }) {

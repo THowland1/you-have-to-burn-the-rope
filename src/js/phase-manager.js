@@ -2,14 +2,14 @@ import { healthBar } from './healthbar.js';
 import { platforms, LeftPlatform } from './platforms.js';
 import { explosions } from './explosions.js';
 import { c } from './canvas.js';
-import { offset } from './coordinates.js';
+import { offset } from './coordinates';
 import { chandelier } from './chandelier.js';
 import { rope } from './rope.js';
 import { audioManager } from './audio-manager.js';
 import { buttonManager } from './button-manager.js';
-import { img } from './img.js';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 async function wait(ms) { return new Promise((resolve) => setTimeout(resolve, ms)); }
 

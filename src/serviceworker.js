@@ -1,5 +1,5 @@
 
-import { ASSET_URLS } from './js/urls.js';
+import { ASSET_URLS } from './js/urls';
 
 const CACHE_NAME = 'version-0.1';
 const OFFLINE_URL = 'index.html';

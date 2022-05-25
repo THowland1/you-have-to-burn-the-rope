@@ -1,4 +1,4 @@
-import { Coordinates } from './coordinates.js';
+import { Coordinates } from './coordinates';
 import { c } from './canvas.js';
 
 

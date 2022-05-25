@@ -1,12 +1,12 @@
-import { Coordinates } from './coordinates.js';
+import { Coordinates } from './coordinates';
 import { c } from './canvas.js';
-import { CHANDELIER_GRAVITY } from './consts.js';
-import { timeManager } from './time-manager.js';
+import { CHANDELIER_GRAVITY } from './consts';
+import { timeManager } from './time-manager';
 import { phaseManager } from './phase-manager.js';
 import { boss } from './boss.js';
-import { img } from './img.js';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 class Chandelier extends Coordinates {
     constructor() {
         super({ x: 130 * 32, y: 12 * 32, width: 5 * 32, height: 3 * 32 });

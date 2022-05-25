@@ -1,18 +1,18 @@
 import { audioManager } from './audio-manager.js';
 import { axes } from './axes.js';
 import { c } from './canvas.js';
-import { JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts.js';
-import { Coordinates } from './coordinates.js';
+import { JUMP_SPEED, PLAYER_ATTACKINTERVAL, PLAYER_GRAVITY, WALKING_SPEED } from './consts';
+import { Coordinates } from './coordinates';
 import { flames } from './flames.js';
 import { boss } from './boss.js';
 import { Frames } from './frames.js';
 import { phaseManager, PHASES } from './phase-manager.js';
 import { platforms } from './platforms.js';
 import { plumes } from './plumes.js';
-import { timeManager } from './time-manager.js';
-import { img } from './img.js';
+import { timeManager } from './time-manager';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 class KeyManager {
     constructor() {

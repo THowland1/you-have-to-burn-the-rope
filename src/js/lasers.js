@@ -1,14 +1,14 @@
-import { Coordinates } from './coordinates.js';
+import { Coordinates } from './coordinates';
 import { c } from './canvas.js';
 import { Frames } from './frames.js';
-import { timeManager } from './time-manager.js';
+import { timeManager } from './time-manager';
 import { audioManager } from './audio-manager.js';
-import { LASER_DURATION, LASER_SPEED } from './consts.js';
+import { LASER_DURATION, LASER_SPEED } from './consts';
 import { player } from './player.js';
 import { explosions } from './explosions.js';
-import { img } from './img.js';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 const laserImages = [
     img(ASSET_URLS['../img/laser-1_20x20.png']),

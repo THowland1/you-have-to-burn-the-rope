@@ -1,4 +1,3 @@
-
 export const COURSE_WIDTH = 5120;
 export const COURSE_HEIGHT = 960;
 export const BOSS_SPEED = 2;
@@ -22,17 +21,16 @@ export const DEBUG_DELAY = 0;
 /** px per second */ export const JUMP_SPEED = 25 / 30;
 
 /** CHANDELIER */
-export const CHANDELIER_GRAVITY = .001;
+export const CHANDELIER_GRAVITY = 0.001;
 
 /** LASER */
 export const LASER_SPEED = 3;
 export const LASER_DURATION = 2000;
 
 /** AXE */
-/** px per second */ export const AXE_SPEED_Y = .7;
+/** px per second */ export const AXE_SPEED_Y = 0.7;
 /** px per second */ export const AXE_SPEED_X = 7 / 30;
-/** px per second per second */ export const AXE_GRAVITY = .1 / (30);
+/** px per second per second */ export const AXE_GRAVITY = 0.1 / 30;
 /** ms per attack */ export const PLAYER_ATTACKINTERVAL = 150;
 
-
-export const VOLUME = .2;
+export const VOLUME = 0.2;

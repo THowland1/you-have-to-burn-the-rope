@@ -1,10 +1,10 @@
-import { Coordinates } from './coordinates.js';
+import { Coordinates } from './coordinates';
 import { Frames } from './frames.js';
 import { audioManager } from './audio-manager.js';
 import { c } from './canvas.js';
-import { img } from './img.js';
+import { img } from './img';
 
-import { ASSET_URLS } from './urls.js';
+import { ASSET_URLS } from './urls';
 
 const plumeImages = [
     img(ASSET_URLS['../img/plume-1_43x21.png']),
