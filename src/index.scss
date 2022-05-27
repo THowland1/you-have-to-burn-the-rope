@@ -1,0 +1,19 @@
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+body {
+  margin: 0;
+  background: url('./img/page-bg_32x32.png');
+  position: absolute;
+  inset: 0;
+  touch-action: manipulation;
+  font-family: 'Inter';
+}
+#canvas {
+  margin: auto;
+  position: absolute;
+  inset: 0;
+}

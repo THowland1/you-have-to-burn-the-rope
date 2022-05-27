@@ -1,13 +1,36 @@
+import { audioManager } from './audio-manager';
+import { elementManager } from './element-manager';
+import { ButtonBarElement } from './elements/button-bar';
+import { NavBarElement } from './elements/nav-bar';
+
 class ButtonManager {
-  buttons = document.getElementById('buttons')!;
+  volume0Button = elementManager.navbar.volume0Button;
+  volume1Button = elementManager.navbar.volume1Button;
+  showInfoButton = elementManager.navbar.showInfoButton;
+
+  constructor() {
+    this.volume0Button.addEventListener('click', () =>
+      audioManager.setVolume(0)
+    );
+    this.volume1Button.addEventListener('click', () =>
+      audioManager.setVolume(1)
+    );
+
+    this.showInfoButton.addEventListener('click', () => {
+      document
+        .getElementsByTagName('app-info-modal')![0]
+        .toggleAttribute('open');
+    });
+  }
+
   show() {
-    this.buttons.classList.remove('hidden');
+    elementManager.buttonbar.show();
   }
   hide() {
-    this.buttons.classList.add('hidden');
+    elementManager.buttonbar.hide();
   }
   setOpacity(value: number) {
-    this.buttons.style.opacity = String(value);
+    elementManager.buttonbar.style.opacity = String(value);
   }
 }
 

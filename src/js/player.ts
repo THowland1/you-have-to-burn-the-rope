@@ -18,93 +18,7 @@ import { timeManager } from './time-manager';
 import { img } from './img';
 
 import { ASSET_URLS } from './urls';
-
-class KeyManager {
-  keys = {
-    right: {
-      pressed: false,
-    },
-    left: {
-      pressed: false,
-    },
-    jump: {
-      pressed: false,
-    },
-    attack: {
-      pressed: false,
-    },
-  };
-  constructor() {
-    const jump = () => {
-      if (!player.stunned && player.velocity.y === 0) {
-        player.velocity.y -= JUMP_SPEED;
-        audioManager.playJumpSound();
-      }
-    };
-    const startRight = () => {
-      if (!player.stunned) {
-        this.keys.right.pressed = true;
-        player.facingRight = true;
-      }
-    };
-    const stopRight = () => (this.keys.right.pressed = false);
-    const startLeft = () => {
-      if (!player.stunned) {
-        this.keys.left.pressed = true;
-        player.facingRight = false;
-      }
-    };
-    const stopLeft = () => (this.keys.left.pressed = false);
-    const attack = () => {
-      if (
-        !player.stunned &&
-        timeManager.now > player.lastAttack + PLAYER_ATTACKINTERVAL
-      ) {
-        player.attack();
-      }
-    };
-    addEventListener('keydown', (e) => {
-      if (phaseManager.phase >= PHASES.ropeburning) {
-        return;
-      }
-      const fn = {
-        ' ': jump,
-        ArrowUp: jump,
-        ArrowRight: startRight,
-        ArrowLeft: startLeft,
-      }[e.key];
-      (fn ?? attack)();
-    });
-    addEventListener('keyup', (e) => {
-      const fn = {
-        ArrowRight: stopRight,
-        ArrowLeft: stopLeft,
-      }[e.key];
-      fn?.();
-    });
-
-    const touch = matchMedia('(hover: none)').matches;
-    if (touch) {
-      const buttonsDiv = document.getElementById('buttons')!;
-      buttonsDiv.style.display = 'flex';
-
-      const rightBtn = document.getElementById('right')!;
-      rightBtn.addEventListener('touchstart', startRight);
-      rightBtn.addEventListener('touchend', stopRight);
-
-      const leftBtn = document.getElementById('left')!;
-      leftBtn.addEventListener('touchstart', startLeft);
-      leftBtn.addEventListener('touchend', stopLeft);
-
-      const jumpBtn = document.getElementById('jump')!;
-      jumpBtn.addEventListener('touchstart', jump);
-
-      const attackBtn = document.getElementById('attack')!;
-      attackBtn.addEventListener('touchstart', attack);
-    }
-  }
-}
-const keys = new KeyManager();
+import { keyManager } from './key-manager';
 
 interface IPlayer {
   x: number;
@@ -278,9 +192,9 @@ export class Player extends Coordinates {
 
     if (this.flying) {
       this.velocity.x *= 0.9;
-    } else if (keys.keys.right.pressed) {
+    } else if (keyManager.keys.right.pressed) {
       this.velocity.x = WALKING_SPEED;
-    } else if (keys.keys.left.pressed) {
+    } else if (keyManager.keys.left.pressed) {
       this.velocity.x = -WALKING_SPEED;
     } else {
       this.velocity.x = 0;

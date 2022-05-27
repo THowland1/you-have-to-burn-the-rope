@@ -37,14 +37,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-document.getElementById('show-info')!.addEventListener('click', () => {
-  document.getElementById('info')!.classList.remove('hidden');
-});
-
-document.getElementById('hide-info')!.addEventListener('click', () => {
-  document.getElementById('info')!.classList.add('hidden');
-});
-
 document.getElementById('canvas')!.addEventListener('click', () => {
   phaseManager.startStartPhase();
 });

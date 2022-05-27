@@ -1,3 +1,4 @@
+import { elementManager } from './element-manager';
 import { ASSET_URLS } from './urls';
 class EndCreditsMusic {
   audio = new BGMusic(ASSET_URLS['../audio/now-youre-a-hero.mp3']);
@@ -79,12 +80,6 @@ class AudioManager {
   jumpSound = new SFX(ASSET_URLS['../audio/jump.mp3']);
   landSound = new SFX(ASSET_URLS['../audio/land.mp3']);
 
-  volume0Btn = document.getElementById('volume-0')!;
-  volume1Btn = document.getElementById('volume-1')!;
-  constructor() {
-    this.volume0Btn.addEventListener('click', () => this.setVolume(0));
-    this.volume1Btn.addEventListener('click', () => this.setVolume(1));
-  }
   playTunnelMusic() {
     this.tunnelMusic.play(this.volume);
   }
@@ -130,11 +125,9 @@ class AudioManager {
     this.volume = volume;
 
     if (this.volume > 0) {
-      this.volume0Btn.classList.remove('hidden');
-      this.volume1Btn.classList.add('hidden');
+      elementManager.navbar.unmute();
     } else {
-      this.volume0Btn.classList.add('hidden');
-      this.volume1Btn.classList.remove('hidden');
+      elementManager.navbar.mute();
     }
   }
 }

@@ -1,0 +1,21 @@
+* {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body {
+  touch-action: manipulation;
+  background: url("page-bg_32x32.79edeaeb.png");
+  margin: 0;
+  font-family: Inter;
+  position: absolute;
+  inset: 0;
+}
+
+#canvas {
+  margin: auto;
+  position: absolute;
+  inset: 0;
+}
+
+/*# sourceMappingURL=index.ce1d6491.css.map */

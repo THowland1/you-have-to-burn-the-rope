@@ -1,0 +1,76 @@
+<style>
+  :host {
+    display: none;
+  }
+  :host([show]) {
+    display: block;
+  }
+  #buttons {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+  }
+  button {
+    background-color: rgb(255 255 255 / 0);
+    border: solid 1px #999;
+    border-radius: 8px;
+    height: 64px;
+    width: 64px;
+    color: #999;
+    margin-left: 4px;
+    margin-right: 4px;
+    transition: all 0.3s;
+    font-size: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  button svg {
+    height: 1em;
+    width: 1em;
+  }
+
+  button:active,
+  button:focus {
+    outline: none;
+  }
+  button:hover {
+    background-color: rgb(255 255 255 / 0.25);
+  }
+  #jump::before {
+    background-image: url('../../img/up-arrow_999_64x64.svg');
+  }
+  #attack::before {
+    background-image: url('../../img/axe_999_64x64.svg');
+  }
+  #left::before {
+    background-image: url('../../img/up-arrow_999_64x64.svg');
+    transform: rotate(-90deg);
+  }
+  #right::before {
+    background-image: url('../../img/up-arrow_999_64x64.svg');
+    transform: rotate(90deg);
+  }
+  .icon-button::before {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    height: 1em;
+    width: 1em;
+  }
+</style>
+<div id="buttons">
+  <div>
+    <button class="icon-button" id="jump"></button>
+    <button class="icon-button" id="attack"></button>
+  </div>
+  <div>
+    <button class="icon-button" id="left"></button>
+    <button class="icon-button" id="right"></button>
+  </div>
+</div>

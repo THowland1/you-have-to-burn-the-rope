@@ -1,0 +1,82 @@
+<style>
+  #volume-1 {
+    display: none;
+  }
+  :host([muted]) #volume-1 {
+    display: inherit;
+  }
+  :host([muted]) #volume-0 {
+    display: none;
+  }
+
+  #buttons {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+  }
+  button {
+    background-color: rgb(255 255 255 / 0);
+    border: solid 1px #999;
+    border-radius: 8px;
+    height: 64px;
+    width: 64px;
+    color: #999;
+    margin-left: 4px;
+    margin-right: 4px;
+    transition: all 0.3s;
+    font-size: 24px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  button svg {
+    height: 1em;
+    width: 1em;
+  }
+
+  button:active,
+  button:focus {
+    outline: none;
+  }
+  button:hover {
+    background-color: rgb(255 255 255 / 0.25);
+  }
+  nav {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 32px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  nav button {
+    border: none;
+  }
+
+  .icon-button::before {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    content: '';
+    height: 1em;
+    width: 1em;
+  }
+  #volume-0::before {
+    background-image: url('../../img/volume-0_999_64x64.svg');
+  }
+  #volume-1::before {
+    background-image: url('./../../img/volume-1_999_64x64.svg');
+  }
+  #show-info::before {
+    background-image: url('./../../img/info-circle_999_64x64.svg');
+  }
+</style>
+<nav>
+  <button class="icon-button" id="volume-0"></button>
+  <button class="icon-button hidden" id="volume-1"></button>
+  <button class="icon-button" id="show-info"></button>
+</nav>
