@@ -1,5 +1,4 @@
 export const ASSET_URLS = {
-  '../serviceworker.js': new URL('../serviceworker.js', import.meta.url),
   './index.ts': new URL('../index.ts', import.meta.url),
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap':
     new URL(

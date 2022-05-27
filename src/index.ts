@@ -26,12 +26,13 @@ import { plumes } from './js/plumes';
 import { rope } from './js/rope';
 import { slides } from './js/slides';
 import { timeManager } from './js/time-manager';
-import { ASSET_URLS } from './js/urls';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register(ASSET_URLS['../serviceworker.js'], { type: 'module' })
+      .register(new URL('./serviceworker.js', import.meta.url), {
+        type: 'module',
+      })
       .then((reg) => console.log('Success: ', reg.scope))
       .catch((err) => console.log('Failure: ', err));
   });
