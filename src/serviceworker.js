@@ -1,21 +1,17 @@
-import * as moo from '@parcel/service-worker';
-import { ASSET_URLS } from './js/urls';
+import { manifest, version } from '@parcel/service-worker';
 
-console.log(moo);
-
-const CACHE_NAME = 'version-0.1';
 const OFFLINE_URL = 'index.html';
 
 self.addEventListener('install', function (event) {
     console.log('[ServiceWorker] Install');
 
     event.waitUntil((async () => {
-        const cache = await caches.open(CACHE_NAME);
+        const cache = await caches.open(version);
         // Setting {cache: 'reload'} in the new request will ensure that the response
         // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
         await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }));
         await cache.add('/');
-        await cache.addAll(Object.values(ASSET_URLS));
+        await cache.addAll(manifest);
     })());
 
     self.skipWaiting();
