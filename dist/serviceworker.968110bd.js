@@ -569,7 +569,7 @@ parcelHelpers.export(exports, "ASSET_URLS", ()=>ASSET_URLS
 );
 const ASSET_URLS = {
     '../serviceworker.js': new URL(require("12598dbdb868850f")),
-    './index.js': new URL(require("c7bdd7e9e353a412")),
+    './index.ts': new URL(require("bb954a09ea1fa89e")),
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("83b7d5f789511615")),
     '../audio/axe-throw.mp3': new URL(require("ef611db54e3dee4f")),
     '../audio/boss-explosion.mp3': new URL(require("2fa3e31ddced57e9")),
@@ -639,7 +639,7 @@ const ASSET_URLS = {
     '../img/rope.png': new URL(require("82ff9f0d479476e6"))
 };
 
-},{"12598dbdb868850f":"ld6g2","c7bdd7e9e353a412":"bxiGM","83b7d5f789511615":"eFyOJ","ef611db54e3dee4f":"8G4cH","2fa3e31ddced57e9":"2wLy4","eb4a90b4e9500517":"jaEqy","938761b684182af1":"bJcna","4283bdfb26d29b1e":"cOBx9","92cb31807985c857":"5F5k6","e9371211ecb03429":"6auCl","d52aff1d687cf8ee":"ay6Yf","a2279bbd83b0e70a":"6Z7FG","4a5a8b662d1f6f09":"37Npb","7271d57ce7da033f":"esMJa","9bc6fb652764c13a":"4qfhT","d7b83b70e6592bdb":"7FfX0","72de858084fa02be":"1D2VR","cd5f32171301a805":"jZJ8y","1345a573c343a341":"kpuJ4","82b00d5f6456e9ad":"cQqtC","2c8ff0e0c05efc28":"68dFl","3f98b60277fd7b66":"6ATE5","98fee3b149974ca9":"bcVz0","edf6e79e9b4882e3":"lpubY","e503115f39badf28":"lNwyT","7f8a1d9696ce940a":"j46sC","c487a497b1efa3bc":"fvrwX","cefe40fa15010f90":"7ly1I","ad14f91c823e549a":"lVCnp","9623141b49264b9f":"56jTQ","a560e9f774468634":"7F1ag","d61b6ba086adcc2b":"flsAs","fc6ff2e9d0776084":"iQ139","49d49d949b4fa210":"cNqEB","ddcd0c58537b16bf":"fR06x","b7083691210ba588":"75ONh","a80917f444244687":"afajq","260f2762902d877a":"PIWQy","ab5192c0f2f9ef49":"a2pgN","27ad87d87fda90ea":"6ADP5","b533e5384b54f8c1":"eKAVb","b4059c2e34ae5e2f":"9EPnV","c805683a32a0f7b2":"3iuk1","925efa060855a93f":"6jWfz","e2cc0bb7680d12f6":"3VuW6","88011022ea06ee33":"kR70m","38f8d45e24d12ee2":"5WU6w","41c0cfc1fed69d12":"7R5mF","34d8afbdb4ac3d5e":"1TtBE","12cebfce04fdf60":"2MHMB","33ca6d2c4e9cfda4":"gt2mk","87640417fca58364":"94bmi","9d63b073ae256418":"8U28w","52bab78fba5bf111":"crOGG","3601a3015750be48":"2sMLW","d7b5753638ee0521":"agWu4","c5ab14b1cde9566e":"kAzoh","d3e05fe56561de51":"7MrLw","95c4d7c727d87042":"jem1m","be13a19c622683aa":"a5Fzf","d4c3c2c2e7dc31af":"3Y8uZ","789a9897de5bf741":"lmR9V","97a322445b6dc7c3":"d1gIV","34041894fe39b81a":"5DrDO","c235fec3d0587fcb":"nlcIK","48adc2dd52cfcae4":"fxYTD","a5d9b054ef12d754":"C71mP","ad23dad22f63b285":"1RGW7","82ff9f0d479476e6":"2nr7z","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ld6g2":[function(require,module,exports) {
+},{"12598dbdb868850f":"ld6g2","83b7d5f789511615":"eFyOJ","ef611db54e3dee4f":"8G4cH","2fa3e31ddced57e9":"2wLy4","eb4a90b4e9500517":"jaEqy","938761b684182af1":"bJcna","4283bdfb26d29b1e":"cOBx9","92cb31807985c857":"5F5k6","e9371211ecb03429":"6auCl","d52aff1d687cf8ee":"ay6Yf","a2279bbd83b0e70a":"6Z7FG","4a5a8b662d1f6f09":"37Npb","7271d57ce7da033f":"esMJa","9bc6fb652764c13a":"4qfhT","d7b83b70e6592bdb":"7FfX0","72de858084fa02be":"1D2VR","cd5f32171301a805":"jZJ8y","1345a573c343a341":"kpuJ4","82b00d5f6456e9ad":"cQqtC","2c8ff0e0c05efc28":"68dFl","3f98b60277fd7b66":"6ATE5","98fee3b149974ca9":"bcVz0","edf6e79e9b4882e3":"lpubY","e503115f39badf28":"lNwyT","7f8a1d9696ce940a":"j46sC","c487a497b1efa3bc":"fvrwX","cefe40fa15010f90":"7ly1I","ad14f91c823e549a":"lVCnp","9623141b49264b9f":"56jTQ","a560e9f774468634":"7F1ag","d61b6ba086adcc2b":"flsAs","fc6ff2e9d0776084":"iQ139","49d49d949b4fa210":"cNqEB","ddcd0c58537b16bf":"fR06x","b7083691210ba588":"75ONh","a80917f444244687":"afajq","260f2762902d877a":"PIWQy","ab5192c0f2f9ef49":"a2pgN","27ad87d87fda90ea":"6ADP5","b533e5384b54f8c1":"eKAVb","b4059c2e34ae5e2f":"9EPnV","c805683a32a0f7b2":"3iuk1","925efa060855a93f":"6jWfz","e2cc0bb7680d12f6":"3VuW6","88011022ea06ee33":"kR70m","38f8d45e24d12ee2":"5WU6w","41c0cfc1fed69d12":"7R5mF","34d8afbdb4ac3d5e":"1TtBE","12cebfce04fdf60":"2MHMB","33ca6d2c4e9cfda4":"gt2mk","87640417fca58364":"94bmi","9d63b073ae256418":"8U28w","52bab78fba5bf111":"crOGG","3601a3015750be48":"2sMLW","d7b5753638ee0521":"agWu4","c5ab14b1cde9566e":"kAzoh","d3e05fe56561de51":"7MrLw","95c4d7c727d87042":"jem1m","be13a19c622683aa":"a5Fzf","d4c3c2c2e7dc31af":"3Y8uZ","789a9897de5bf741":"lmR9V","97a322445b6dc7c3":"d1gIV","34041894fe39b81a":"5DrDO","c235fec3d0587fcb":"nlcIK","48adc2dd52cfcae4":"fxYTD","a5d9b054ef12d754":"C71mP","ad23dad22f63b285":"1RGW7","82ff9f0d479476e6":"2nr7z","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","bb954a09ea1fa89e":"8l71E"}],"ld6g2":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "serviceworker.968110bd.js" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -676,10 +676,7 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"bxiGM":[function(require,module,exports) {
-module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "yhtbtr.3542e8cb.js" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"eFyOJ":[function(require,module,exports) {
+},{}],"eFyOJ":[function(require,module,exports) {
 module.exports = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 
 },{}],"8G4cH":[function(require,module,exports) {
@@ -910,6 +907,9 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["iohiW","fiTDl"], "fiTDl", "parcelRequiref536")
+},{}],"8l71E":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('7CghF') + "yhtbtr.799891e4.js" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}]},["iohiW","fiTDl"], "fiTDl", "parcelRequiref536")
 
 //# sourceMappingURL=serviceworker.968110bd.js.map

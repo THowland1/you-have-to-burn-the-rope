@@ -526,29 +526,30 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"h7u1C":[function(require,module,exports) {
-var _axesJs = require("./js/axes.js");
-var _bossJs = require("./js/boss.js");
-var _canvasJs = require("./js/canvas.js");
-var _chandelierJs = require("./js/chandelier.js");
-var _constsJs = require("./js/consts.js");
-var _coordinatesJs = require("./js/coordinates.js");
-var _debugMenuJs = require("./js/debug-menu.js");
-var _explosionsJs = require("./js/explosions.js");
-var _flamesJs = require("./js/flames.js");
-var _healthbarJs = require("./js/healthbar.js");
-var _lasersJs = require("./js/lasers.js");
-var _phaseManagerJs = require("./js/phase-manager.js");
-var _platformsJs = require("./js/platforms.js");
-var _playerJs = require("./js/player.js");
-var _plumesJs = require("./js/plumes.js");
-var _ropeJs = require("./js/rope.js");
-var _slidesJs = require("./js/slides.js");
-var _timeManagerJs = require("./js/time-manager.js");
-var _audioManagerJs = require("./js/audio-manager.js");
-var _buttonManagerJs = require("./js/button-manager.js");
-var _urlsJs = require("./js/urls.js");
+var _audioManager = require("./js/audio-manager");
+var _axes = require("./js/axes");
+var _bg = require("./js/bg");
+var _boss = require("./js/boss");
+var _buttonManager = require("./js/button-manager");
+var _canvas = require("./js/canvas");
+var _chandelier = require("./js/chandelier");
+var _consts = require("./js/consts");
+var _coordinates = require("./js/coordinates");
+var _debugMenu = require("./js/debug-menu");
+var _explosions = require("./js/explosions");
+var _flames = require("./js/flames");
+var _healthbar = require("./js/healthbar");
+var _lasers = require("./js/lasers");
+var _phaseManager = require("./js/phase-manager");
+var _platforms = require("./js/platforms");
+var _player = require("./js/player");
+var _plumes = require("./js/plumes");
+var _rope = require("./js/rope");
+var _slides = require("./js/slides");
+var _timeManager = require("./js/time-manager");
+var _urls = require("./js/urls");
 if ('serviceWorker' in navigator) window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register(_urlsJs.ASSET_URLS['../serviceworker.js'], {
+    navigator.serviceWorker.register(_urls.ASSET_URLS['../serviceworker.js'], {
         type: 'module'
     }).then((reg)=>console.log('Success: ', reg.scope)
     ).catch((err)=>console.log('Failure: ', err)
@@ -561,843 +562,89 @@ document.getElementById('hide-info').addEventListener('click', ()=>{
     document.getElementById('info').classList.add('hidden');
 });
 document.getElementById('canvas').addEventListener('click', ()=>{
-    _phaseManagerJs.phaseManager.startStartPhase();
+    _phaseManager.phaseManager.startStartPhase();
 });
-class BG {
-    constructor(){
-        this.img = new Image();
-        this.img.src = _urlsJs.ASSET_URLS['../img/bg.png'];
-    }
-    draw() {
-        const sx = _coordinatesJs.offset.x;
-        const sy = _coordinatesJs.offset.y;
-        const sw = _canvasJs.FRAME_WIDTH;
-        const sh = _canvasJs.FRAME_HEIGHT;
-        const dx = 0;
-        const dy = 0;
-        const dw = _canvasJs.FRAME_WIDTH;
-        const dh = _canvasJs.FRAME_HEIGHT;
-        this.img && _canvasJs.c.drawImage(this.img, sx, sy, sw, sh, dx, dy, dw, dh);
-    }
-}
-const bg = new BG();
 function animate() {
     const now = new Date().valueOf();
-    _timeManagerJs.timeManager.msPerFrame = now - _timeManagerJs.timeManager.now;
-    _timeManagerJs.timeManager.now = now;
-    if (_constsJs.DEBUG_DELAY) setTimeout(()=>{
+    _timeManager.timeManager.msPerFrame = now - _timeManager.timeManager.now;
+    _timeManager.timeManager.now = now;
+    if (_consts.DEBUG_DELAY) setTimeout(()=>{
         requestAnimationFrame(animate);
-    }, _constsJs.DEBUG_DELAY);
+    }, _consts.DEBUG_DELAY);
     else requestAnimationFrame(animate);
-    _canvasJs.c.clearRect(0, 0, _canvasJs.canvas.width, _canvasJs.canvas.height);
-    if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.clicktostart) {
-        _canvasJs.c.fillStyle = 'white';
-        _canvasJs.c.textAlign = 'center';
-        _canvasJs.c.font = '500 14px Inter';
-        _canvasJs.c.fillText('Click to start', _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2);
+    _canvas.c.clearRect(0, 0, _canvas.canvas.width, _canvas.canvas.height);
+    if (_phaseManager.phaseManager.phase === _phaseManager.PHASES.clicktostart) {
+        _canvas.c.fillStyle = 'white';
+        _canvas.c.textAlign = 'center';
+        _canvas.c.font = '500 14px Inter';
+        _canvas.c.fillText('Click to start', _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2);
         return;
     }
-    if (_audioManagerJs.audioManager.endCreditsMusic.currentTime < 2) {
-        bg.draw();
-        if (_phaseManagerJs.phaseManager.showBackDoor) _phaseManagerJs.phaseManager.drawBackDoor();
-        _bossJs.boss.update();
-        _playerJs.player.update();
-        _ropeJs.rope.update();
-        _chandelierJs.chandelier.update();
-        _explosionsJs.explosions.update();
-        _plumesJs.plumes.update();
-        _axesJs.axes.update();
-        _lasersJs.lasers.update();
-        _healthbarJs.healthBar.update();
-        _flamesJs.flames.forEach((flame)=>flame.draw()
+    if (_audioManager.audioManager.endCreditsMusic.currentTime < 2) {
+        _bg.bg.draw();
+        if (_phaseManager.phaseManager.showBackDoor) _phaseManager.phaseManager.drawBackDoor();
+        _boss.boss.update();
+        _player.player.update();
+        _rope.rope.update();
+        _chandelier.chandelier.update();
+        _explosions.explosions.update();
+        _plumes.plumes.update();
+        _axes.axes.update();
+        _lasers.lasers.update();
+        _healthbar.healthBar.update();
+        _flames.flames.forEach((flame)=>flame.draw()
         );
-        _canvasJs.canvas.style.opacity = (2 - _audioManagerJs.audioManager.endCreditsMusic.currentTime) / 2;
-        _buttonManagerJs.buttonManager.setOpacity((2 - _audioManagerJs.audioManager.endCreditsMusic.currentTime) / 2);
+        _canvas.canvas.style.opacity = String((2 - _audioManager.audioManager.endCreditsMusic.currentTime) / 2);
+        _buttonManager.buttonManager.setOpacity((2 - _audioManager.audioManager.endCreditsMusic.currentTime) / 2);
     } else {
-        _canvasJs.canvas.style.opacity = 1;
-        _buttonManagerJs.buttonManager.hide();
+        _canvas.canvas.style.opacity = String(1);
+        _buttonManager.buttonManager.hide();
     }
-    if (_playerJs.player.left >= 3456) _phaseManagerJs.phaseManager.startBossFightPhase();
-    else if (_playerJs.player.left >= 192) _phaseManagerJs.phaseManager.startTunnelPhase();
-    _canvasJs.c.fillStyle = 'white';
-    _slidesJs.slides.forEach((slide)=>slide.draw()
+    if (_player.player.left >= 3456) _phaseManager.phaseManager.startBossFightPhase();
+    else if (_player.player.left >= 192) _phaseManager.phaseManager.startTunnelPhase();
+    _canvas.c.fillStyle = 'white';
+    _slides.slides.forEach((slide)=>slide.draw()
     );
-    if (_playerJs.player.hasFlame && _playerJs.player.intersects(_ropeJs.rope.flammableBitOfRope)) {
-        _playerJs.player.hasFlame = false;
-        _phaseManagerJs.phaseManager.startRopeBurningPhase();
+    if (_player.player.hasFlame && _player.player.intersects(_rope.rope.flammableBitOfRope)) {
+        _player.player.hasFlame = false;
+        _phaseManager.phaseManager.startRopeBurningPhase();
     }
-    if (_constsJs.SHOW_PLATFORMS) _platformsJs.platforms.forEach((platform)=>platform.draw()
+    if (_consts.SHOW_PLATFORMS) _platforms.platforms.forEach((platform)=>platform.draw()
     );
-    if (_constsJs.SHOW_DEBUGMENU) _debugMenuJs.debugMenu.draw();
-    if (_constsJs.SHOW_GRIDLINES) {
-        _canvasJs.c.fillStyle = 'white';
-        Array.from(Array(_constsJs.COURSE_WIDTH / 128)).forEach((_, x)=>{
-            _canvasJs.c.fillRect(x * 128 - _coordinatesJs.offset.x, 0, 1, _canvasJs.FRAME_HEIGHT);
-            _canvasJs.c.fillText(`${x * 4}`, x * 128 - _coordinatesJs.offset.x, 10);
+    if (_consts.SHOW_DEBUGMENU) _debugMenu.debugMenu.draw();
+    if (_consts.SHOW_GRIDLINES) {
+        _canvas.c.fillStyle = 'white';
+        Array.from(Array(_consts.COURSE_WIDTH / 128)).forEach((_, x)=>{
+            _canvas.c.fillRect(x * 128 - _coordinates.offset.x, 0, 1, _canvas.FRAME_HEIGHT);
+            _canvas.c.fillText(`${x * 4}`, x * 128 - _coordinates.offset.x, 10);
         });
-        Array.from(Array(_constsJs.COURSE_HEIGHT / 160)).forEach((_, y)=>{
-            _canvasJs.c.fillRect(0, y * 160 - _coordinatesJs.offset.y, _canvasJs.FRAME_WIDTH, 1);
-            _canvasJs.c.fillText(`${y * 5}`, 10, y * 160 - _coordinatesJs.offset.y);
+        Array.from(Array(_consts.COURSE_HEIGHT / 160)).forEach((_, y)=>{
+            _canvas.c.fillRect(0, y * 160 - _coordinates.offset.y, _canvas.FRAME_WIDTH, 1);
+            _canvas.c.fillText(`${y * 5}`, 10, y * 160 - _coordinates.offset.y);
         });
     }
-    if (_playerJs.player.localRight > 400 && _coordinatesJs.offset.x + _canvasJs.FRAME_WIDTH < _constsJs.COURSE_WIDTH && _playerJs.player.velocity.x > 0) _coordinatesJs.offset.x += _playerJs.player.velocity.x * _timeManagerJs.timeManager.msPerFrame;
-    else if (_playerJs.player.localLeft < 200 && _coordinatesJs.offset.x > 0 && _playerJs.player.velocity.x < 0) _coordinatesJs.offset.x += _playerJs.player.velocity.x * _timeManagerJs.timeManager.msPerFrame;
-    if (_playerJs.player.localTop < 175 && _coordinatesJs.offset.y > 0 && _playerJs.player.velocity.y < 0) _coordinatesJs.offset.y += _playerJs.player.velocity.y * _timeManagerJs.timeManager.msPerFrame;
-    else if (_playerJs.player.localBottom > 200 && _coordinatesJs.offset.y + _canvasJs.FRAME_HEIGHT < _constsJs.COURSE_HEIGHT && _playerJs.player.velocity.y > 0) _coordinatesJs.offset.y += _playerJs.player.velocity.y * _timeManagerJs.timeManager.msPerFrame;
+    if (_player.player.localRight > 400 && _coordinates.offset.x + _canvas.FRAME_WIDTH < _consts.COURSE_WIDTH && _player.player.velocity.x > 0) _coordinates.offset.x += _player.player.velocity.x * _timeManager.timeManager.msPerFrame;
+    else if (_player.player.localLeft < 200 && _coordinates.offset.x > 0 && _player.player.velocity.x < 0) _coordinates.offset.x += _player.player.velocity.x * _timeManager.timeManager.msPerFrame;
+    if (_player.player.localTop < 175 && _coordinates.offset.y > 0 && _player.player.velocity.y < 0) _coordinates.offset.y += _player.player.velocity.y * _timeManager.timeManager.msPerFrame;
+    else if (_player.player.localBottom > 200 && _coordinates.offset.y + _canvas.FRAME_HEIGHT < _consts.COURSE_HEIGHT && _player.player.velocity.y > 0) _coordinates.offset.y += _player.player.velocity.y * _timeManager.timeManager.msPerFrame;
 }
 animate();
 
-},{"./js/axes.js":"6UenL","./js/boss.js":"jiKqO","./js/canvas.js":"jvBLU","./js/chandelier.js":"2oThl","./js/consts.js":"2J0f1","./js/coordinates.js":"dsbsK","./js/debug-menu.js":"bcbWB","./js/explosions.js":"ensJg","./js/flames.js":"3rfbG","./js/healthbar.js":"2uxWm","./js/lasers.js":"awXIj","./js/phase-manager.js":"73f18","./js/platforms.js":"3eULH","./js/player.js":"2k4ca","./js/plumes.js":"dtlaX","./js/rope.js":"OzOSK","./js/slides.js":"dKMrO","./js/time-manager.js":"hIoYz","./js/audio-manager.js":"gwz40","./js/button-manager.js":"jLViv","./js/urls.js":"ki4j8"}],"6UenL":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "axes", ()=>axes
-);
-var _coordinatesJs = require("./coordinates.js");
-var _canvasJs = require("./canvas.js");
-var _bossJs = require("./boss.js");
-var _healthbarJs = require("./healthbar.js");
-var _timeManagerJs = require("./time-manager.js");
-var _audioManagerJs = require("./audio-manager.js");
-var _constsJs = require("./consts.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
-const axeImg = _imgJs.img(_urlsJs.ASSET_URLS['../img/axe_18x18.png']);
-class Axes {
-    constructor(){
-        /** @type {Axe[]} */ this.axes = [];
-    }
-    add({ left , top , shootRight  }) {
-        this.axes.push(new Axe({
-            left,
-            top,
-            shootRight
-        }));
-        _audioManagerJs.audioManager.playAxeThrowSound();
-    }
-    update() {
-        this.axes = this.axes.filter((axe)=>_timeManagerJs.timeManager.now - axe.startTime < 6000 && !axe.hitBoss
-        );
-        this.axes.forEach((axe)=>axe.update()
-        );
-    }
-}
-class Axe extends _coordinatesJs.Coordinates {
-    constructor({ left , top , shootRight  }){
-        super({
-            x: left,
-            y: top,
-            width: 18,
-            height: 18
-        });
-        this.img = axeImg;
-        this.startTime = new Date().valueOf();
-        this.angle = 0;
-        this.finished = false;
-        this.velocity = -_constsJs.AXE_SPEED_Y;
-        this.turnsPerSecond = .25;
-        this.shootRight = shootRight;
-        this.hitBoss = false;
-    }
-    update() {
-        if (this.intersects(_bossJs.boss)) {
-            this.hitBoss = true;
-            _healthbarJs.healthBar.health -= .01;
-        }
-        this.x += _constsJs.AXE_SPEED_X * _timeManagerJs.timeManager.msPerFrame * (this.shootRight ? 1 : -1);
-        this.velocity += _constsJs.AXE_GRAVITY * _timeManagerJs.timeManager.msPerFrame;
-        this.y += this.velocity * _timeManagerJs.timeManager.msPerFrame;
-        this.angle += 2 * Math.PI * this.turnsPerSecond * (_timeManagerJs.timeManager.now - this.startTime) / 1000;
-        this.draw();
-    }
-    draw() {
-        _canvasJs.c.save();
-        _canvasJs.c.setTransform(1, 0, 0, 1, this.localLeft, this.localTop); // sets scale and origin
-        _canvasJs.c.rotate(this.angle);
-        _canvasJs.c.drawImage(this.img, -9, -9, this.width, this.height);
-        _canvasJs.c.restore();
-    }
-}
-const axes = new Axes();
-
-},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./boss.js":"jiKqO","./healthbar.js":"2uxWm","./time-manager.js":"hIoYz","./audio-manager.js":"gwz40","./consts.js":"2J0f1","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dsbsK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "offset", ()=>offset
-);
-// rope
-// export const offset = {
-//     x: 124 * 32,
-//     y: 5 * 32
-// };
-// end
-// export const offset = {
-//     x: 144 * 32,
-//     y: 15 * 32
-// };
-parcelHelpers.export(exports, "Coordinates", ()=>Coordinates
-);
-const offset = {
-    x: 0,
-    y: 0
-};
-class Coordinates {
-    constructor({ x , y , height , width  }){
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-    }
-    get left() {
-        return this.x;
-    }
-    get right() {
-        return this.left + this.width;
-    }
-    get center() {
-        return this.left + 0.5 * this.width;
-    }
-    get yCenter() {
-        return this.top + 0.5 * this.height;
-    }
-    get top() {
-        return this.y;
-    }
-    get bottom() {
-        return this.top + this.height;
-    }
-    get localLeft() {
-        return this.x - offset.x;
-    }
-    get localRight() {
-        return this.localLeft + this.width;
-    }
-    get localTop() {
-        return this.y - offset.y;
-    }
-    get localBottom() {
-        return this.localTop + this.height;
-    }
-    intersectsX({ left , right  }) {
-        return this.right >= left && this.right <= right || this.left >= left && this.right <= right;
-    }
-    intersectsY({ top , bottom  }) {
-        return this.bottom <= bottom && this.bottom >= top || this.top <= bottom && this.top >= top;
-    }
-    intersects({ left , right , top , bottom  }) {
-        return this.intersectsX({
-            left,
-            right
-        }) && this.intersectsY({
-            top,
-            bottom
-        });
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"jvBLU":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "canvas", ()=>canvas
-);
-parcelHelpers.export(exports, "c", ()=>c
-);
-parcelHelpers.export(exports, "FRAME_WIDTH", ()=>FRAME_WIDTH
-);
-parcelHelpers.export(exports, "FRAME_HEIGHT", ()=>FRAME_HEIGHT
-);
-const SCALE = 1;
-class Context {
-    constructor(){
-        this.canvas = document.querySelector('canvas');
-        this.context = this.canvas.getContext('2d');
-    }
-    drawImage(image, ...rest) {
-        if (rest.length === 4) this.context.drawImage(image, ...rest.map((o)=>o * SCALE
-        ));
-        else if (rest.length === 8) {
-            const [sx, sy, sw, sh] = rest.slice(0, 4);
-            const d = rest.slice(4, 8);
-            this.context.drawImage(image, sx, sy, sw, sh, ...d.map((o)=>o * SCALE
-            ));
-        }
-    }
-    scale(...rest) {
-        this.context.scale(...rest);
-    }
-    clearRect(...rest) {
-        this.context.clearRect(...rest.map((o)=>o * SCALE
-        ));
-    }
-    fillRect(...rest) {
-        this.context.fillRect(...rest.map((o)=>o * SCALE
-        ));
-    }
-    fillText(text, ...rest) {
-        this.context.fillText(text, ...rest.map((o)=>o * SCALE
-        ));
-    }
-    setTransform(a, b, c1, d, e, f) {
-        this.context.setTransform(a, b, c1, d, e, f);
-    }
-    rotate(angle) {
-        this.context.rotate(angle);
-    }
-    save() {
-        this.context.save();
-    }
-    restore() {
-        this.context.restore();
-    }
-    set fillStyle(value) {
-        this.context.fillStyle = value;
-    }
-    set font(value) {
-        this.context.font = value;
-    }
-    set textAlign(value) {
-        this.context.textAlign = value;
-    }
-}
-const context = new Context();
-const canvas = context.canvas;
-const c = context;
-const FRAME_WIDTH = 704;
-const FRAME_HEIGHT = 512;
-canvas.height = SCALE * FRAME_HEIGHT;
-canvas.width = SCALE * FRAME_WIDTH;
-function setSize() {
-    const width = window.outerWidth;
-    const height = window.outerWidth;
-    const maxHeight = FRAME_HEIGHT;
-    const maxWidth = FRAME_WIDTH;
-    if (width >= maxWidth && height >= maxHeight) {
-        canvas.style.height = `${maxHeight}px`;
-        canvas.style.width = `${maxWidth}px`;
-    } else {
-        var ratio = FRAME_HEIGHT / FRAME_WIDTH;
-        canvas.style.height = `${width * ratio}px`;
-        canvas.style.width = `${width}px`;
-    }
-}
-setSize();
-addEventListener('resize', setSize);
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jiKqO":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "boss", ()=>boss
-);
-var _canvasJs = require("./canvas.js");
-var _constsJs = require("./consts.js");
-var _coordinatesJs = require("./coordinates.js");
-var _playerJs = require("./player.js");
-var _phaseManagerJs = require("./phase-manager.js");
-var _lasersJs = require("./lasers.js");
-var _timeManagerJs = require("./time-manager.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
-class Boss extends _coordinatesJs.Coordinates {
-    /**
-     * Boss pattern
-     * If player is X blocks away, do nothing (no changing mode, no acting)
-     * If player is above, switch to 'looking up' sprite
-     * If player is to the left, switch to 'looking left' sprite
-     * If player is to the right, switch to 'looking right' sprite
-     * Either in attack mode or move mode
-     * Mode logic
-     *  - 
-     */ constructor(){
-        super({
-            x: 4128,
-            y: 608,
-            height: 256,
-            width: 192
-        });
-        /** @type{'move' | 'attack' | 'still'} */ this.mode = 'attack';
-        this.facingRight = false;
-        this.x = 4128;
-        this.y = 608;
-        this.velocity = {
-            x: 0,
-            y: 0
-        };
-        this.images = {
-            attack: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-attack_204x256.png']),
-            die: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-die_192x256.png']),
-            lookup: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-lookup_192x256.png']),
-            move: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-move_204x256.png']),
-            still: _imgJs.img(_urlsJs.ASSET_URLS['../img/boss-still_204x256.png'])
-        };
-        this.lastAttacked = 0;
-        this.recalculateModeAt = 0;
-    }
-    draw() {
-        let img;
-        this.width = 204;
-        img = this.images.move;
-        if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.bossdying) {
-            this.width = 192;
-            img = this.images.die;
-        } else if (this.mode === 'attack') img = this.images.attack;
-        else if (this.mode === 'still') img = this.images.still;
-        else if (this.top > _playerJs.player.bottom) {
-            this.width = 192;
-            img = this.images.lookup;
-        }
-        if (this.facingRight) _canvasJs.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
-        else {
-            _canvasJs.c.save();
-            _canvasJs.c.scale(-1, 1);
-            _canvasJs.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
-            _canvasJs.c.restore();
-        }
-    }
-    update() {
-        if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.end) return;
-        this.draw();
-        if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.bossdying) return;
-        if (_playerJs.player.left > _constsJs.ATTACKZONE_LEFT && _playerJs.player.right < _constsJs.ATTACKZONE_RIGHT) {
-            if (_phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.ropeburning || _phaseManagerJs.phaseManager.phase === _phaseManagerJs.PHASES.ropefalling || _playerJs.player.bottom <= _constsJs.RAFTERS_BOTTOM && (_playerJs.player.left < boss.left || _playerJs.player.right > boss.right)) this.mode = 'move';
-            else if (_timeManagerJs.timeManager.now > this.recalculateModeAt) {
-                this.recalculateModeAt = _timeManagerJs.timeManager.now + _constsJs.BOSS_MAXMODEDURATION * Math.random();
-                this.mode = [
-                    'move',
-                    'attack',
-                    'still'
-                ][Math.floor(3 * Math.random())];
-            }
-        } else this.mode = 'still';
-        this.facingRight = _playerJs.player.center > this.center;
-        switch(this.mode){
-            case 'attack':
-                if (_timeManagerJs.timeManager.now > this.lastAttacked + _constsJs.BOSS_ATTACKINTERVAL) {
-                    _lasersJs.lasers.add({
-                        left: this.facingRight ? this.right - 32 : this.left + 16,
-                        top: this.top + 108
-                    });
-                    this.lastAttacked = _timeManagerJs.timeManager.now;
-                }
-                break;
-            case 'move':
-                if (this.facingRight && this.right <= _constsJs.BOSS_MAXRIGHT) this.x += _constsJs.BOSS_SPEED;
-                else if (!this.facingRight && this.left >= _constsJs.BOSS_MAXLEFT) this.x -= _constsJs.BOSS_SPEED;
-        }
-    }
-}
-const boss = new Boss();
-
-},{"./canvas.js":"jvBLU","./consts.js":"2J0f1","./coordinates.js":"dsbsK","./player.js":"2k4ca","./phase-manager.js":"73f18","./lasers.js":"awXIj","./time-manager.js":"hIoYz","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2J0f1":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "COURSE_WIDTH", ()=>COURSE_WIDTH
-);
-parcelHelpers.export(exports, "COURSE_HEIGHT", ()=>COURSE_HEIGHT
-);
-parcelHelpers.export(exports, "BOSS_SPEED", ()=>BOSS_SPEED
-);
-parcelHelpers.export(exports, "BOSS_MAXLEFT", ()=>BOSS_MAXLEFT
-);
-parcelHelpers.export(exports, "BOSS_MAXRIGHT", ()=>BOSS_MAXRIGHT
-);
-parcelHelpers.export(exports, "ATTACKZONE_LEFT", ()=>ATTACKZONE_LEFT
-);
-parcelHelpers.export(exports, "ATTACKZONE_RIGHT", ()=>ATTACKZONE_RIGHT
-);
-parcelHelpers.export(exports, "RAFTERS_BOTTOM", ()=>RAFTERS_BOTTOM
-);
-parcelHelpers.export(exports, "BOSS_ATTACKINTERVAL", ()=>BOSS_ATTACKINTERVAL
-);
-parcelHelpers.export(exports, "BOSS_MAXMODEDURATION", ()=>BOSS_MAXMODEDURATION
-);
-parcelHelpers.export(exports, "SHOW_GRIDLINES", ()=>SHOW_GRIDLINES
-);
-parcelHelpers.export(exports, "SHOW_PLATFORMS", ()=>SHOW_PLATFORMS
-);
-parcelHelpers.export(exports, "SHOW_DEBUGMENU", ()=>SHOW_DEBUGMENU
-);
-parcelHelpers.export(exports, "DEBUG_DELAY", ()=>DEBUG_DELAY
-);
-parcelHelpers.export(exports, "PLAYER_GRAVITY", ()=>PLAYER_GRAVITY
-);
-parcelHelpers.export(exports, "WALKING_SPEED", ()=>WALKING_SPEED
-);
-parcelHelpers.export(exports, "JUMP_SPEED", ()=>JUMP_SPEED
-);
-parcelHelpers.export(exports, "CHANDELIER_GRAVITY", ()=>CHANDELIER_GRAVITY
-);
-parcelHelpers.export(exports, "LASER_SPEED", ()=>LASER_SPEED
-);
-parcelHelpers.export(exports, "LASER_DURATION", ()=>LASER_DURATION
-);
-parcelHelpers.export(exports, "AXE_SPEED_Y", ()=>AXE_SPEED_Y
-);
-parcelHelpers.export(exports, "AXE_SPEED_X", ()=>AXE_SPEED_X
-);
-parcelHelpers.export(exports, "AXE_GRAVITY", ()=>AXE_GRAVITY
-);
-parcelHelpers.export(exports, "PLAYER_ATTACKINTERVAL", ()=>PLAYER_ATTACKINTERVAL
-);
-parcelHelpers.export(exports, "VOLUME", ()=>VOLUME
-);
-const COURSE_WIDTH = 5120;
-const COURSE_HEIGHT = 960;
-const BOSS_SPEED = 2;
-const BOSS_MAXLEFT = 3840;
-const BOSS_MAXRIGHT = 4640;
-const ATTACKZONE_LEFT = 3616;
-const ATTACKZONE_RIGHT = 4864;
-const RAFTERS_BOTTOM = 320;
-const BOSS_ATTACKINTERVAL = 150;
-const BOSS_MAXMODEDURATION = 2000;
-const SHOW_GRIDLINES = false;
-const SHOW_PLATFORMS = false;
-const SHOW_DEBUGMENU = false;
-const DEBUG_DELAY = 0;
-const PLAYER_GRAVITY = 2.1 / 900;
-const WALKING_SPEED = 8 / 30;
-const JUMP_SPEED = 25 / 30;
-const CHANDELIER_GRAVITY = .001;
-const LASER_SPEED = 3;
-const LASER_DURATION = 2000;
-const AXE_SPEED_Y = .7;
-const AXE_SPEED_X = 7 / 30;
-const AXE_GRAVITY = .1 / 30;
-const PLAYER_ATTACKINTERVAL = 150;
-const VOLUME = .2;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2k4ca":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Player", ()=>Player
-);
-parcelHelpers.export(exports, "player", ()=>player
-);
-var _audioManagerJs = require("./audio-manager.js");
-var _axesJs = require("./axes.js");
-var _canvasJs = require("./canvas.js");
-var _constsJs = require("./consts.js");
-var _coordinatesJs = require("./coordinates.js");
-var _flamesJs = require("./flames.js");
-var _bossJs = require("./boss.js");
-var _framesJs = require("./frames.js");
-var _phaseManagerJs = require("./phase-manager.js");
-var _platformsJs = require("./platforms.js");
-var _plumesJs = require("./plumes.js");
-var _timeManagerJs = require("./time-manager.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
-class KeyManager {
-    constructor(){
-        this.keys = {
-            right: {
-                pressed: false
-            },
-            left: {
-                pressed: false
-            },
-            jump: {
-                pressed: false
-            },
-            attack: {
-                pressed: false
-            }
-        };
-        const jump = ()=>{
-            if (!player.stunned && player.velocity.y === 0) {
-                player.velocity.y -= _constsJs.JUMP_SPEED;
-                _audioManagerJs.audioManager.playJumpSound();
-            }
-        };
-        const startRight = ()=>{
-            if (!player.stunned) {
-                this.keys.right.pressed = true;
-                player.facingRight = true;
-            }
-        };
-        const stopRight = ()=>this.keys.right.pressed = false
-        ;
-        const startLeft = ()=>{
-            if (!player.stunned) {
-                this.keys.left.pressed = true;
-                player.facingRight = false;
-            }
-        };
-        const stopLeft = ()=>this.keys.left.pressed = false
-        ;
-        const attack = ()=>{
-            if (!player.stunned && _timeManagerJs.timeManager.now > player.lastAttack + _constsJs.PLAYER_ATTACKINTERVAL) player.attack();
-        };
-        addEventListener('keydown', (e)=>{
-            if (_phaseManagerJs.phaseManager.phase >= _phaseManagerJs.PHASES.ropeburning) return;
-            const fn = {
-                ' ': jump,
-                'ArrowUp': jump,
-                'ArrowRight': startRight,
-                'ArrowLeft': startLeft
-            }[e.key];
-            (fn ?? attack)();
-        });
-        addEventListener('keyup', (e)=>{
-            const fn = {
-                'ArrowRight': stopRight,
-                'ArrowLeft': stopLeft
-            }[e.key];
-            fn?.();
-        });
-        const touch = matchMedia('(hover: none)').matches;
-        if (touch) {
-            const buttonsDiv = document.getElementById('buttons');
-            buttonsDiv.style.display = 'flex';
-            const rightBtn = document.getElementById('right');
-            rightBtn.addEventListener('touchstart', startRight);
-            rightBtn.addEventListener('touchend', stopRight);
-            const leftBtn = document.getElementById('left');
-            leftBtn.addEventListener('touchstart', startLeft);
-            leftBtn.addEventListener('touchend', stopLeft);
-            const jumpBtn = document.getElementById('jump');
-            jumpBtn.addEventListener('touchstart', jump);
-            const attackBtn = document.getElementById('attack');
-            attackBtn.addEventListener('touchstart', attack);
-        }
-    }
-}
-const keys = new KeyManager();
-class Player extends _coordinatesJs.Coordinates {
-    constructor({ x , y  }){
-        super({
-            x,
-            y,
-            height: 36,
-            width: 30
-        });
-        this.hasFlame = false;
-        this.facingRight = true;
-        /** px per frame */ this.velocity = {
-            x: 0,
-            y: 0
-        };
-        this.images = {
-            fall: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-fall_30x36.png']),
-            hit: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-hit_30x36.png']),
-            jump: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-jump_30x36.png']),
-            still: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-still_30x36.png']),
-            throw: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-throw_30x36.png']),
-            walk1: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-walk-1_30x36.png']),
-            walk2: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-walk-2_30x36.png']),
-            walk3: _imgJs.img(_urlsJs.ASSET_URLS['../img/player-walk-3_30x36.png']),
-            stick: _imgJs.img(_urlsJs.ASSET_URLS['../img/stick_30x6.png']),
-            flame1: _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-1_28x28.png']),
-            flame2: _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-2_28x28.png']),
-            flame3: _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-3_28x28.png'])
-        };
-        this.walkFrames = new _framesJs.Frames({
-            fps: 12,
-            images: [
-                this.images.walk3,
-                this.images.walk2,
-                this.images.walk1
-            ]
-        });
-        this.flameFrames = new _framesJs.Frames({
-            fps: 12,
-            images: [
-                this.images.flame1,
-                this.images.flame2,
-                this.images.flame3
-            ]
-        });
-        this.lastAttack = 0;
-        this.lastHit = 0;
-    }
-    get flying() {
-        return _timeManagerJs.timeManager.now - this.lastHit < 500;
-    }
-    get stunned() {
-        return _timeManagerJs.timeManager.now - this.lastHit < 1500;
-    }
-    get blinking() {
-        return _timeManagerJs.timeManager.now - this.lastHit < 2000;
-    }
-    get nextFrame() {
-        return new _coordinatesJs.Coordinates({
-            x: this.x + this.velocity.x * _timeManagerJs.timeManager.msPerFrame,
-            y: this.y + this.velocity.y * _timeManagerJs.timeManager.msPerFrame,
-            width: this.width,
-            height: this.height
-        });
-    }
-    attack() {
-        this.hasFlame = false;
-        this.lastAttack = new Date().valueOf();
-        _axesJs.axes.add({
-            left: this.left + 0.5 * this.width,
-            top: this.top + 0.5 * this.height,
-            shootRight: this.facingRight
-        });
-    }
-    land() {
-        _plumesJs.plumes.add({
-            left: this.left - 43,
-            bottom: this.bottom,
-            facingRight: false
-        });
-        _plumesJs.plumes.add({
-            left: this.right,
-            bottom: this.bottom,
-            facingRight: true
-        });
-    }
-    hurtByBoss() {
-        this.hasFlame = false;
-        this.lastHit = new Date().valueOf();
-        this.velocity.x = (this.facingRight ? -1 : 1) * _constsJs.JUMP_SPEED;
-    }
-    hurtByLaser() {
-        this.hasFlame = false;
-        if (!this.blinking) {
-            this.velocity.y = -_constsJs.JUMP_SPEED;
-            this.lastHit = new Date().valueOf();
-        }
-    }
-    draw() {
-        const torchOffset = {
-            x: 0,
-            y: 0
-        };
-        let img;
-        if (this.flying) img = this.images.hit;
-        else if (_timeManagerJs.timeManager.now - this.lastAttack < 100) img = this.images.throw;
-        else if (this.velocity.y > 0) {
-            img = this.images.fall;
-            torchOffset.x = 1;
-            torchOffset.y = -6;
-        } else if (this.velocity.y < 0) {
-            img = this.images.jump;
-            torchOffset.x = 1;
-        } else if (this.velocity.x !== 0) {
-            img = this.walkFrames.get();
-            torchOffset.x = 1;
-        } else img = this.images.still;
-        if (this.blinking) {
-            const sinceHit = _timeManagerJs.timeManager.now - this.lastHit;
-            if (sinceHit % 500 > 300) return;
-        }
-        if (this.facingRight) {
-            _canvasJs.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
-            if (this.hasFlame) {
-                _canvasJs.c.drawImage(this.images.stick, this.localLeft + 5 + torchOffset.x, this.localTop + 18 + torchOffset.y, 30, 6);
-                _canvasJs.c.drawImage(this.flameFrames.get(), this.localLeft + 20 + torchOffset.x, this.localTop - 7 + torchOffset.y, 28, 28);
-            }
-        } else {
-            _canvasJs.c.save();
-            _canvasJs.c.scale(-1, 1);
-            _canvasJs.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
-            if (this.hasFlame) {
-                _canvasJs.c.drawImage(this.images.stick, -this.localRight + 5 + torchOffset.x, this.localTop + 18 + torchOffset.y, 30, 6);
-                _canvasJs.c.drawImage(this.flameFrames.get(), -this.localRight + 20 + torchOffset.x, this.localTop - 7 + torchOffset.y, 28, 28);
-            }
-            _canvasJs.c.restore();
-        }
-    }
-    update() {
-        // Update Y velocity
-        this.velocity.y += _constsJs.PLAYER_GRAVITY * _timeManagerJs.timeManager.msPerFrame;
-        // Update X velocity
-        if (this.flying) this.velocity.x *= .9;
-        else if (keys.keys.right.pressed) this.velocity.x = _constsJs.WALKING_SPEED;
-        else if (keys.keys.left.pressed) this.velocity.x = -_constsJs.WALKING_SPEED;
-        else this.velocity.x = 0;
-        _platformsJs.platforms.forEach((platform)=>{
-            if (this.right > platform.left && this.left < platform.right || this.nextFrame.right > platform.left && this.nextFrame.left < platform.right) {
-                if (this.bottom <= platform.top && this.nextFrame.bottom >= platform.top) {
-                    this.y = platform.y - this.height;
-                    if (this.velocity.y > 0.1 * _timeManagerJs.timeManager.msPerFrame) this.land();
-                    this.velocity.y = 0;
-                } else if (this.top >= platform.bottom && this.nextFrame.top <= platform.bottom) {
-                    this.y = platform.bottom;
-                    this.velocity.y = 0;
-                }
-            }
-            if (this.bottom > platform.top && this.top < platform.bottom || this.nextFrame.bottom > platform.top && this.nextFrame.top < platform.bottom) {
-                if (this.right <= platform.left && this.nextFrame.right >= platform.left) {
-                    this.x = platform.left - this.width;
-                    this.velocity.x = 0;
-                }
-                if (this.left >= platform.right && this.nextFrame.left <= platform.right) {
-                    this.x = platform.right;
-                    this.velocity.x = 0;
-                }
-            }
-        });
-        this.x += this.velocity.x * _timeManagerJs.timeManager.msPerFrame;
-        this.y += this.velocity.y * _timeManagerJs.timeManager.msPerFrame;
-        if (!this.hasFlame) this.hasFlame = _flamesJs.flames.some((flame)=>this.intersects(flame)
-        );
-        this.draw();
-        if (this.intersects(_bossJs.boss)) this.hurtByBoss();
-    }
-}
-const player = new Player({
-    x: 128,
-    y: 0
-}); //rope
- // export const player = new Player({
- //     x: 127 * 32,
- //     y: 8.5 * 32,
- // });
- //bottomright
- // export const player = new Player({
- //     x: 152 * 32,
- //     y: 23.5 * 32,
- // });
-
-},{"./audio-manager.js":"gwz40","./axes.js":"6UenL","./canvas.js":"jvBLU","./consts.js":"2J0f1","./coordinates.js":"dsbsK","./flames.js":"3rfbG","./boss.js":"jiKqO","./frames.js":"8i0FU","./phase-manager.js":"73f18","./platforms.js":"3eULH","./plumes.js":"dtlaX","./time-manager.js":"hIoYz","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gwz40":[function(require,module,exports) {
+},{"./js/audio-manager":"eqlY2","./js/axes":"6KuQA","./js/boss":"i5HRn","./js/button-manager":"2Z5wt","./js/canvas":"3ib9d","./js/chandelier":"bvCN6","./js/consts":"i99Dc","./js/coordinates":"96akj","./js/debug-menu":"ezoyF","./js/explosions":"esUVw","./js/flames":"hqADu","./js/healthbar":"5clUK","./js/lasers":"4YS9J","./js/phase-manager":"2aQoL","./js/platforms":"eYBZp","./js/player":"cK1Qv","./js/plumes":"6HX0g","./js/rope":"9scZJ","./js/slides":"9bwzS","./js/time-manager":"g5oF1","./js/urls":"8OWkF","./js/bg":"1beJH"}],"eqlY2":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "audioManager", ()=>audioManager
 );
-var _urlsJs = require("./urls.js");
+var _urls = require("./urls");
 class EndCreditsMusic {
-    constructor(){
-        this.audio = new Audio(_urlsJs.ASSET_URLS['../audio/now-youre-a-hero.mp3']);
-        this.startTime = null;
-    }
-    play() {
+    audio = new BGMusic(_urls.ASSET_URLS['../audio/now-youre-a-hero.mp3']);
+    startTime = null;
+    play(volume) {
         this.startTime = new Date().valueOf();
-        this.audio.play();
+        this.audio.play(volume);
     }
     set currentTime(value) {
-        this.audio.currentTime = value;
+        if (this.audio.bgMusic) this.audio.bgMusic.currentTime = value;
         const date = new Date();
         date.setSeconds(date.getSeconds() - value);
         this.startTime = date.valueOf();
@@ -1407,9 +654,25 @@ class EndCreditsMusic {
         else return 0;
     }
 }
-class SFX {
+class BGMusic {
+    bgMusic = null;
     constructor(src){
-        /** @type{HTMLAudioElement[]} */ this.cache = [];
+        this.src = src;
+    }
+    play(volume) {
+        const bgMusic = new Audio(this.src.href);
+        bgMusic.loop = true;
+        bgMusic.volume = volume;
+        bgMusic.play();
+        this.bgMusic = bgMusic;
+    }
+    pause() {
+        this.bgMusic?.pause();
+    }
+}
+class SFX {
+    cache = [];
+    constructor(src){
         this.src = src;
     }
     play(volume) {
@@ -1418,7 +681,7 @@ class SFX {
         );
         if (availableSoundInCache) sound = availableSoundInCache;
         else {
-            sound = new Audio(this.src);
+            sound = new Audio(this.src.href);
             this.cache.push(sound);
         }
         sound.volume = volume;
@@ -1426,29 +689,40 @@ class SFX {
     }
 }
 class AudioManager {
+    volume = 1;
+    tunnelMusic = new BGMusic(_urls.ASSET_URLS['../audio/tunnel.mp3']);
+    bossFightMusic = new BGMusic(_urls.ASSET_URLS['../audio/boss-fight.mp3']);
+    endCreditsMusic = new EndCreditsMusic();
+    axeThrowSound = new SFX(_urls.ASSET_URLS['../audio/axe-throw.mp3']);
+    ropeExplosionSound = new SFX(_urls.ASSET_URLS['../audio/rope-explosion.mp3']);
+    bossExplosionSound = new SFX(_urls.ASSET_URLS['../audio/boss-explosion.mp3']);
+    doorSlamSound = new SFX(_urls.ASSET_URLS['../audio/door-slam.mp3']);
+    laserSound = new SFX(_urls.ASSET_URLS['../audio/eye-laser.mp3']);
+    deathSound = new SFX(_urls.ASSET_URLS['../audio/death.mp3']);
+    jumpSound = new SFX(_urls.ASSET_URLS['../audio/jump.mp3']);
+    landSound = new SFX(_urls.ASSET_URLS['../audio/land.mp3']);
+    volume0Btn = document.getElementById('volume-0');
+    volume1Btn = document.getElementById('volume-1');
     constructor(){
-        this.volume = 1;
-        this.tunnelMusic = new Audio(_urlsJs.ASSET_URLS['../audio/tunnel.mp3']);
-        this.tunnelMusic.loop = true;
-        this.tunnelMusic.volume = this.volume;
-        this.bossFightMusic = new Audio(_urlsJs.ASSET_URLS['../audio/boss-fight.mp3']);
-        this.bossFightMusic.loop = true;
-        this.bossFightMusic.volume = this.volume;
-        this.axeThrowSound = new SFX(_urlsJs.ASSET_URLS['../audio/axe-throw.mp3']);
-        this.ropeExplosionSound = new SFX(_urlsJs.ASSET_URLS['../audio/rope-explosion.mp3']);
-        this.bossExplosionSound = new SFX(_urlsJs.ASSET_URLS['../audio/boss-explosion.mp3']);
-        this.doorSlamSound = new SFX(_urlsJs.ASSET_URLS['../audio/door-slam.mp3']);
-        this.laserSound = new SFX(_urlsJs.ASSET_URLS['../audio/eye-laser.mp3']);
-        this.deathSound = new SFX(_urlsJs.ASSET_URLS['../audio/death.mp3']);
-        this.jumpSound = new SFX(_urlsJs.ASSET_URLS['../audio/jump.mp3']);
-        this.landSound = new SFX(_urlsJs.ASSET_URLS['../audio/land.mp3']);
-        this.endCreditsMusic = new EndCreditsMusic();
-        this.volume0Btn = document.getElementById('volume-0');
-        this.volume1Btn = document.getElementById('volume-1');
         this.volume0Btn.addEventListener('click', ()=>this.setVolume(0)
         );
         this.volume1Btn.addEventListener('click', ()=>this.setVolume(1)
         );
+    }
+    playTunnelMusic() {
+        this.tunnelMusic.play(this.volume);
+    }
+    playBossFightMusic() {
+        this.bossFightMusic.play(this.volume);
+    }
+    playEndCreditsMusic() {
+        this.endCreditsMusic.play(this.volume);
+    }
+    pauseTunnelMusic() {
+        this.tunnelMusic.pause();
+    }
+    pauseBossFightMusic() {
+        this.bossFightMusic.pause();
     }
     playAxeThrowSound() {
         this.axeThrowSound.play(this.volume);
@@ -1476,9 +750,6 @@ class AudioManager {
     }
     setVolume(volume) {
         this.volume = volume;
-        this.tunnelMusic.volume = volume;
-        this.bossFightMusic.volume = volume;
-        this.endCreditsMusic.audio.volume = volume;
         if (this.volume > 0) {
             this.volume0Btn.classList.remove('hidden');
             this.volume1Btn.classList.add('hidden');
@@ -1490,84 +761,84 @@ class AudioManager {
 }
 const audioManager = new AudioManager();
 
-},{"./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ki4j8":[function(require,module,exports) {
+},{"./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8OWkF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ASSET_URLS", ()=>ASSET_URLS
 );
 const ASSET_URLS = {
-    '../serviceworker.js': new URL(require("3c36f07cce4de438")),
-    './index.ts': new URL(require("42a03ed5dacf8a2c")),
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("adad38975974dcd7")),
-    '../audio/axe-throw.mp3': new URL(require("276eccf37794b08")),
-    '../audio/boss-explosion.mp3': new URL(require("b475c8cab88c5336")),
-    '../audio/boss-fight.mp3': new URL(require("4ad82c4e8be05464")),
-    '../audio/death.mp3': new URL(require("ca8b1dae55606be9")),
-    '../audio/door-slam.mp3': new URL(require("d9f1df6bcc3dc4ee")),
-    '../audio/eye-laser.mp3': new URL(require("3ba879e52243017c")),
-    '../audio/jump.mp3': new URL(require("ca43fe38a10d6b13")),
-    '../audio/land.mp3': new URL(require("e18be15545078789")),
-    '../audio/now-youre-a-hero.mp3': new URL(require("97b8d787b92b4c09")),
-    '../audio/rope-explosion.mp3': new URL(require("5d020da195c20bf2")),
-    '../audio/tunnel.mp3': new URL(require("b750a357c60df1b5")),
-    '../img/axe_18x18.png': new URL(require("87247644b3a7a88a")),
-    '../img/axe_999_64x64.svg': new URL(require("396b5b11e5c86fea")),
-    '../img/back-door_32x64.png': new URL(require("fb9f2690d40a8bf9")),
-    '../img/boss-attack_204x256.png': new URL(require("c65245d1ee827c71")),
-    '../img/boss-die_192x256.png': new URL(require("42a72b7755c6498b")),
-    '../img/boss-lookup_192x256.png': new URL(require("fde782d934ea79d3")),
-    '../img/boss-move_204x256.png': new URL(require("48dbb5d316bd3988")),
-    '../img/boss-still_204x256.png': new URL(require("e6ecf7be898d2b94")),
-    '../img/chandelier_160x96.png': new URL(require("805595210ad79098")),
-    '../img/credits-1_200x200.png': new URL(require("41920263ad6e2773")),
-    '../img/credits-2_200x200.png': new URL(require("2e8ed2795a83ea16")),
-    '../img/credits-3_200x200.png': new URL(require("579617441f5a8e6f")),
-    '../img/credits-4_200x200.png': new URL(require("1ec052dc3afc3103")),
-    '../img/credits-bg_704x512.png': new URL(require("1a89809d5ed07023")),
-    '../img/explosion-1_36x36.png': new URL(require("1d5d4a24793eeb95")),
-    '../img/explosion-2_36x36.png': new URL(require("c31caa2b2ccf5570")),
-    '../img/explosion-3_36x36.png': new URL(require("1635172a4eed68a9")),
-    '../img/explosion-4_36x36.png': new URL(require("e87fe54be77bdc4a")),
-    '../img/explosion-5_36x36.png': new URL(require("243d99757e4dbaf6")),
-    '../img/explosion-6_36x36.png': new URL(require("da219837b4e73c6a")),
-    '../img/explosion-7_36x36.png': new URL(require("e3026c998b856249")),
-    '../img/flame-sprites.png': new URL(require("cd5b90f58ea04ec6")),
-    '../img/flame-1_28x28.png': new URL(require("6b12c379e459f5a0")),
-    '../img/flame-2_28x28.png': new URL(require("be57e3f43ae4dbfc")),
-    '../img/flame-3_28x28.png': new URL(require("d6d66d7261099ab")),
-    '../img/info-circle_999_64x64.svg': new URL(require("f8ab4caabcf828eb")),
-    '../img/laser-1_20x20.png': new URL(require("cb26072e90bd692d")),
-    '../img/laser-2_20x20.png': new URL(require("e7da8aa9ff48c6c8")),
-    '../img/laser-3_20x20.png': new URL(require("76b090dd0ea6d021")),
-    '../img/laser-4_20x20.png': new URL(require("5b694e3994ab3a5a")),
-    '../img/laser-5_20x20.png': new URL(require("7e9066c1d1279d67")),
-    '../img/laser-6_20x20.png': new URL(require("f9af3119980a6329")),
-    '../img/laser-7_20x20.png': new URL(require("dbbe02123dfdbca")),
-    '../img/page-bg_32x32.png': new URL(require("c58df0bb569b9e32")),
-    '../img/player-fall_30x36.png': new URL(require("7cfd066581934182")),
-    '../img/player-hit_30x36.png': new URL(require("488d8d31375c1399")),
-    '../img/player-jump_30x36.png': new URL(require("a294ccf09816f08f")),
-    '../img/player-still_30x36.png': new URL(require("ef6bc6fd035318fb")),
-    '../img/player-throw_30x36.png': new URL(require("cddd9b061f39a436")),
-    '../img/player-walk-1_30x36.png': new URL(require("86a8c63c23fd4e3f")),
-    '../img/player-walk-2_30x36.png': new URL(require("8d22c4e584b4e818")),
-    '../img/player-walk-3_30x36.png': new URL(require("5e97299569052fb0")),
-    '../img/plume-1_43x21.png': new URL(require("8a4a5b8124a869fa")),
-    '../img/plume-2_43x21.png': new URL(require("c200f5e10f1c64f8")),
-    '../img/plume-3_43x21.png': new URL(require("aebcdecc266054d0")),
-    '../img/plume-4_43x21.png': new URL(require("8d67c17c93a32004")),
-    '../img/plume-5_43x21.png': new URL(require("961acaa10c40a510")),
-    '../img/plume-6_43x21.png': new URL(require("1ceb93fc27896ee2")),
-    '../img/rope_8x192.png': new URL(require("c046d30d4a87e8dd")),
-    '../img/stick_30x6.png': new URL(require("248a638bf4e0a107")),
-    '../img/up-arrow_999_64x64.svg': new URL(require("d33d0c3e7412bca6")),
-    '../img/volume-0_999_64x64.svg': new URL(require("ee865d0e87d56a6d")),
-    '../img/volume-1_999_64x64.svg': new URL(require("3ed0256a573b1e54")),
-    '../img/bg.png': new URL(require("8fe8bcf6ef889bc0")),
-    '../img/rope.png': new URL(require("ba24449b1d4964c3"))
+    '../serviceworker.js': new URL(require("12598dbdb868850f")),
+    './index.ts': new URL(require("bb954a09ea1fa89e")),
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap': new URL(require("83b7d5f789511615")),
+    '../audio/axe-throw.mp3': new URL(require("ef611db54e3dee4f")),
+    '../audio/boss-explosion.mp3': new URL(require("2fa3e31ddced57e9")),
+    '../audio/boss-fight.mp3': new URL(require("eb4a90b4e9500517")),
+    '../audio/death.mp3': new URL(require("938761b684182af1")),
+    '../audio/door-slam.mp3': new URL(require("4283bdfb26d29b1e")),
+    '../audio/eye-laser.mp3': new URL(require("92cb31807985c857")),
+    '../audio/jump.mp3': new URL(require("e9371211ecb03429")),
+    '../audio/land.mp3': new URL(require("d52aff1d687cf8ee")),
+    '../audio/now-youre-a-hero.mp3': new URL(require("a2279bbd83b0e70a")),
+    '../audio/rope-explosion.mp3': new URL(require("4a5a8b662d1f6f09")),
+    '../audio/tunnel.mp3': new URL(require("7271d57ce7da033f")),
+    '../img/axe_18x18.png': new URL(require("9bc6fb652764c13a")),
+    '../img/axe_999_64x64.svg': new URL(require("d7b83b70e6592bdb")),
+    '../img/back-door_32x64.png': new URL(require("72de858084fa02be")),
+    '../img/boss-attack_204x256.png': new URL(require("cd5f32171301a805")),
+    '../img/boss-die_192x256.png': new URL(require("1345a573c343a341")),
+    '../img/boss-lookup_192x256.png': new URL(require("82b00d5f6456e9ad")),
+    '../img/boss-move_204x256.png': new URL(require("2c8ff0e0c05efc28")),
+    '../img/boss-still_204x256.png': new URL(require("3f98b60277fd7b66")),
+    '../img/chandelier_160x96.png': new URL(require("98fee3b149974ca9")),
+    '../img/credits-1_200x200.png': new URL(require("edf6e79e9b4882e3")),
+    '../img/credits-2_200x200.png': new URL(require("e503115f39badf28")),
+    '../img/credits-3_200x200.png': new URL(require("7f8a1d9696ce940a")),
+    '../img/credits-4_200x200.png': new URL(require("c487a497b1efa3bc")),
+    '../img/credits-bg_704x512.png': new URL(require("cefe40fa15010f90")),
+    '../img/explosion-1_36x36.png': new URL(require("ad14f91c823e549a")),
+    '../img/explosion-2_36x36.png': new URL(require("9623141b49264b9f")),
+    '../img/explosion-3_36x36.png': new URL(require("a560e9f774468634")),
+    '../img/explosion-4_36x36.png': new URL(require("d61b6ba086adcc2b")),
+    '../img/explosion-5_36x36.png': new URL(require("fc6ff2e9d0776084")),
+    '../img/explosion-6_36x36.png': new URL(require("49d49d949b4fa210")),
+    '../img/explosion-7_36x36.png': new URL(require("ddcd0c58537b16bf")),
+    '../img/flame-sprites.png': new URL(require("b7083691210ba588")),
+    '../img/flame-1_28x28.png': new URL(require("a80917f444244687")),
+    '../img/flame-2_28x28.png': new URL(require("260f2762902d877a")),
+    '../img/flame-3_28x28.png': new URL(require("ab5192c0f2f9ef49")),
+    '../img/info-circle_999_64x64.svg': new URL(require("27ad87d87fda90ea")),
+    '../img/laser-1_20x20.png': new URL(require("b533e5384b54f8c1")),
+    '../img/laser-2_20x20.png': new URL(require("b4059c2e34ae5e2f")),
+    '../img/laser-3_20x20.png': new URL(require("c805683a32a0f7b2")),
+    '../img/laser-4_20x20.png': new URL(require("925efa060855a93f")),
+    '../img/laser-5_20x20.png': new URL(require("e2cc0bb7680d12f6")),
+    '../img/laser-6_20x20.png': new URL(require("88011022ea06ee33")),
+    '../img/laser-7_20x20.png': new URL(require("38f8d45e24d12ee2")),
+    '../img/page-bg_32x32.png': new URL(require("41c0cfc1fed69d12")),
+    '../img/player-fall_30x36.png': new URL(require("34d8afbdb4ac3d5e")),
+    '../img/player-hit_30x36.png': new URL(require("12cebfce04fdf60")),
+    '../img/player-jump_30x36.png': new URL(require("33ca6d2c4e9cfda4")),
+    '../img/player-still_30x36.png': new URL(require("87640417fca58364")),
+    '../img/player-throw_30x36.png': new URL(require("9d63b073ae256418")),
+    '../img/player-walk-1_30x36.png': new URL(require("52bab78fba5bf111")),
+    '../img/player-walk-2_30x36.png': new URL(require("3601a3015750be48")),
+    '../img/player-walk-3_30x36.png': new URL(require("d7b5753638ee0521")),
+    '../img/plume-1_43x21.png': new URL(require("c5ab14b1cde9566e")),
+    '../img/plume-2_43x21.png': new URL(require("d3e05fe56561de51")),
+    '../img/plume-3_43x21.png': new URL(require("95c4d7c727d87042")),
+    '../img/plume-4_43x21.png': new URL(require("be13a19c622683aa")),
+    '../img/plume-5_43x21.png': new URL(require("d4c3c2c2e7dc31af")),
+    '../img/plume-6_43x21.png': new URL(require("789a9897de5bf741")),
+    '../img/rope_8x192.png': new URL(require("97a322445b6dc7c3")),
+    '../img/stick_30x6.png': new URL(require("34041894fe39b81a")),
+    '../img/up-arrow_999_64x64.svg': new URL(require("c235fec3d0587fcb")),
+    '../img/volume-0_999_64x64.svg': new URL(require("48adc2dd52cfcae4")),
+    '../img/volume-1_999_64x64.svg': new URL(require("a5d9b054ef12d754")),
+    '../img/bg.png': new URL(require("ad23dad22f63b285")),
+    '../img/rope.png': new URL(require("82ff9f0d479476e6"))
 };
 
-},{"3c36f07cce4de438":"qbaWg","adad38975974dcd7":"eFyOJ","276eccf37794b08":"kAsHj","b475c8cab88c5336":"lpxuW","4ad82c4e8be05464":"76ebO","ca8b1dae55606be9":"dk9wx","d9f1df6bcc3dc4ee":"76m8c","3ba879e52243017c":"haFPw","ca43fe38a10d6b13":"aWElV","e18be15545078789":"679cf","97b8d787b92b4c09":"H8jfG","5d020da195c20bf2":"dc19g","b750a357c60df1b5":"6d2M0","87247644b3a7a88a":"d1Eeb","396b5b11e5c86fea":"l99iv","fb9f2690d40a8bf9":"ljW8M","c65245d1ee827c71":"aAoWi","42a72b7755c6498b":"4y7WK","fde782d934ea79d3":"l0ckg","48dbb5d316bd3988":"cSj19","e6ecf7be898d2b94":"bl1r3","805595210ad79098":"8mEm1","41920263ad6e2773":"jOEyT","2e8ed2795a83ea16":"aTL8s","579617441f5a8e6f":"4EyJZ","1ec052dc3afc3103":"Lu2C7","1a89809d5ed07023":"MKRDx","1d5d4a24793eeb95":"02E0J","c31caa2b2ccf5570":"4o4gr","1635172a4eed68a9":"dhYx5","e87fe54be77bdc4a":"gSy8u","243d99757e4dbaf6":"9kV93","da219837b4e73c6a":"6A6cc","e3026c998b856249":"aFWyU","cd5b90f58ea04ec6":"17B85","6b12c379e459f5a0":"lvyCo","be57e3f43ae4dbfc":"iyTTP","d6d66d7261099ab":"gJVjl","f8ab4caabcf828eb":"jEmbQ","cb26072e90bd692d":"88jC8","e7da8aa9ff48c6c8":"deODV","76b090dd0ea6d021":"1LerJ","5b694e3994ab3a5a":"3docn","7e9066c1d1279d67":"6NxbV","f9af3119980a6329":"7j39L","dbbe02123dfdbca":"84d66","c58df0bb569b9e32":"bWW0T","7cfd066581934182":"ktE5y","488d8d31375c1399":"9IVgJ","a294ccf09816f08f":"6ZGqK","ef6bc6fd035318fb":"91uDY","cddd9b061f39a436":"dAfA1","86a8c63c23fd4e3f":"d9jz3","8d22c4e584b4e818":"4lWNg","5e97299569052fb0":"1CsM1","8a4a5b8124a869fa":"aGiYb","c200f5e10f1c64f8":"5WLYe","aebcdecc266054d0":"hz1tx","8d67c17c93a32004":"hJVF7","961acaa10c40a510":"hBZDf","1ceb93fc27896ee2":"6vJn7","c046d30d4a87e8dd":"60uEu","248a638bf4e0a107":"f2y9P","d33d0c3e7412bca6":"5GVQf","ee865d0e87d56a6d":"5YJBi","3ed0256a573b1e54":"2hfG2","8fe8bcf6ef889bc0":"1OCW8","ba24449b1d4964c3":"3HriH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","42a03ed5dacf8a2c":"1SPBh"}],"qbaWg":[function(require,module,exports) {
+},{"12598dbdb868850f":"qbaWg","83b7d5f789511615":"eFyOJ","ef611db54e3dee4f":"kAsHj","2fa3e31ddced57e9":"lpxuW","eb4a90b4e9500517":"76ebO","938761b684182af1":"dk9wx","4283bdfb26d29b1e":"76m8c","92cb31807985c857":"haFPw","e9371211ecb03429":"aWElV","d52aff1d687cf8ee":"679cf","a2279bbd83b0e70a":"H8jfG","4a5a8b662d1f6f09":"dc19g","7271d57ce7da033f":"6d2M0","9bc6fb652764c13a":"d1Eeb","d7b83b70e6592bdb":"l99iv","72de858084fa02be":"ljW8M","cd5f32171301a805":"aAoWi","1345a573c343a341":"4y7WK","82b00d5f6456e9ad":"l0ckg","2c8ff0e0c05efc28":"cSj19","3f98b60277fd7b66":"bl1r3","98fee3b149974ca9":"8mEm1","edf6e79e9b4882e3":"jOEyT","e503115f39badf28":"aTL8s","7f8a1d9696ce940a":"4EyJZ","c487a497b1efa3bc":"Lu2C7","cefe40fa15010f90":"MKRDx","ad14f91c823e549a":"02E0J","9623141b49264b9f":"4o4gr","a560e9f774468634":"dhYx5","d61b6ba086adcc2b":"gSy8u","fc6ff2e9d0776084":"9kV93","49d49d949b4fa210":"6A6cc","ddcd0c58537b16bf":"aFWyU","b7083691210ba588":"17B85","a80917f444244687":"lvyCo","260f2762902d877a":"iyTTP","ab5192c0f2f9ef49":"gJVjl","27ad87d87fda90ea":"jEmbQ","b533e5384b54f8c1":"88jC8","b4059c2e34ae5e2f":"deODV","c805683a32a0f7b2":"1LerJ","925efa060855a93f":"3docn","e2cc0bb7680d12f6":"6NxbV","88011022ea06ee33":"7j39L","38f8d45e24d12ee2":"84d66","41c0cfc1fed69d12":"bWW0T","34d8afbdb4ac3d5e":"ktE5y","12cebfce04fdf60":"9IVgJ","33ca6d2c4e9cfda4":"6ZGqK","87640417fca58364":"91uDY","9d63b073ae256418":"dAfA1","52bab78fba5bf111":"d9jz3","3601a3015750be48":"4lWNg","d7b5753638ee0521":"1CsM1","c5ab14b1cde9566e":"aGiYb","d3e05fe56561de51":"5WLYe","95c4d7c727d87042":"hz1tx","be13a19c622683aa":"hJVF7","d4c3c2c2e7dc31af":"hBZDf","789a9897de5bf741":"6vJn7","97a322445b6dc7c3":"60uEu","34041894fe39b81a":"f2y9P","c235fec3d0587fcb":"5GVQf","48adc2dd52cfcae4":"5YJBi","a5d9b054ef12d754":"2hfG2","ad23dad22f63b285":"1OCW8","82ff9f0d479476e6":"3HriH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","bb954a09ea1fa89e":"1SPBh"}],"qbaWg":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "serviceworker.968110bd.js" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -1805,22 +1076,734 @@ module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "bg.6c7
 },{"./helpers/bundle-url":"lgJ39"}],"3HriH":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "rope.442217df.png" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"1SPBh":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"1SPBh":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "yhtbtr.799891e4.js" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"3rfbG":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"6KuQA":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "axes", ()=>axes
+);
+var _coordinates = require("./coordinates");
+var _canvas = require("./canvas");
+var _boss = require("./boss");
+var _healthbar = require("./healthbar");
+var _timeManager = require("./time-manager");
+var _audioManager = require("./audio-manager");
+var _consts = require("./consts");
+var _img = require("./img");
+var _urls = require("./urls");
+const axeImg = _img.img(_urls.ASSET_URLS['../img/axe_18x18.png']);
+class Axes {
+    axes = [];
+    add({ left , top , shootRight  }) {
+        this.axes.push(new Axe({
+            left,
+            top,
+            shootRight
+        }));
+        _audioManager.audioManager.playAxeThrowSound();
+    }
+    update() {
+        this.axes = this.axes.filter((axe)=>_timeManager.timeManager.now - axe.startTime < 6000 && !axe.hitBoss
+        );
+        this.axes.forEach((axe)=>axe.update()
+        );
+    }
+}
+class Axe extends _coordinates.Coordinates {
+    img = axeImg;
+    startTime = new Date().valueOf();
+    angle = 0;
+    finished = false;
+    velocity = -_consts.AXE_SPEED_Y;
+    turnsPerSecond = 0.25;
+    hitBoss = false;
+    constructor({ left , top , shootRight  }){
+        super({
+            x: left,
+            y: top,
+            width: 18,
+            height: 18
+        });
+        this.shootRight = shootRight;
+    }
+    update() {
+        if (this.intersects(_boss.boss)) {
+            this.hitBoss = true;
+            _healthbar.healthBar.health -= 0.01;
+        }
+        this.x += _consts.AXE_SPEED_X * _timeManager.timeManager.msPerFrame * (this.shootRight ? 1 : -1);
+        this.velocity += _consts.AXE_GRAVITY * _timeManager.timeManager.msPerFrame;
+        this.y += this.velocity * _timeManager.timeManager.msPerFrame;
+        this.angle += 2 * Math.PI * this.turnsPerSecond * (_timeManager.timeManager.now - this.startTime) / 1000;
+        this.draw();
+    }
+    draw() {
+        _canvas.c.save();
+        _canvas.c.setTransform(1, 0, 0, 1, this.localLeft, this.localTop); // sets scale and origin
+        _canvas.c.rotate(this.angle);
+        _canvas.c.drawImage(this.img, -9, -9, this.width, this.height);
+        _canvas.c.restore();
+    }
+}
+const axes = new Axes();
+
+},{"./coordinates":"96akj","./canvas":"3ib9d","./boss":"i5HRn","./healthbar":"5clUK","./time-manager":"g5oF1","./audio-manager":"eqlY2","./consts":"i99Dc","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"96akj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "offset", ()=>offset
+);
+parcelHelpers.export(exports, "Coordinates", ()=>Coordinates
+);
+const offset = {
+    x: 0,
+    y: 0
+};
+class Coordinates {
+    constructor({ x , y , height , width  }){
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+    }
+    get left() {
+        return this.x;
+    }
+    get right() {
+        return this.left + this.width;
+    }
+    get center() {
+        return this.left + 0.5 * this.width;
+    }
+    get yCenter() {
+        return this.top + 0.5 * this.height;
+    }
+    get top() {
+        return this.y;
+    }
+    get bottom() {
+        return this.top + this.height;
+    }
+    get localLeft() {
+        return this.x - offset.x;
+    }
+    get localRight() {
+        return this.localLeft + this.width;
+    }
+    get localTop() {
+        return this.y - offset.y;
+    }
+    get localBottom() {
+        return this.localTop + this.height;
+    }
+    intersectsX({ left , right  }) {
+        return this.right >= left && this.right <= right || this.left >= left && this.right <= right;
+    }
+    intersectsY({ top , bottom  }) {
+        return this.bottom <= bottom && this.bottom >= top || this.top <= bottom && this.top >= top;
+    }
+    intersects({ left , right , top , bottom  }) {
+        return this.intersectsX({
+            left,
+            right
+        }) && this.intersectsY({
+            top,
+            bottom
+        });
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3ib9d":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "canvas", ()=>canvas
+);
+parcelHelpers.export(exports, "c", ()=>c
+);
+parcelHelpers.export(exports, "FRAME_WIDTH", ()=>FRAME_WIDTH
+);
+parcelHelpers.export(exports, "FRAME_HEIGHT", ()=>FRAME_HEIGHT
+);
+const SCALE = 1;
+class Context {
+    canvas = document.querySelector('canvas');
+    context = this.canvas.getContext('2d');
+    drawImage(image, ...rest) {
+        if (rest.length === 4) {
+            const [dx, dy, dw, dh] = rest;
+            this.context.drawImage(image, dx * SCALE, dy * SCALE, dw * SCALE, dh * SCALE);
+        } else if (rest.length === 8) {
+            const [sx, sy, sw, sh, dx, dy, dw, dh] = rest;
+            this.context.drawImage(image, sx, sy, sw, sh, dx * SCALE, dy * SCALE, dw * SCALE, dh * SCALE);
+        }
+    }
+    scale(x, y) {
+        this.context.scale(x, y);
+    }
+    clearRect(x, y, w, h) {
+        this.context.clearRect(x * SCALE, y * SCALE, w * SCALE, h * SCALE);
+    }
+    fillRect(x, y, w, h) {
+        this.context.fillRect(x * SCALE, y * SCALE, w * SCALE, h * SCALE);
+    }
+    fillText(text, x, y) {
+        this.context.fillText(text, x * SCALE, y * SCALE);
+    }
+    setTransform(a, b, c1, d, e, f) {
+        this.context.setTransform(a, b, c1, d, e, f);
+    }
+    rotate(angle) {
+        this.context.rotate(angle);
+    }
+    save() {
+        this.context.save();
+    }
+    restore() {
+        this.context.restore();
+    }
+    set fillStyle(value) {
+        this.context.fillStyle = value;
+    }
+    set font(value) {
+        this.context.font = value;
+    }
+    set textAlign(value) {
+        this.context.textAlign = value;
+    }
+}
+const context = new Context();
+const canvas = context.canvas;
+const c = context;
+const FRAME_WIDTH = 704;
+const FRAME_HEIGHT = 512;
+canvas.height = SCALE * FRAME_HEIGHT;
+canvas.width = SCALE * FRAME_WIDTH;
+function setSize() {
+    const width = window.outerWidth;
+    const height = window.outerWidth;
+    const maxHeight = FRAME_HEIGHT;
+    const maxWidth = FRAME_WIDTH;
+    if (width >= maxWidth && height >= maxHeight) {
+        canvas.style.height = `${maxHeight}px`;
+        canvas.style.width = `${maxWidth}px`;
+    } else {
+        var ratio = FRAME_HEIGHT / FRAME_WIDTH;
+        canvas.style.height = `${width * ratio}px`;
+        canvas.style.width = `${width}px`;
+    }
+}
+setSize();
+addEventListener('resize', setSize);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"i5HRn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "boss", ()=>boss
+);
+var _canvas = require("./canvas");
+var _consts = require("./consts");
+var _coordinates = require("./coordinates");
+var _player = require("./player");
+var _phaseManager = require("./phase-manager");
+var _lasers = require("./lasers");
+var _timeManager = require("./time-manager");
+var _img = require("./img");
+var _urls = require("./urls");
+class Boss extends _coordinates.Coordinates {
+    mode = 'attack';
+    facingRight = false;
+    x = 4128;
+    y = 608;
+    velocity = {
+        x: 0,
+        y: 0
+    };
+    images = {
+        attack: _img.img(_urls.ASSET_URLS['../img/boss-attack_204x256.png']),
+        die: _img.img(_urls.ASSET_URLS['../img/boss-die_192x256.png']),
+        lookup: _img.img(_urls.ASSET_URLS['../img/boss-lookup_192x256.png']),
+        move: _img.img(_urls.ASSET_URLS['../img/boss-move_204x256.png']),
+        still: _img.img(_urls.ASSET_URLS['../img/boss-still_204x256.png'])
+    };
+    lastAttacked = 0;
+    recalculateModeAt = 0;
+    constructor(){
+        super({
+            x: 4128,
+            y: 608,
+            height: 256,
+            width: 192
+        });
+    }
+    draw() {
+        let img;
+        this.width = 204;
+        img = this.images.move;
+        if (_phaseManager.phaseManager.phase === _phaseManager.PHASES.bossdying) {
+            this.width = 192;
+            img = this.images.die;
+        } else if (this.mode === 'attack') img = this.images.attack;
+        else if (this.mode === 'still') img = this.images.still;
+        else if (this.top > _player.player.bottom) {
+            this.width = 192;
+            img = this.images.lookup;
+        }
+        if (this.facingRight) _canvas.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+        else {
+            _canvas.c.save();
+            _canvas.c.scale(-1, 1);
+            _canvas.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            _canvas.c.restore();
+        }
+    }
+    update() {
+        if (_phaseManager.phaseManager.phase === _phaseManager.PHASES.end) return;
+        this.draw();
+        if (_phaseManager.phaseManager.phase === _phaseManager.PHASES.bossdying) return;
+        if (_player.player.left > _consts.ATTACKZONE_LEFT && _player.player.right < _consts.ATTACKZONE_RIGHT) {
+            if (_phaseManager.phaseManager.phase === _phaseManager.PHASES.ropeburning || _phaseManager.phaseManager.phase === _phaseManager.PHASES.ropefalling || _player.player.bottom <= _consts.RAFTERS_BOTTOM && (_player.player.left < boss.left || _player.player.right > boss.right)) this.mode = 'move';
+            else if (_timeManager.timeManager.now > this.recalculateModeAt) {
+                this.recalculateModeAt = _timeManager.timeManager.now + _consts.BOSS_MAXMODEDURATION * Math.random();
+                this.mode = [
+                    'move',
+                    'attack',
+                    'still'
+                ][Math.floor(3 * Math.random())];
+            }
+        } else this.mode = 'still';
+        this.facingRight = _player.player.center > this.center;
+        switch(this.mode){
+            case 'attack':
+                if (_timeManager.timeManager.now > this.lastAttacked + _consts.BOSS_ATTACKINTERVAL) {
+                    _lasers.lasers.add({
+                        left: this.facingRight ? this.right - 32 : this.left + 16,
+                        top: this.top + 108
+                    });
+                    this.lastAttacked = _timeManager.timeManager.now;
+                }
+                break;
+            case 'move':
+                if (this.facingRight && this.right <= _consts.BOSS_MAXRIGHT) this.x += _consts.BOSS_SPEED;
+                else if (!this.facingRight && this.left >= _consts.BOSS_MAXLEFT) this.x -= _consts.BOSS_SPEED;
+        }
+    }
+}
+const boss = new Boss();
+
+},{"./canvas":"3ib9d","./consts":"i99Dc","./coordinates":"96akj","./player":"cK1Qv","./phase-manager":"2aQoL","./lasers":"4YS9J","./time-manager":"g5oF1","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"i99Dc":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "COURSE_WIDTH", ()=>COURSE_WIDTH
+);
+parcelHelpers.export(exports, "COURSE_HEIGHT", ()=>COURSE_HEIGHT
+);
+parcelHelpers.export(exports, "BOSS_SPEED", ()=>BOSS_SPEED
+);
+parcelHelpers.export(exports, "BOSS_MAXLEFT", ()=>BOSS_MAXLEFT
+);
+parcelHelpers.export(exports, "BOSS_MAXRIGHT", ()=>BOSS_MAXRIGHT
+);
+parcelHelpers.export(exports, "ATTACKZONE_LEFT", ()=>ATTACKZONE_LEFT
+);
+parcelHelpers.export(exports, "ATTACKZONE_RIGHT", ()=>ATTACKZONE_RIGHT
+);
+parcelHelpers.export(exports, "RAFTERS_BOTTOM", ()=>RAFTERS_BOTTOM
+);
+parcelHelpers.export(exports, "BOSS_ATTACKINTERVAL", ()=>BOSS_ATTACKINTERVAL
+);
+parcelHelpers.export(exports, "BOSS_MAXMODEDURATION", ()=>BOSS_MAXMODEDURATION
+);
+parcelHelpers.export(exports, "SHOW_GRIDLINES", ()=>SHOW_GRIDLINES
+);
+parcelHelpers.export(exports, "SHOW_PLATFORMS", ()=>SHOW_PLATFORMS
+);
+parcelHelpers.export(exports, "SHOW_DEBUGMENU", ()=>SHOW_DEBUGMENU
+);
+parcelHelpers.export(exports, "DEBUG_DELAY", ()=>DEBUG_DELAY
+);
+parcelHelpers.export(exports, "PLAYER_GRAVITY", ()=>PLAYER_GRAVITY
+);
+parcelHelpers.export(exports, "WALKING_SPEED", ()=>WALKING_SPEED
+);
+parcelHelpers.export(exports, "JUMP_SPEED", ()=>JUMP_SPEED
+);
+parcelHelpers.export(exports, "CHANDELIER_GRAVITY", ()=>CHANDELIER_GRAVITY
+);
+parcelHelpers.export(exports, "LASER_SPEED", ()=>LASER_SPEED
+);
+parcelHelpers.export(exports, "LASER_DURATION", ()=>LASER_DURATION
+);
+parcelHelpers.export(exports, "AXE_SPEED_Y", ()=>AXE_SPEED_Y
+);
+parcelHelpers.export(exports, "AXE_SPEED_X", ()=>AXE_SPEED_X
+);
+parcelHelpers.export(exports, "AXE_GRAVITY", ()=>AXE_GRAVITY
+);
+parcelHelpers.export(exports, "PLAYER_ATTACKINTERVAL", ()=>PLAYER_ATTACKINTERVAL
+);
+parcelHelpers.export(exports, "VOLUME", ()=>VOLUME
+);
+const COURSE_WIDTH = 5120;
+const COURSE_HEIGHT = 960;
+const BOSS_SPEED = 2;
+const BOSS_MAXLEFT = 3840;
+const BOSS_MAXRIGHT = 4640;
+const ATTACKZONE_LEFT = 3616;
+const ATTACKZONE_RIGHT = 4864;
+const RAFTERS_BOTTOM = 320;
+const BOSS_ATTACKINTERVAL = 150;
+const BOSS_MAXMODEDURATION = 2000;
+const SHOW_GRIDLINES = false;
+const SHOW_PLATFORMS = false;
+const SHOW_DEBUGMENU = false;
+const DEBUG_DELAY = 0;
+const PLAYER_GRAVITY = 2.1 / 900;
+const WALKING_SPEED = 8 / 30;
+const JUMP_SPEED = 25 / 30;
+const CHANDELIER_GRAVITY = 0.001;
+const LASER_SPEED = 3;
+const LASER_DURATION = 2000;
+const AXE_SPEED_Y = 0.7;
+const AXE_SPEED_X = 7 / 30;
+const AXE_GRAVITY = 0.1 / 30;
+const PLAYER_ATTACKINTERVAL = 150;
+const VOLUME = 0.2;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cK1Qv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Player", ()=>Player
+);
+parcelHelpers.export(exports, "player", ()=>player
+);
+var _audioManager = require("./audio-manager");
+var _axes = require("./axes");
+var _canvas = require("./canvas");
+var _consts = require("./consts");
+var _coordinates = require("./coordinates");
+var _flames = require("./flames");
+var _boss = require("./boss");
+var _frames = require("./frames");
+var _phaseManager = require("./phase-manager");
+var _platforms = require("./platforms");
+var _plumes = require("./plumes");
+var _timeManager = require("./time-manager");
+var _img = require("./img");
+var _urls = require("./urls");
+class KeyManager {
+    keys = {
+        right: {
+            pressed: false
+        },
+        left: {
+            pressed: false
+        },
+        jump: {
+            pressed: false
+        },
+        attack: {
+            pressed: false
+        }
+    };
+    constructor(){
+        const jump = ()=>{
+            if (!player.stunned && player.velocity.y === 0) {
+                player.velocity.y -= _consts.JUMP_SPEED;
+                _audioManager.audioManager.playJumpSound();
+            }
+        };
+        const startRight = ()=>{
+            if (!player.stunned) {
+                this.keys.right.pressed = true;
+                player.facingRight = true;
+            }
+        };
+        const stopRight = ()=>this.keys.right.pressed = false
+        ;
+        const startLeft = ()=>{
+            if (!player.stunned) {
+                this.keys.left.pressed = true;
+                player.facingRight = false;
+            }
+        };
+        const stopLeft = ()=>this.keys.left.pressed = false
+        ;
+        const attack = ()=>{
+            if (!player.stunned && _timeManager.timeManager.now > player.lastAttack + _consts.PLAYER_ATTACKINTERVAL) player.attack();
+        };
+        addEventListener('keydown', (e)=>{
+            if (_phaseManager.phaseManager.phase >= _phaseManager.PHASES.ropeburning) return;
+            const fn = {
+                ' ': jump,
+                ArrowUp: jump,
+                ArrowRight: startRight,
+                ArrowLeft: startLeft
+            }[e.key];
+            (fn ?? attack)();
+        });
+        addEventListener('keyup', (e)=>{
+            const fn = {
+                ArrowRight: stopRight,
+                ArrowLeft: stopLeft
+            }[e.key];
+            fn?.();
+        });
+        const touch = matchMedia('(hover: none)').matches;
+        if (touch) {
+            const buttonsDiv = document.getElementById('buttons');
+            buttonsDiv.style.display = 'flex';
+            const rightBtn = document.getElementById('right');
+            rightBtn.addEventListener('touchstart', startRight);
+            rightBtn.addEventListener('touchend', stopRight);
+            const leftBtn = document.getElementById('left');
+            leftBtn.addEventListener('touchstart', startLeft);
+            leftBtn.addEventListener('touchend', stopLeft);
+            const jumpBtn = document.getElementById('jump');
+            jumpBtn.addEventListener('touchstart', jump);
+            const attackBtn = document.getElementById('attack');
+            attackBtn.addEventListener('touchstart', attack);
+        }
+    }
+}
+const keys = new KeyManager();
+class Player extends _coordinates.Coordinates {
+    hasFlame = false;
+    facingRight = true;
+    /** px per frame */ velocity = {
+        x: 0,
+        y: 0
+    };
+    images = {
+        fall: _img.img(_urls.ASSET_URLS['../img/player-fall_30x36.png']),
+        hit: _img.img(_urls.ASSET_URLS['../img/player-hit_30x36.png']),
+        jump: _img.img(_urls.ASSET_URLS['../img/player-jump_30x36.png']),
+        still: _img.img(_urls.ASSET_URLS['../img/player-still_30x36.png']),
+        throw: _img.img(_urls.ASSET_URLS['../img/player-throw_30x36.png']),
+        walk1: _img.img(_urls.ASSET_URLS['../img/player-walk-1_30x36.png']),
+        walk2: _img.img(_urls.ASSET_URLS['../img/player-walk-2_30x36.png']),
+        walk3: _img.img(_urls.ASSET_URLS['../img/player-walk-3_30x36.png']),
+        stick: _img.img(_urls.ASSET_URLS['../img/stick_30x6.png']),
+        flame1: _img.img(_urls.ASSET_URLS['../img/flame-1_28x28.png']),
+        flame2: _img.img(_urls.ASSET_URLS['../img/flame-2_28x28.png']),
+        flame3: _img.img(_urls.ASSET_URLS['../img/flame-3_28x28.png'])
+    };
+    walkFrames = new _frames.Frames({
+        fps: 12,
+        images: [
+            this.images.walk3,
+            this.images.walk2,
+            this.images.walk1
+        ]
+    });
+    flameFrames = new _frames.Frames({
+        fps: 12,
+        images: [
+            this.images.flame1,
+            this.images.flame2,
+            this.images.flame3
+        ]
+    });
+    lastAttack = 0;
+    lastHit = 0;
+    constructor({ x , y  }){
+        super({
+            x,
+            y,
+            height: 36,
+            width: 30
+        });
+    }
+    get flying() {
+        return _timeManager.timeManager.now - this.lastHit < 500;
+    }
+    get stunned() {
+        return _timeManager.timeManager.now - this.lastHit < 1500;
+    }
+    get blinking() {
+        return _timeManager.timeManager.now - this.lastHit < 2000;
+    }
+    get nextFrame() {
+        return new _coordinates.Coordinates({
+            x: this.x + this.velocity.x * _timeManager.timeManager.msPerFrame,
+            y: this.y + this.velocity.y * _timeManager.timeManager.msPerFrame,
+            width: this.width,
+            height: this.height
+        });
+    }
+    attack() {
+        this.hasFlame = false;
+        this.lastAttack = new Date().valueOf();
+        _axes.axes.add({
+            left: this.left + 0.5 * this.width,
+            top: this.top + 0.5 * this.height,
+            shootRight: this.facingRight
+        });
+    }
+    land() {
+        _plumes.plumes.add({
+            left: this.left - 43,
+            bottom: this.bottom,
+            facingRight: false
+        });
+        _plumes.plumes.add({
+            left: this.right,
+            bottom: this.bottom,
+            facingRight: true
+        });
+    }
+    hurtByBoss() {
+        this.hasFlame = false;
+        this.lastHit = new Date().valueOf();
+        this.velocity.x = (this.facingRight ? -1 : 1) * _consts.JUMP_SPEED;
+    }
+    hurtByLaser() {
+        this.hasFlame = false;
+        if (!this.blinking) {
+            this.velocity.y = -_consts.JUMP_SPEED;
+            this.lastHit = new Date().valueOf();
+        }
+    }
+    draw() {
+        const torchOffset = {
+            x: 0,
+            y: 0
+        };
+        let img;
+        if (this.flying) img = this.images.hit;
+        else if (_timeManager.timeManager.now - this.lastAttack < 100) img = this.images.throw;
+        else if (this.velocity.y > 0) {
+            img = this.images.fall;
+            torchOffset.x = 1;
+            torchOffset.y = -6;
+        } else if (this.velocity.y < 0) {
+            img = this.images.jump;
+            torchOffset.x = 1;
+        } else if (this.velocity.x !== 0) {
+            img = this.walkFrames.get();
+            torchOffset.x = 1;
+        } else img = this.images.still;
+        if (this.blinking) {
+            const sinceHit = _timeManager.timeManager.now - this.lastHit;
+            if (sinceHit % 500 > 300) return;
+        }
+        if (this.facingRight) {
+            _canvas.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+            if (this.hasFlame) {
+                _canvas.c.drawImage(this.images.stick, this.localLeft + 5 + torchOffset.x, this.localTop + 18 + torchOffset.y, 30, 6);
+                _canvas.c.drawImage(this.flameFrames.get(), this.localLeft + 20 + torchOffset.x, this.localTop - 7 + torchOffset.y, 28, 28);
+            }
+        } else {
+            _canvas.c.save();
+            _canvas.c.scale(-1, 1);
+            _canvas.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            if (this.hasFlame) {
+                _canvas.c.drawImage(this.images.stick, -this.localRight + 5 + torchOffset.x, this.localTop + 18 + torchOffset.y, 30, 6);
+                _canvas.c.drawImage(this.flameFrames.get(), -this.localRight + 20 + torchOffset.x, this.localTop - 7 + torchOffset.y, 28, 28);
+            }
+            _canvas.c.restore();
+        }
+    }
+    update() {
+        // Update Y velocity
+        this.velocity.y += _consts.PLAYER_GRAVITY * _timeManager.timeManager.msPerFrame;
+        // Update X velocity
+        if (this.flying) this.velocity.x *= 0.9;
+        else if (keys.keys.right.pressed) this.velocity.x = _consts.WALKING_SPEED;
+        else if (keys.keys.left.pressed) this.velocity.x = -_consts.WALKING_SPEED;
+        else this.velocity.x = 0;
+        _platforms.platforms.forEach((platform)=>{
+            if (this.right > platform.left && this.left < platform.right || this.nextFrame.right > platform.left && this.nextFrame.left < platform.right) {
+                if (this.bottom <= platform.top && this.nextFrame.bottom >= platform.top) {
+                    this.y = platform.y - this.height;
+                    if (this.velocity.y > 0.1 * _timeManager.timeManager.msPerFrame) this.land();
+                    this.velocity.y = 0;
+                } else if (this.top >= platform.bottom && this.nextFrame.top <= platform.bottom) {
+                    this.y = platform.bottom;
+                    this.velocity.y = 0;
+                }
+            }
+            if (this.bottom > platform.top && this.top < platform.bottom || this.nextFrame.bottom > platform.top && this.nextFrame.top < platform.bottom) {
+                if (this.right <= platform.left && this.nextFrame.right >= platform.left) {
+                    this.x = platform.left - this.width;
+                    this.velocity.x = 0;
+                }
+                if (this.left >= platform.right && this.nextFrame.left <= platform.right) {
+                    this.x = platform.right;
+                    this.velocity.x = 0;
+                }
+            }
+        });
+        this.x += this.velocity.x * _timeManager.timeManager.msPerFrame;
+        this.y += this.velocity.y * _timeManager.timeManager.msPerFrame;
+        if (!this.hasFlame) this.hasFlame = _flames.flames.some((flame)=>this.intersects(flame)
+        );
+        this.draw();
+        if (this.intersects(_boss.boss)) this.hurtByBoss();
+    }
+}
+const player = new Player({
+    x: 128,
+    y: 0
+}); //rope
+ // export const player = new Player({
+ //     x: 127 * 32,
+ //     y: 8.5 * 32,
+ // });
+ //bottomright
+ // export const player = new Player({
+ //     x: 152 * 32,
+ //     y: 23.5 * 32,
+ // });
+
+},{"./audio-manager":"eqlY2","./axes":"6KuQA","./canvas":"3ib9d","./consts":"i99Dc","./coordinates":"96akj","./flames":"hqADu","./boss":"i5HRn","./frames":"27wmM","./phase-manager":"2aQoL","./platforms":"eYBZp","./plumes":"6HX0g","./time-manager":"g5oF1","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hqADu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Flame", ()=>Flame
 );
 parcelHelpers.export(exports, "flames", ()=>flames
 );
-var _coordinatesJs = require("./coordinates.js");
-var _timeManagerJs = require("./time-manager.js");
-var _canvasJs = require("./canvas.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
-class Flame extends _coordinatesJs.Coordinates {
+var _coordinates = require("./coordinates");
+var _timeManager = require("./time-manager");
+var _canvas = require("./canvas");
+var _img = require("./img");
+var _urls = require("./urls");
+class Flame extends _coordinates.Coordinates {
+    img = _img.img(_urls.ASSET_URLS['../img/flame-sprites.png']);
+    framesPerSecond = 10;
+    frameCount = 3;
+    frameIndex = 0;
+    frameUpdated = new Date().valueOf();
     constructor({ left , top  }){
         super({
             x: left,
@@ -1828,16 +1811,11 @@ class Flame extends _coordinatesJs.Coordinates {
             width: 32,
             height: 64
         });
-        this.img = _imgJs.img(_urlsJs.ASSET_URLS['../img/flame-sprites.png']);
-        this.framesPerSecond = 10;
-        this.frameCount = 3;
-        this.frameIndex = 0;
-        this.frameUpdated = new Date().valueOf();
     }
     draw() {
-        if (_timeManagerJs.timeManager.now - this.frameUpdated > 1000 / this.framesPerSecond) {
+        if (_timeManager.timeManager.now - this.frameUpdated > 1000 / this.framesPerSecond) {
             this.frameIndex = (this.frameIndex + 1) % this.frameCount;
-            this.frameUpdated = _timeManagerJs.timeManager.now;
+            this.frameUpdated = _timeManager.timeManager.now;
         }
         const sx = this.frameIndex * 32;
         const sy = 0;
@@ -1847,7 +1825,7 @@ class Flame extends _coordinatesJs.Coordinates {
         const dy = this.localTop;
         const dw = this.width;
         const dh = this.height;
-        this.img && _canvasJs.c.drawImage(this.img, sx, sy, sw, sh, dx, dy, dw, dh);
+        this.img && _canvas.c.drawImage(this.img, sx, sy, sw, sh, dx, dy, dw, dh);
     }
 }
 const flames = [
@@ -1877,7 +1855,7 @@ const flames = [
     }), 
 ];
 
-},{"./coordinates.js":"dsbsK","./time-manager.js":"hIoYz","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hIoYz":[function(require,module,exports) {
+},{"./coordinates":"96akj","./time-manager":"g5oF1","./canvas":"3ib9d","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"g5oF1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "timeManager", ()=>timeManager
@@ -1887,28 +1865,28 @@ const timeManager = {
     msPerFrame: 1000 / 60
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"durFA":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hlH8y":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "img", ()=>img
 );
 function img(src) {
     const result = new Image();
-    result.src = src;
+    result.src = src instanceof URL ? src.href : src;
     return result;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8i0FU":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"27wmM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Frames", ()=>Frames
 );
 class Frames {
-    constructor({ images , fps , loop  }){
+    frameUpdated = new Date().valueOf();
+    currentIndex = 0;
+    constructor({ images , fps  }){
         this.fps = fps;
         this.images = images;
-        this.frameUpdated = new Date().valueOf();
-        this.currentIndex = 0;
     }
     get() {
         const now = new Date().valueOf();
@@ -1920,24 +1898,24 @@ class Frames {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"73f18":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2aQoL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "PHASES", ()=>PHASES
 );
 parcelHelpers.export(exports, "phaseManager", ()=>phaseManager
 );
-var _healthbarJs = require("./healthbar.js");
-var _platformsJs = require("./platforms.js");
-var _explosionsJs = require("./explosions.js");
-var _canvasJs = require("./canvas.js");
-var _coordinatesJs = require("./coordinates.js");
-var _chandelierJs = require("./chandelier.js");
-var _ropeJs = require("./rope.js");
-var _audioManagerJs = require("./audio-manager.js");
-var _buttonManagerJs = require("./button-manager.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
+var _healthbar = require("./healthbar");
+var _platforms = require("./platforms");
+var _explosions = require("./explosions");
+var _canvas = require("./canvas");
+var _coordinates = require("./coordinates");
+var _chandelier = require("./chandelier");
+var _rope = require("./rope");
+var _audioManager = require("./audio-manager");
+var _buttonManager = require("./button-manager");
+var _img = require("./img");
+var _urls = require("./urls");
 async function wait(ms) {
     return new Promise((resolve)=>setTimeout(resolve, ms)
     );
@@ -1953,201 +1931,199 @@ const PHASES = {
     end: 7
 };
 class PhaseManager {
-    constructor(){
-        this.backDoorImage = _imgJs.img(_urlsJs.ASSET_URLS['../img/back-door_32x64.png']);
-        this.showBackDoor = false;
-        this.phase = PHASES.clicktostart;
-    }
+    backDoorImage = _img.img(_urls.ASSET_URLS['../img/back-door_32x64.png']);
+    showBackDoor = false;
+    phase = PHASES.clicktostart;
     startStartPhase() {
         if (this.phase >= PHASES.start) return;
         this.phase = PHASES.start;
-        _buttonManagerJs.buttonManager.show();
+        _buttonManager.buttonManager.show();
     }
     startTunnelPhase() {
         if (this.phase >= PHASES.tunnel) return;
-        _audioManagerJs.audioManager.tunnelMusic.play();
+        _audioManager.audioManager.playTunnelMusic();
         this.phase = PHASES.tunnel;
     }
     startBossFightPhase() {
         if (this.phase >= PHASES.bossfight) return;
-        _audioManagerJs.audioManager.tunnelMusic.pause();
-        _audioManagerJs.audioManager.bossFightMusic.play();
+        _audioManager.audioManager.pauseTunnelMusic();
+        _audioManager.audioManager.playBossFightMusic();
         this.showBackDoor = true;
-        _healthbarJs.healthBar.show = true;
-        _platformsJs.platforms.push(new _platformsJs.LeftPlatform({
+        _healthbar.healthBar.show = true;
+        _platforms.platforms.push(new _platforms.LeftPlatform({
             right: 3456,
             bottom: 864,
             top: 800
         }));
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 3422,
             top: 798
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 3422,
             top: 830
         });
-        _audioManagerJs.audioManager.playDoorslamSound();
+        _audioManager.audioManager.playDoorslamSound();
         this.phase = PHASES.bossfight;
     }
     async startRopeBurningPhase() {
         if (this.phase >= PHASES.ropeburning) return;
-        _audioManagerJs.audioManager.bossFightMusic.pause();
+        _audioManager.audioManager.pauseBossFightMusic();
         this.phase = PHASES.ropeburning;
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4224,
             top: 192
         });
-        _audioManagerJs.audioManager.playRopeExplosionSound();
+        _audioManager.audioManager.playRopeExplosionSound();
         await wait(200);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4224,
             top: 224
         });
-        _audioManagerJs.audioManager.playRopeExplosionSound();
+        _audioManager.audioManager.playRopeExplosionSound();
         await wait(200);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4224,
             top: 256
         });
-        _audioManagerJs.audioManager.playRopeExplosionSound();
+        _audioManager.audioManager.playRopeExplosionSound();
         await wait(200);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4224,
             top: 288
         });
-        _audioManagerJs.audioManager.playRopeExplosionSound();
+        _audioManager.audioManager.playRopeExplosionSound();
         await wait(200);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4224,
             top: 320
         });
-        _audioManagerJs.audioManager.playRopeExplosionSound();
+        _audioManager.audioManager.playRopeExplosionSound();
         this.startRopeFallingPhase();
     }
     async startRopeFallingPhase() {
         if (this.phase >= PHASES.ropefalling) return;
         this.phase = PHASES.ropefalling;
-        _chandelierJs.chandelier.dropped = true;
+        _chandelier.chandelier.dropped = true;
     }
     async startBossDyingPhase() {
         if (this.phase >= PHASES.bossdying) return;
         this.phase = PHASES.bossdying;
-        _healthbarJs.healthBar.die();
-        _chandelierJs.chandelier.show = false;
-        _ropeJs.rope.show = false;
+        _healthbar.healthBar.die();
+        _chandelier.chandelier.show = false;
+        _rope.rope.show = false;
         // #region Explosions
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4291,
             top: 642
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4283,
             top: 676
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4264,
             top: 681
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4282,
             top: 688
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4186,
             top: 621
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4194,
             top: 649
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4203,
             top: 642
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4223,
             top: 664
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4219,
             top: 668
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4203,
             top: 686
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4200,
             top: 670
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4200,
             top: 700
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4205,
             top: 792
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4248,
             top: 730
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4154,
             top: 686
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4126,
             top: 725
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4214,
             top: 598
         });
-        _audioManagerJs.audioManager.playDeathSound();
+        _audioManager.audioManager.playDeathSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4159,
             top: 654
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4161,
             top: 706
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4274,
             top: 851
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4206,
             top: 734
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4192,
             top: 733
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4203,
             top: 732
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4252,
             top: 546
         });
-        _audioManagerJs.audioManager.playBossExplosionSound();
+        _audioManager.audioManager.playBossExplosionSound();
         await wait(300);
         // #endregion
         this.startEndPhase();
@@ -2156,113 +2132,111 @@ class PhaseManager {
         if (this.phase >= PHASES.end) return;
         this.phase = PHASES.end;
         // #region Explosions
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4237,
             top: 560
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4205,
             top: 596
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4251,
             top: 603
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4231,
             top: 642
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4295,
             top: 644
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4249,
             top: 656
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4243,
             top: 681
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4203,
             top: 684
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4266,
             top: 684
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4219,
             top: 692
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4215,
             top: 700
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4293,
             top: 730
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4126,
             top: 740
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4187,
             top: 746
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4224,
             top: 750
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4199,
             top: 767
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4176,
             top: 768
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4296,
             top: 813
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4161,
             top: 820
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4179,
             top: 844
         });
-        _explosionsJs.explosions.add({
+        _explosions.explosions.add({
             left: 4180,
             top: 882
         });
-        _audioManagerJs.audioManager.playDeathSound();
+        _audioManager.audioManager.playDeathSound();
         // #endregion
         await wait(2000);
-        _audioManagerJs.audioManager.endCreditsMusic.play();
+        _audioManager.audioManager.playEndCreditsMusic();
     }
     drawBackDoor() {
-        _canvasJs.c.drawImage(this.backDoorImage, 3424 - _coordinatesJs.offset.x, 800 - _coordinatesJs.offset.y, 32, 64);
+        _canvas.c.drawImage(this.backDoorImage, 3424 - _coordinates.offset.x, 800 - _coordinates.offset.y, 32, 64);
     }
 }
 const phaseManager = new PhaseManager();
 
-},{"./healthbar.js":"2uxWm","./platforms.js":"3eULH","./explosions.js":"ensJg","./canvas.js":"jvBLU","./coordinates.js":"dsbsK","./chandelier.js":"2oThl","./rope.js":"OzOSK","./audio-manager.js":"gwz40","./button-manager.js":"jLViv","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2uxWm":[function(require,module,exports) {
+},{"./healthbar":"5clUK","./platforms":"eYBZp","./explosions":"esUVw","./canvas":"3ib9d","./coordinates":"96akj","./chandelier":"bvCN6","./rope":"9scZJ","./audio-manager":"eqlY2","./button-manager":"2Z5wt","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5clUK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "healthBar", ()=>healthBar
 );
-var _canvasJs = require("./canvas.js");
+var _canvas = require("./canvas");
 class HealthBar {
-    constructor(){
-        this.health = 1;
-        this.deathTime = null;
-        this.show = false;
-    }
+    health = 1;
+    deathTime = null;
+    show = false;
     die() {
         this.deathTime = new Date().valueOf();
     }
@@ -2274,32 +2248,32 @@ class HealthBar {
         this.draw();
     }
     draw() {
-        _canvasJs.c.fillStyle = 'white';
-        _canvasJs.c.fillRect(16, 16, _canvasJs.FRAME_WIDTH - 32, 20);
-        _canvasJs.c.fillRect(16, 32, 154, 24);
-        _canvasJs.c.fillStyle = 'black';
-        _canvasJs.c.fillRect(18, 18, _canvasJs.FRAME_WIDTH - 36, 16);
-        _canvasJs.c.fillRect(18, 30, 150, 24);
-        _canvasJs.c.fillStyle = 'red';
-        _canvasJs.c.fillRect(20, 20, (_canvasJs.FRAME_WIDTH - 40) * this.health, 12);
-        _canvasJs.c.fillStyle = 'white';
-        _canvasJs.c.textAlign = 'left';
-        _canvasJs.c.font = 'bold 14px Inter';
-        _canvasJs.c.fillText('Grinning Colossus', 28, 48);
+        _canvas.c.fillStyle = 'white';
+        _canvas.c.fillRect(16, 16, _canvas.FRAME_WIDTH - 32, 20);
+        _canvas.c.fillRect(16, 32, 154, 24);
+        _canvas.c.fillStyle = 'black';
+        _canvas.c.fillRect(18, 18, _canvas.FRAME_WIDTH - 36, 16);
+        _canvas.c.fillRect(18, 30, 150, 24);
+        _canvas.c.fillStyle = 'red';
+        _canvas.c.fillRect(20, 20, (_canvas.FRAME_WIDTH - 40) * this.health, 12);
+        _canvas.c.fillStyle = 'white';
+        _canvas.c.textAlign = 'left';
+        _canvas.c.font = 'bold 14px Inter';
+        _canvas.c.fillText('Grinning Colossus', 28, 48);
     }
 }
 const healthBar = new HealthBar();
 
-},{"./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3eULH":[function(require,module,exports) {
+},{"./canvas":"3ib9d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eYBZp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LeftPlatform", ()=>LeftPlatform
 );
 parcelHelpers.export(exports, "platforms", ()=>platforms
 );
-var _coordinatesJs = require("./coordinates.js");
-var _canvasJs = require("./canvas.js");
-class Platform extends _coordinatesJs.Coordinates {
+var _coordinates = require("./coordinates");
+var _canvas = require("./canvas");
+class Platform extends _coordinates.Coordinates {
     constructor({ left , top , right , bottom  }){
         super({
             x: left,
@@ -2309,8 +2283,8 @@ class Platform extends _coordinatesJs.Coordinates {
         });
     }
     draw() {
-        _canvasJs.c.fillStyle = '#00f3';
-        _canvasJs.c.fillRect(this.localLeft, this.localTop, this.width, this.height);
+        _canvas.c.fillStyle = '#00f3';
+        _canvas.c.fillRect(this.localLeft, this.localTop, this.width, this.height);
     }
 }
 class LeftPlatform extends Platform {
@@ -2855,29 +2829,27 @@ const platforms = [
     })
 ];
 
-},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ensJg":[function(require,module,exports) {
+},{"./coordinates":"96akj","./canvas":"3ib9d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"esUVw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "explosions", ()=>explosions
 );
-var _coordinatesJs = require("./coordinates.js");
-var _canvasJs = require("./canvas.js");
-var _framesJs = require("./frames.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
+var _coordinates = require("./coordinates");
+var _canvas = require("./canvas");
+var _frames = require("./frames");
+var _img = require("./img");
+var _urls = require("./urls");
 const explosionImages = [
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-1_36x36.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-2_36x36.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-3_36x36.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-4_36x36.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-5_36x36.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-6_36x36.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/explosion-7_36x36.png']), 
+    _img.img(_urls.ASSET_URLS['../img/explosion-1_36x36.png']),
+    _img.img(_urls.ASSET_URLS['../img/explosion-2_36x36.png']),
+    _img.img(_urls.ASSET_URLS['../img/explosion-3_36x36.png']),
+    _img.img(_urls.ASSET_URLS['../img/explosion-4_36x36.png']),
+    _img.img(_urls.ASSET_URLS['../img/explosion-5_36x36.png']),
+    _img.img(_urls.ASSET_URLS['../img/explosion-6_36x36.png']),
+    _img.img(_urls.ASSET_URLS['../img/explosion-7_36x36.png']), 
 ];
 class Explosions {
-    constructor(){
-        /** @type {Explosion[]} */ this.explosions = [];
-    }
+    explosions = [];
     add({ left , top  }) {
         this.explosions.push(new Explosion({
             left,
@@ -2894,7 +2866,11 @@ class Explosions {
         );
     }
 }
-class Explosion extends _coordinatesJs.Coordinates {
+class Explosion extends _coordinates.Coordinates {
+    frames = new _frames.Frames({
+        images: explosionImages,
+        fps: 14
+    });
     constructor({ left , top  }){
         super({
             x: left,
@@ -2902,31 +2878,33 @@ class Explosion extends _coordinatesJs.Coordinates {
             width: 36,
             height: 36
         });
-        this.frames = new _framesJs.Frames({
-            images: explosionImages,
-            fps: 14
-        });
     }
     draw() {
-        _canvasJs.c.drawImage(this.frames.get(), this.localLeft, this.localTop, this.width, this.height);
+        _canvas.c.drawImage(this.frames.get(), this.localLeft, this.localTop, this.width, this.height);
     }
 }
 const explosions = new Explosions();
 
-},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./frames.js":"8i0FU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2oThl":[function(require,module,exports) {
+},{"./coordinates":"96akj","./canvas":"3ib9d","./frames":"27wmM","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bvCN6":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "chandelier", ()=>chandelier
 );
-var _coordinatesJs = require("./coordinates.js");
-var _canvasJs = require("./canvas.js");
-var _constsJs = require("./consts.js");
-var _timeManagerJs = require("./time-manager.js");
-var _phaseManagerJs = require("./phase-manager.js");
-var _bossJs = require("./boss.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
-class Chandelier extends _coordinatesJs.Coordinates {
+var _coordinates = require("./coordinates");
+var _canvas = require("./canvas");
+var _consts = require("./consts");
+var _timeManager = require("./time-manager");
+var _phaseManager = require("./phase-manager");
+var _boss = require("./boss");
+var _img = require("./img");
+var _urls = require("./urls");
+class Chandelier extends _coordinates.Coordinates {
+    img = _img.img(_urls.ASSET_URLS['../img/chandelier_160x96.png']);
+    show = true;
+    dropped = false;
+    velocity = {
+        y: 0
+    };
     constructor(){
         super({
             x: 4160,
@@ -2934,38 +2912,32 @@ class Chandelier extends _coordinatesJs.Coordinates {
             width: 160,
             height: 96
         });
-        this.img = _imgJs.img(_urlsJs.ASSET_URLS['../img/chandelier_160x96.png']);
-        this.show = true;
-        this.dropped = false;
-        this.velocity = {
-            y: 0
-        };
     }
     draw() {
-        this.img && _canvasJs.c.drawImage(this.img, this.localLeft, this.localTop, this.width, this.height);
+        this.img && _canvas.c.drawImage(this.img, this.localLeft, this.localTop, this.width, this.height);
     }
     update() {
         if (!this.show) return;
         if (this.dropped) {
-            this.velocity.y += _constsJs.CHANDELIER_GRAVITY * _timeManagerJs.timeManager.msPerFrame;
-            this.y += this.velocity.y * _timeManagerJs.timeManager.msPerFrame;
-            if (this.yCenter > _bossJs.boss.yCenter) _phaseManagerJs.phaseManager.startBossDyingPhase();
+            this.velocity.y += _consts.CHANDELIER_GRAVITY * _timeManager.timeManager.msPerFrame;
+            this.y += this.velocity.y * _timeManager.timeManager.msPerFrame;
+            if (this.yCenter > _boss.boss.yCenter) _phaseManager.phaseManager.startBossDyingPhase();
         }
         this.draw();
     }
 }
 const chandelier = new Chandelier();
 
-},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./consts.js":"2J0f1","./time-manager.js":"hIoYz","./phase-manager.js":"73f18","./boss.js":"jiKqO","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"OzOSK":[function(require,module,exports) {
+},{"./coordinates":"96akj","./canvas":"3ib9d","./consts":"i99Dc","./time-manager":"g5oF1","./phase-manager":"2aQoL","./boss":"i5HRn","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9scZJ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "rope", ()=>rope
 );
-var _coordinatesJs = require("./coordinates.js");
-var _canvasJs = require("./canvas.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
-class FlammableBitOfRope extends _coordinatesJs.Coordinates {
+var _coordinates = require("./coordinates");
+var _canvas = require("./canvas");
+var _img = require("./img");
+var _urls = require("./urls");
+class FlammableBitOfRope extends _coordinates.Coordinates {
     constructor(){
         super({
             x: 4236,
@@ -2975,7 +2947,10 @@ class FlammableBitOfRope extends _coordinatesJs.Coordinates {
         });
     }
 }
-class Rope extends _coordinatesJs.Coordinates {
+class Rope extends _coordinates.Coordinates {
+    img = _img.img(_urls.ASSET_URLS['../img/rope_8x192.png']);
+    show = true;
+    flammableBitOfRope = new FlammableBitOfRope();
     constructor(){
         super({
             x: 4236,
@@ -2983,9 +2958,6 @@ class Rope extends _coordinatesJs.Coordinates {
             width: 8,
             height: 192
         });
-        this.img = _imgJs.img(_urlsJs.ASSET_URLS['../img/rope_8x192.png']);
-        this.show = true;
-        this.flammableBitOfRope = new FlammableBitOfRope();
     }
     update() {
         if (!this.show) return;
@@ -2996,20 +2968,18 @@ class Rope extends _coordinatesJs.Coordinates {
         const dy = this.localTop;
         const dw = this.width;
         const dh = this.height;
-        this.img && _canvasJs.c.drawImage(this.img, dx, dy, dw, dh);
+        this.img && _canvas.c.drawImage(this.img, dx, dy, dw, dh);
     }
 }
 const rope = new Rope();
 
-},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jLViv":[function(require,module,exports) {
+},{"./coordinates":"96akj","./canvas":"3ib9d","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Z5wt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "buttonManager", ()=>buttonManager
 );
 class ButtonManager {
-    constructor(){
-        this.buttons = document.getElementById('buttons');
-    }
+    buttons = document.getElementById('buttons');
     show() {
         this.buttons.classList.remove('hidden');
     }
@@ -3017,41 +2987,39 @@ class ButtonManager {
         this.buttons.classList.add('hidden');
     }
     setOpacity(value) {
-        this.buttons.style.opacity = value;
+        this.buttons.style.opacity = String(value);
     }
 }
 const buttonManager = new ButtonManager();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dtlaX":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6HX0g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "plumes", ()=>plumes
 );
-var _coordinatesJs = require("./coordinates.js");
-var _framesJs = require("./frames.js");
-var _audioManagerJs = require("./audio-manager.js");
-var _canvasJs = require("./canvas.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
+var _coordinates = require("./coordinates");
+var _frames = require("./frames");
+var _audioManager = require("./audio-manager");
+var _canvas = require("./canvas");
+var _img = require("./img");
+var _urls = require("./urls");
 const plumeImages = [
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-1_43x21.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-2_43x21.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-3_43x21.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-4_43x21.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-5_43x21.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/plume-6_43x21.png']), 
+    _img.img(_urls.ASSET_URLS['../img/plume-1_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-2_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-3_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-4_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-5_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-6_43x21.png']), 
 ];
 class Plumes {
-    constructor(){
-        /** @type {Plume[]} */ this.plumes = [];
-    }
+    plumes = [];
     add({ left , bottom , facingRight  }) {
         this.plumes.push(new Plume({
             left,
             bottom,
             facingRight
         }));
-        _audioManagerJs.audioManager.playLandSound();
+        _audioManager.audioManager.playLandSound();
     }
     update() {
         this.plumes = this.plumes.filter((plume)=>plume.frames.currentIndex < 5
@@ -3063,7 +3031,11 @@ class Plumes {
         );
     }
 }
-class Plume extends _coordinatesJs.Coordinates {
+class Plume extends _coordinates.Coordinates {
+    frames = new _frames.Frames({
+        images: plumeImages,
+        fps: 14
+    });
     constructor({ left , bottom , facingRight  }){
         super({
             x: left,
@@ -3071,59 +3043,53 @@ class Plume extends _coordinatesJs.Coordinates {
             width: 43,
             height: 21
         });
-        this.frames = new _framesJs.Frames({
-            images: plumeImages,
-            fps: 14
-        });
         this.facingRight = facingRight;
     }
     draw() {
         const img = this.frames.get();
-        if (this.facingRight) _canvasJs.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+        if (this.facingRight) _canvas.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
         else {
-            _canvasJs.c.save();
-            _canvasJs.c.scale(-1, 1);
-            _canvasJs.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
-            _canvasJs.c.restore();
+            _canvas.c.save();
+            _canvas.c.scale(-1, 1);
+            _canvas.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            _canvas.c.restore();
         }
     }
 }
 const plumes = new Plumes();
 
-},{"./coordinates.js":"dsbsK","./frames.js":"8i0FU","./audio-manager.js":"gwz40","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"awXIj":[function(require,module,exports) {
+},{"./coordinates":"96akj","./frames":"27wmM","./audio-manager":"eqlY2","./canvas":"3ib9d","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4YS9J":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "lasers", ()=>lasers
 );
-var _coordinatesJs = require("./coordinates.js");
-var _canvasJs = require("./canvas.js");
-var _framesJs = require("./frames.js");
-var _timeManagerJs = require("./time-manager.js");
-var _audioManagerJs = require("./audio-manager.js");
-var _constsJs = require("./consts.js");
-var _playerJs = require("./player.js");
-var _explosionsJs = require("./explosions.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
+var _coordinates = require("./coordinates");
+var _canvas = require("./canvas");
+var _frames = require("./frames");
+var _timeManager = require("./time-manager");
+var _audioManager = require("./audio-manager");
+var _consts = require("./consts");
+var _player = require("./player");
+var _explosions = require("./explosions");
+var _img = require("./img");
+var _urls = require("./urls");
 const laserImages = [
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-1_20x20.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-2_20x20.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-3_20x20.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-4_20x20.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-5_20x20.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-6_20x20.png']),
-    _imgJs.img(_urlsJs.ASSET_URLS['../img/laser-7_20x20.png']), 
+    _img.img(_urls.ASSET_URLS['../img/laser-1_20x20.png']),
+    _img.img(_urls.ASSET_URLS['../img/laser-2_20x20.png']),
+    _img.img(_urls.ASSET_URLS['../img/laser-3_20x20.png']),
+    _img.img(_urls.ASSET_URLS['../img/laser-4_20x20.png']),
+    _img.img(_urls.ASSET_URLS['../img/laser-5_20x20.png']),
+    _img.img(_urls.ASSET_URLS['../img/laser-6_20x20.png']),
+    _img.img(_urls.ASSET_URLS['../img/laser-7_20x20.png']), 
 ];
 class Lasers {
-    constructor(){
-        /** @type {Laser[]} */ this.lasers = [];
-    }
+    lasers = [];
     add({ left , top  }) {
         this.lasers.push(new Laser({
             left,
             top
         }));
-        _audioManagerJs.audioManager.playLaserSound();
+        _audioManager.audioManager.playLaserSound();
     }
     update() {
         this.lasers = this.lasers.filter((laser)=>!laser.finished && !laser.hitPlayer
@@ -3132,7 +3098,14 @@ class Lasers {
         );
     }
 }
-class Laser extends _coordinatesJs.Coordinates {
+class Laser extends _coordinates.Coordinates {
+    laserFrames = new _frames.Frames({
+        fps: 24,
+        images: laserImages
+    });
+    startTime = _timeManager.timeManager.now;
+    finished = false;
+    hitPlayer = false;
     constructor({ left , top  }){
         super({
             x: left,
@@ -3140,27 +3113,20 @@ class Laser extends _coordinatesJs.Coordinates {
             width: 20,
             height: 20
         });
-        this.laserFrames = new _framesJs.Frames({
-            fps: 24,
-            images: laserImages
-        });
-        this.startTime = _timeManagerJs.timeManager.now;
-        this.finished = false;
-        this.hitPlayer = false;
-        const gapX = _playerJs.player.x - this.x;
-        const gapY = _playerJs.player.y - this.y;
+        const gapX = _player.player.x - this.x;
+        const gapY = _player.player.y - this.y;
         const gap = Math.sqrt(Math.pow(gapX, 2) + Math.pow(gapY, 2));
-        this.dx = _constsJs.LASER_SPEED * gapX / gap;
-        this.dy = _constsJs.LASER_SPEED * gapY / gap;
+        this.dx = _consts.LASER_SPEED * gapX / gap;
+        this.dy = _consts.LASER_SPEED * gapY / gap;
     }
     update() {
-        if (this.intersects(_playerJs.player)) {
-            _playerJs.player.hurtByLaser();
+        if (this.intersects(_player.player)) {
+            _player.player.hurtByLaser();
             this.hitPlayer = true;
         }
-        if (_timeManagerJs.timeManager.now - this.startTime > _constsJs.LASER_DURATION) {
+        if (_timeManager.timeManager.now - this.startTime > _consts.LASER_DURATION) {
             this.finished = true;
-            _explosionsJs.explosions.add({
+            _explosions.explosions.add({
                 left: this.left,
                 top: this.top
             });
@@ -3170,40 +3136,40 @@ class Laser extends _coordinatesJs.Coordinates {
         this.draw();
     }
     draw() {
-        _canvasJs.c.drawImage(this.laserFrames.get(), this.localLeft, this.localTop, this.width, this.height);
+        _canvas.c.drawImage(this.laserFrames.get(), this.localLeft, this.localTop, this.width, this.height);
     }
 }
 const lasers = new Lasers();
 
-},{"./coordinates.js":"dsbsK","./canvas.js":"jvBLU","./frames.js":"8i0FU","./time-manager.js":"hIoYz","./audio-manager.js":"gwz40","./consts.js":"2J0f1","./player.js":"2k4ca","./explosions.js":"ensJg","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bcbWB":[function(require,module,exports) {
+},{"./coordinates":"96akj","./canvas":"3ib9d","./frames":"27wmM","./time-manager":"g5oF1","./audio-manager":"eqlY2","./consts":"i99Dc","./player":"cK1Qv","./explosions":"esUVw","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ezoyF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "debugMenu", ()=>debugMenu
 );
-var _canvasJs = require("./canvas.js");
-var _timeManagerJs = require("./time-manager.js");
-var _playerJs = require("./player.js");
+var _canvas = require("./canvas");
+var _timeManager = require("./time-manager");
+var _player = require("./player");
 class DebugMenu {
     constructor(){}
     draw() {
-        _canvasJs.c.fillStyle = '#000c';
-        _canvasJs.c.fillRect(0, 0, 200, 200);
-        _canvasJs.c.fillStyle = '#bbb';
-        _canvasJs.c.textAlign = 'left';
-        _canvasJs.c.font = 'bold 14px Inter';
-        _canvasJs.c.fillText('ms per frame', 58, 48);
-        _canvasJs.c.textAlign = 'right';
-        _canvasJs.c.fillStyle = 'white';
-        _canvasJs.c.fillText(_timeManagerJs.timeManager.msPerFrame, 28, 48);
-        _canvasJs.c.fillStyle = '#bbb';
-        _canvasJs.c.textAlign = 'left';
-        _canvasJs.c.font = 'bold 14px Inter';
-        _canvasJs.c.fillText(_playerJs.player.velocity.y, 58, 68);
+        _canvas.c.fillStyle = '#000c';
+        _canvas.c.fillRect(0, 0, 200, 200);
+        _canvas.c.fillStyle = '#bbb';
+        _canvas.c.textAlign = 'left';
+        _canvas.c.font = 'bold 14px Inter';
+        _canvas.c.fillText('ms per frame', 58, 48);
+        _canvas.c.textAlign = 'right';
+        _canvas.c.fillStyle = 'white';
+        _canvas.c.fillText(String(_timeManager.timeManager.msPerFrame), 28, 48);
+        _canvas.c.fillStyle = '#bbb';
+        _canvas.c.textAlign = 'left';
+        _canvas.c.font = 'bold 14px Inter';
+        _canvas.c.fillText(String(_player.player.velocity.y), 58, 68);
     }
 }
 const debugMenu = new DebugMenu();
 
-},{"./canvas.js":"jvBLU","./time-manager.js":"hIoYz","./player.js":"2k4ca","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dKMrO":[function(require,module,exports) {
+},{"./canvas":"3ib9d","./time-manager":"g5oF1","./player":"cK1Qv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9bwzS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "slides", ()=>slides
@@ -3238,12 +3204,12 @@ parcelHelpers.export(exports, "slides", ()=>slides
  // Maybe watch a video 67.011187 70.684104
  // Maybe press refresh 70.684104 72.576486
  // and start again 70.684104 73.537913
- // 
+ //
  // Now you're a hero 74.415235 76.130476
  // You managed to 76.130476 77.202936
  // ...
  // and start again ... 95.670418
- // 
+ //
  // Yes it's over now 96.491651 98.614725
  // we didn't want to 99.723953 101.586446
  // make a longer game 101.586446 103.916165
@@ -3254,12 +3220,12 @@ parcelHelpers.export(exports, "slides", ()=>slides
  // Now you're a hero 111.125234 ..
  // ...
  // and start again ... 132.611929
- // Game Over fadestart 
+ // Game Over fadestart
 ;
-var _audioManagerJs = require("./audio-manager.js");
-var _canvasJs = require("./canvas.js");
-var _imgJs = require("./img.js");
-var _urlsJs = require("./urls.js");
+var _audioManager = require("./audio-manager");
+var _canvas = require("./canvas");
+var _img = require("./img");
+var _urls = require("./urls");
 class TitleSlide {
     constructor({ timeIn , timeOut , fadeTime  }){
         this.timeIn = timeIn;
@@ -3267,15 +3233,15 @@ class TitleSlide {
         this.fadeTime = fadeTime;
     }
     draw() {
-        const time = _audioManagerJs.audioManager.endCreditsMusic.currentTime;
+        const time = _audioManager.audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) return;
-        if (time - this.timeIn < this.fadeTime) _canvasJs.canvas.style.opacity = (time - this.timeIn) / this.fadeTime;
-        else if (this.timeOut - time < this.fadeTime) _canvasJs.canvas.style.opacity = (this.timeOut - time) / this.fadeTime;
-        _canvasJs.c.textAlign = 'center';
-        _canvasJs.c.font = '500 14px Inter';
-        _canvasJs.c.fillText('You Have To Burn The Rope', _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2 - 10);
-        _canvasJs.c.font = '400 12px Inter';
-        _canvasJs.c.fillText('Thank you for playing!', _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2 + 10);
+        if (time - this.timeIn < this.fadeTime) _canvas.canvas.style.opacity = String((time - this.timeIn) / this.fadeTime);
+        else if (this.timeOut - time < this.fadeTime) _canvas.canvas.style.opacity = String((this.timeOut - time) / this.fadeTime);
+        _canvas.c.textAlign = 'center';
+        _canvas.c.font = '500 14px Inter';
+        _canvas.c.fillText('You Have To Burn The Rope', _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2 - 10);
+        _canvas.c.font = '400 12px Inter';
+        _canvas.c.fillText('Thank you for playing!', _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2 + 10);
     }
 }
 class GameOverSlide {
@@ -3285,12 +3251,12 @@ class GameOverSlide {
         this.text = text;
     }
     draw() {
-        const time = _audioManagerJs.audioManager.endCreditsMusic.currentTime;
+        const time = _audioManager.audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn) return;
-        if (time - this.timeIn < this.fadeTime) _canvasJs.canvas.style.opacity = (time - this.timeIn) / this.fadeTime;
-        _canvasJs.c.textAlign = 'center';
-        _canvasJs.c.font = '500 14px Inter';
-        _canvasJs.c.fillText(this.text, _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2);
+        if (time - this.timeIn < this.fadeTime) _canvas.canvas.style.opacity = String((time - this.timeIn) / this.fadeTime);
+        _canvas.c.textAlign = 'center';
+        _canvas.c.font = '500 14px Inter';
+        _canvas.c.fillText(this.text, _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2);
     }
 }
 class LyricSlide {
@@ -3300,71 +3266,71 @@ class LyricSlide {
         this.text = text;
     }
     draw() {
-        const time = _audioManagerJs.audioManager.endCreditsMusic.currentTime;
+        const time = _audioManager.audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) return;
-        _canvasJs.c.textAlign = 'center';
-        _canvasJs.c.font = '500 14px Inter';
-        _canvasJs.c.fillText(this.text, _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2);
+        _canvas.c.textAlign = 'center';
+        _canvas.c.font = '500 14px Inter';
+        _canvas.c.fillText(this.text, _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2);
     }
 }
 class ImageTextSlide {
     constructor({ heading , lines , src , timeIn , timeOut , fadeTime  }){
-        this.img = _imgJs.img(_urlsJs.ASSET_URLS[src]);
-        /** @type {string} */ this.heading = heading;
-        /** @type {string[]} */ this.lines = lines;
+        this.img = _img.img(src);
+        this.heading = heading;
+        this.lines = lines;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
         this.fadeTime = fadeTime;
     }
     draw() {
-        const time = _audioManagerJs.audioManager.endCreditsMusic.currentTime;
+        const time = _audioManager.audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) return;
-        if (time - this.timeIn < this.fadeTime) _canvasJs.canvas.style.opacity = (time - this.timeIn) / this.fadeTime;
-        else if (this.timeOut - time < this.fadeTime) _canvasJs.canvas.style.opacity = (this.timeOut - time) / this.fadeTime;
+        if (time - this.timeIn < this.fadeTime) _canvas.canvas.style.opacity = String((time - this.timeIn) / this.fadeTime);
+        else if (this.timeOut - time < this.fadeTime) _canvas.canvas.style.opacity = String((this.timeOut - time) / this.fadeTime);
         let offsetX = 150;
         const offsetY = 0;
-        _canvasJs.c.drawImage(this.img, _canvasJs.FRAME_WIDTH / 2 - 250, (_canvasJs.FRAME_HEIGHT - 200) / 2, 200, 200);
-        _canvasJs.c.textAlign = 'center';
-        _canvasJs.c.font = '500 14px Inter';
-        _canvasJs.c.fillText(this.heading, offsetX + _canvasJs.FRAME_WIDTH / 2, offsetY + _canvasJs.FRAME_HEIGHT / 2 - 10);
-        _canvasJs.c.font = '400 12px Inter';
+        _canvas.c.drawImage(this.img, _canvas.FRAME_WIDTH / 2 - 250, (_canvas.FRAME_HEIGHT - 200) / 2, 200, 200);
+        _canvas.c.textAlign = 'center';
+        _canvas.c.font = '500 14px Inter';
+        _canvas.c.fillText(this.heading, offsetX + _canvas.FRAME_WIDTH / 2, offsetY + _canvas.FRAME_HEIGHT / 2 - 10);
+        _canvas.c.font = '400 12px Inter';
         this.lines.forEach((line, i)=>{
-            _canvasJs.c.fillText(line, offsetX + _canvasJs.FRAME_WIDTH / 2, offsetY + _canvasJs.FRAME_HEIGHT / 2 + 5 + 15 * i);
+            _canvas.c.fillText(line, offsetX + _canvas.FRAME_WIDTH / 2, offsetY + _canvas.FRAME_HEIGHT / 2 + 5 + 15 * i);
         });
     }
 }
 class TextImageSlide {
     constructor({ heading , lines , src , timeIn , timeOut , fadeTime  }){
-        this.img = _imgJs.img(_urlsJs.ASSET_URLS[src]);
+        this.img = _img.img(src);
+        this.heading = heading;
+        this.lines = lines;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
         this.fadeTime = fadeTime;
-        /** @type {string} */ this.heading = heading;
-        /** @type {string[]} */ this.lines = lines;
     }
     draw() {
-        const time = _audioManagerJs.audioManager.endCreditsMusic.currentTime;
+        const time = _audioManager.audioManager.endCreditsMusic.currentTime;
         if (time < this.timeIn || time > this.timeOut) return;
-        if (time - this.timeIn < this.fadeTime) _canvasJs.canvas.style.opacity = (time - this.timeIn) / this.fadeTime;
-        else if (this.timeOut - time < this.fadeTime) _canvasJs.canvas.style.opacity = (this.timeOut - time) / this.fadeTime;
+        if (time - this.timeIn < this.fadeTime) _canvas.canvas.style.opacity = String((time - this.timeIn) / this.fadeTime);
+        else if (this.timeOut - time < this.fadeTime) _canvas.canvas.style.opacity = String((this.timeOut - time) / this.fadeTime);
         let offsetX = -150;
-        _canvasJs.c.drawImage(this.img, _canvasJs.FRAME_WIDTH / 2 + 50, (_canvasJs.FRAME_HEIGHT - 200) / 2, 200, 200);
-        _canvasJs.c.textAlign = 'center';
-        _canvasJs.c.font = '500 14px Inter';
-        _canvasJs.c.fillText(this.heading, offsetX + _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2 - 10);
-        _canvasJs.c.font = '400 12px Inter';
+        _canvas.c.drawImage(this.img, _canvas.FRAME_WIDTH / 2 + 50, (_canvas.FRAME_HEIGHT - 200) / 2, 200, 200);
+        _canvas.c.textAlign = 'center';
+        _canvas.c.font = '500 14px Inter';
+        _canvas.c.fillText(this.heading, offsetX + _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2 - 10);
+        _canvas.c.font = '400 12px Inter';
         this.lines.forEach((line, i)=>{
-            _canvasJs.c.fillText(line, offsetX + _canvasJs.FRAME_WIDTH / 2, _canvasJs.FRAME_HEIGHT / 2 + 5 + 15 * i);
+            _canvas.c.fillText(line, offsetX + _canvas.FRAME_WIDTH / 2, _canvas.FRAME_HEIGHT / 2 + 5 + 15 * i);
         });
     }
 }
-// You Have To 
+// You Have To
 // Design, Code, Graphics Kian Bashiri (mazapan.se)
 const slides = [
     new TitleSlide({
         timeIn: 3.158386,
         timeOut: 10.540059,
-        fadeTime: .45
+        fadeTime: 0.45
     }),
     new ImageTextSlide({
         heading: 'Design, Code, Graphics',
@@ -3372,10 +3338,10 @@ const slides = [
             'Kian Bashiri',
             '(mazapan.se)'
         ],
-        src: _urlsJs.ASSET_URLS['../img/credits-1_200x200.png'],
+        src: _urls.ASSET_URLS['../img/credits-1_200x200.png'],
         timeIn: 11.89449,
         timeOut: 19.374947,
-        fadeTime: .45
+        fadeTime: 0.45
     }),
     new TextImageSlide({
         heading: 'Music',
@@ -3383,10 +3349,10 @@ const slides = [
             'Henrik Nåmark',
             '(reachground.se)'
         ],
-        src: _urlsJs.ASSET_URLS['../img/credits-2_200x200.png'],
+        src: _urls.ASSET_URLS['../img/credits-2_200x200.png'],
         timeIn: 20.633224,
         timeOut: 28.119119,
-        fadeTime: .45
+        fadeTime: 0.45
     }),
     new ImageTextSlide({
         heading: 'Additional Design',
@@ -3394,25 +3360,25 @@ const slides = [
             'Henrik Nåmark',
             'Christian Dryden'
         ],
-        src: _urlsJs.ASSET_URLS['../img/credits-3_200x200.png'],
+        src: _urls.ASSET_URLS['../img/credits-3_200x200.png'],
         timeIn: 29.364552,
         timeOut: 36.967399,
-        fadeTime: .45
+        fadeTime: 0.45
     }),
     new TextImageSlide({
         heading: 'Special thanks to',
         lines: [
             'Umami'
         ],
-        src: _urlsJs.ASSET_URLS['../img/credits-4_200x200.png'],
+        src: _urls.ASSET_URLS['../img/credits-4_200x200.png'],
         timeIn: 38.17481,
         timeOut: 45.787413,
-        fadeTime: .45
+        fadeTime: 0.45
     }),
     new LyricSlide({
         timeIn: 52.289314,
         timeOut: 53.952062,
-        text: 'Now you\'re a hero'
+        text: "Now you're a hero"
     }),
     new LyricSlide({
         timeIn: 53.952062,
@@ -3427,7 +3393,7 @@ const slides = [
     new LyricSlide({
         timeIn: 59.330643,
         timeOut: 61.15019,
-        text: 'We\'re happy you made it'
+        text: "We're happy you made it"
     }),
     new LyricSlide({
         timeIn: 61.350186,
@@ -3457,7 +3423,7 @@ const slides = [
     new LyricSlide({
         timeIn: 74.415235,
         timeOut: 76.077983,
-        text: 'Now you\'re a hero'
+        text: "Now you're a hero"
     }),
     new LyricSlide({
         timeIn: 76.077983,
@@ -3472,7 +3438,7 @@ const slides = [
     new LyricSlide({
         timeIn: 81.456564,
         timeOut: 83.276111,
-        text: 'We\'re happy you made it'
+        text: "We're happy you made it"
     }),
     new LyricSlide({
         timeIn: 83.476107,
@@ -3502,12 +3468,12 @@ const slides = [
     new LyricSlide({
         timeIn: 96.491651,
         timeOut: 98.614725,
-        text: 'Yes it\'s over now'
+        text: "Yes it's over now"
     }),
     new LyricSlide({
         timeIn: 99.723953,
         timeOut: 101.586446,
-        text: 'we didn\'t want to'
+        text: "we didn't want to"
     }),
     new LyricSlide({
         timeIn: 101.586446,
@@ -3522,7 +3488,7 @@ const slides = [
     new LyricSlide({
         timeIn: 105.039407,
         timeOut: 107.117157,
-        text: 'I swear it\'s true'
+        text: "I swear it's true"
     }),
     new LyricSlide({
         timeIn: 107.759486,
@@ -3532,7 +3498,7 @@ const slides = [
     new LyricSlide({
         timeIn: 111.125234,
         timeOut: 112.787982,
-        text: 'Now you\'re a hero'
+        text: "Now you're a hero"
     }),
     new LyricSlide({
         timeIn: 112.787982,
@@ -3547,7 +3513,7 @@ const slides = [
     new LyricSlide({
         timeIn: 118.166563,
         timeOut: 119.98611,
-        text: 'We\'re happy you made it'
+        text: "We're happy you made it"
     }),
     new LyricSlide({
         timeIn: 120.186106,
@@ -3578,9 +3544,34 @@ const slides = [
         timeIn: 134.084787,
         fadeTime: 3,
         text: 'Game over'
-    })
+    }), 
 ];
 
-},{"./audio-manager.js":"gwz40","./canvas.js":"jvBLU","./img.js":"durFA","./urls.js":"ki4j8","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["7mgxS","h7u1C"], "h7u1C", "parcelRequiref536")
+},{"./audio-manager":"eqlY2","./canvas":"3ib9d","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1beJH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "bg", ()=>bg
+);
+var _canvas = require("./canvas");
+var _coordinates = require("./coordinates");
+var _img = require("./img");
+var _urls = require("./urls");
+class BG {
+    img = _img.img(_urls.ASSET_URLS['../img/bg.png']);
+    draw() {
+        const sx = _coordinates.offset.x;
+        const sy = _coordinates.offset.y;
+        const sw = _canvas.FRAME_WIDTH;
+        const sh = _canvas.FRAME_HEIGHT;
+        const dx = 0;
+        const dy = 0;
+        const dw = _canvas.FRAME_WIDTH;
+        const dh = _canvas.FRAME_HEIGHT;
+        this.img && _canvas.c.drawImage(this.img, sx, sy, sw, sh, dx, dy, dw, dh);
+    }
+}
+const bg = new BG();
+
+},{"./canvas":"3ib9d","./coordinates":"96akj","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["7mgxS","h7u1C"], "h7u1C", "parcelRequiref536")
 
 //# sourceMappingURL=index.b71e74eb.js.map
