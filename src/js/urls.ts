@@ -29,10 +29,7 @@ export const ASSET_URLS = {
   ),
   '../audio/tunnel.mp3': new URL('../audio/tunnel.mp3', import.meta.url),
   '../img/axe_18x18.png': new URL('../img/axe_18x18.png', import.meta.url),
-  '../img/axe_999_64x64.svg': new URL(
-    '../img/axe_999_64x64.svg',
-    import.meta.url
-  ),
+
   '../img/back-door_32x64.png': new URL(
     '../img/back-door_32x64.png',
     import.meta.url
@@ -125,10 +122,7 @@ export const ASSET_URLS = {
     '../img/flame-3_28x28.png',
     import.meta.url
   ),
-  '../img/info-circle_999_64x64.svg': new URL(
-    '../img/info-circle_999_64x64.svg',
-    import.meta.url
-  ),
+
   '../img/laser-1_20x20.png': new URL(
     '../img/laser-1_20x20.png',
     import.meta.url
@@ -155,10 +149,6 @@ export const ASSET_URLS = {
   ),
   '../img/laser-7_20x20.png': new URL(
     '../img/laser-7_20x20.png',
-    import.meta.url
-  ),
-  '../img/page-bg_32x32.png': new URL(
-    '../img/page-bg_32x32.png',
     import.meta.url
   ),
   '../img/player-fall_30x36.png': new URL(
@@ -219,18 +209,6 @@ export const ASSET_URLS = {
   ),
   '../img/rope_8x192.png': new URL('../img/rope_8x192.png', import.meta.url),
   '../img/stick_30x6.png': new URL('../img/stick_30x6.png', import.meta.url),
-  '../img/up-arrow_999_64x64.svg': new URL(
-    '../img/up-arrow_999_64x64.svg',
-    import.meta.url
-  ),
-  '../img/volume-0_999_64x64.svg': new URL(
-    '../img/volume-0_999_64x64.svg',
-    import.meta.url
-  ),
-  '../img/volume-1_999_64x64.svg': new URL(
-    '../img/volume-1_999_64x64.svg',
-    import.meta.url
-  ),
   '../img/bg.png': new URL('../img/bg.png', import.meta.url),
   '../img/rope.png': new URL('../img/rope.png', import.meta.url),
 };
