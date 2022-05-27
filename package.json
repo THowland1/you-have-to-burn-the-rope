@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/packager-raw-url": "^2.5.0",
+    "@parcel/service-worker": "^2.6.0",
     "@parcel/transformer-inline-string": "^2.5.0",
     "@parcel/transformer-sass": "^2.5.0",
     "@parcel/transformer-webmanifest": "^2.5.0",

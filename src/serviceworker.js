@@ -1,9 +1,10 @@
-
+import * as moo from '@parcel/service-worker';
 import { ASSET_URLS } from './js/urls';
+
+console.log(moo);
 
 const CACHE_NAME = 'version-0.1';
 const OFFLINE_URL = 'index.html';
-const assetUrls = Object.values(ASSET_URLS);
 
 self.addEventListener('install', function (event) {
     console.log('[ServiceWorker] Install');
@@ -14,7 +15,7 @@ self.addEventListener('install', function (event) {
         // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
         await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }));
         await cache.add('/');
-        await cache.addAll(assetUrls);
+        await cache.addAll(Object.values(ASSET_URLS));
     })());
 
     self.skipWaiting();
