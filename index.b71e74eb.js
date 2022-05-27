@@ -555,12 +555,6 @@ if ('serviceWorker' in navigator) window.addEventListener('load', ()=>{
     ).catch((err)=>console.log('Failure: ', err)
     );
 });
-document.getElementById('show-info').addEventListener('click', ()=>{
-    document.getElementById('info').classList.remove('hidden');
-});
-document.getElementById('hide-info').addEventListener('click', ()=>{
-    document.getElementById('info').classList.add('hidden');
-});
 document.getElementById('canvas').addEventListener('click', ()=>{
     _phaseManager.phaseManager.startStartPhase();
 });
@@ -635,6 +629,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "audioManager", ()=>audioManager
 );
+var _elementManager = require("./element-manager");
 var _urls = require("./urls");
 class EndCreditsMusic {
     audio = new BGMusic(_urls.ASSET_URLS['../audio/now-youre-a-hero.mp3']);
@@ -701,14 +696,6 @@ class AudioManager {
     deathSound = new SFX(_urls.ASSET_URLS['../audio/death.mp3']);
     jumpSound = new SFX(_urls.ASSET_URLS['../audio/jump.mp3']);
     landSound = new SFX(_urls.ASSET_URLS['../audio/land.mp3']);
-    volume0Btn = document.getElementById('volume-0');
-    volume1Btn = document.getElementById('volume-1');
-    constructor(){
-        this.volume0Btn.addEventListener('click', ()=>this.setVolume(0)
-        );
-        this.volume1Btn.addEventListener('click', ()=>this.setVolume(1)
-        );
-    }
     playTunnelMusic() {
         this.tunnelMusic.play(this.volume);
     }
@@ -750,18 +737,13 @@ class AudioManager {
     }
     setVolume(volume) {
         this.volume = volume;
-        if (this.volume > 0) {
-            this.volume0Btn.classList.remove('hidden');
-            this.volume1Btn.classList.add('hidden');
-        } else {
-            this.volume0Btn.classList.add('hidden');
-            this.volume1Btn.classList.remove('hidden');
-        }
+        if (this.volume > 0) _elementManager.elementManager.navbar.unmute();
+        else _elementManager.elementManager.navbar.mute();
     }
 }
 const audioManager = new AudioManager();
 
-},{"./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8OWkF":[function(require,module,exports) {
+},{"./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./element-manager":"fyl1r"}],"8OWkF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ASSET_URLS", ()=>ASSET_URLS
@@ -1109,7 +1091,176 @@ exports.export = function(dest, destName, get) {
 },{}],"1SPBh":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('7UhFu') + "yhtbtr.799891e4.js" + "?" + Date.now();
 
-},{"./helpers/bundle-url":"lgJ39"}],"6KuQA":[function(require,module,exports) {
+},{"./helpers/bundle-url":"lgJ39"}],"fyl1r":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "elementManager", ()=>elementManager
+);
+var _infoModal = require("./elements/info-modal");
+var _button = require("./elements/button");
+var _buttonBar = require("./elements/button-bar");
+var _navBar = require("./elements/nav-bar");
+function getSingleEl(tagName) {
+    return document.getElementsByTagName(tagName)[0];
+}
+class ElementManager {
+    buttonbar = getSingleEl('app-button-bar');
+    navbar = getSingleEl('app-nav-bar');
+    volume0Button = this.navbar.volume0Button;
+    volume1Button = this.navbar.volume1Button;
+    showInfoButton = this.navbar.showInfoButton;
+}
+const elementManager = new ElementManager();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./elements/info-modal":"ffmMm","./elements/button":"1sB4J","./elements/button-bar":"eUeDD","./elements/nav-bar":"jbNj6"}],"ffmMm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _infoModalHtml = require("bundle-text:./info-modal.html");
+var _infoModalHtmlDefault = parcelHelpers.interopDefault(_infoModalHtml);
+var html = document.createElement('template');
+html.innerHTML = _infoModalHtmlDefault.default;
+class InfoModalElement extends HTMLElement {
+    constructor(){
+        super();
+        this.attachShadow({
+            mode: 'open'
+        });
+    }
+    _render() {}
+    get hideInfoButton() {
+        return this.shadowRoot.querySelector('#hide-info');
+    }
+    connectedCallback() {
+        this.shadowRoot.appendChild(html.content.cloneNode(true));
+        this.hideInfoButton.addEventListener('click', (_)=>{
+            this.removeAttribute('open');
+        });
+        console.log();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {}
+    static get observedAttributes() {
+        return [
+            'open'
+        ];
+    }
+}
+customElements.define('app-info-modal', InfoModalElement);
+
+},{"bundle-text:./info-modal.html":"6hzL0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6hzL0":[function(require,module,exports) {
+module.exports = "<style>:host {\n  display: none;\n}\n\n:host([open]) {\n  display: block;\n}\n\na {\n  color: inherit;\n}\n\n#info {\n  z-index: 1;\n  color: #fff;\n  background-color: #000000bf;\n  padding: 32px;\n  font-size: 14px;\n  display: flex;\n  position: absolute;\n  inset: 0;\n}\n\n#info > div {\n  max-width: 400px;\n  max-height: 400px;\n  width: 100%;\n  height: 100%;\n  margin: auto;\n}\n\n#info .info-header {\n  text-transform: uppercase;\n  height: 1em;\n  justify-content: space-between;\n  align-items: center;\n  font-weight: 600;\n  display: flex;\n}\n\n#info .info-subheader {\n  font-weight: 600;\n}\n\n#info .disclaimer {\n  font-style: italic;\n}\n\n#info button {\n  color: inherit;\n  border: none;\n  padding: 0;\n}\n\n</style>\n<div id=\"info\" class=\"hidden\">\n  <div>\n    <div class=\"info-header\">\n      <div>You Have To Burn The Rope</div>\n      <app-button id=\"hide-info\">x</app-button>\n    </div>\n    <br>\n    <div class=\"info-subheader\">Originally created by</div>\n    <div>Kian Bashiri <a href=\"http://mazapan.se\">(http://mazapan.se)</a></div>\n    <br>\n    <div class=\"info-subheader\">Converted to HTML/JS by</div>\n    <div>\n      Tom Howland\n      <a href=\"https://tomhowland.com\">(https://tomhowland.com)</a>\n    </div>\n    <br>\n    <div class=\"version\">version 0.5</div>\n  </div>\n</div>\n<script src=\"/info-modal.f03bad97.js\"></script>";
+
+},{}],"1sB4J":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _buttonHtml = require("bundle-text:./button.html");
+var _buttonHtmlDefault = parcelHelpers.interopDefault(_buttonHtml);
+var html = document.createElement('template');
+html.innerHTML = _buttonHtmlDefault.default;
+class ButtonElement extends HTMLElement {
+    constructor(){
+        super();
+        this.attachShadow({
+            mode: 'open'
+        });
+    }
+    _render() {}
+    connectedCallback() {
+        this.shadowRoot.appendChild(html.content.cloneNode(true));
+    }
+    attributeChangedCallback(name, oldValue, newValue) {}
+    static get observedAttributes() {
+        return [
+            'open'
+        ];
+    }
+}
+customElements.define('app-button', ButtonElement);
+
+},{"bundle-text:./button.html":"fk2eh","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fk2eh":[function(require,module,exports) {
+module.exports = "<style>button {\n  height: 64px;\n  width: 64px;\n  color: #999;\n  cursor: pointer;\n  background-color: #fff0;\n  border: 1px solid #999;\n  border-radius: 8px;\n  justify-content: center;\n  align-items: center;\n  margin-left: 4px;\n  margin-right: 4px;\n  padding: 0;\n  font-size: 24px;\n  transition: all .3s;\n  display: inline-flex;\n}\n\nbutton svg {\n  height: 1em;\n  width: 1em;\n}\n\nbutton:active, button:focus {\n  outline: none;\n}\n\nbutton:hover {\n  background-color: #ffffff40;\n}\n\n</style>\n<button>\n  <slot></slot>\n</button>\n<script src=\"/button.c2712ce5.js\"></script>";
+
+},{}],"eUeDD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ButtonBarElement", ()=>ButtonBarElement
+);
+var _buttonBarHtml = require("bundle-text:./button-bar.html");
+var _buttonBarHtmlDefault = parcelHelpers.interopDefault(_buttonBarHtml);
+var html = document.createElement('template');
+html.innerHTML = _buttonBarHtmlDefault.default;
+class ButtonBarElement extends HTMLElement {
+    constructor(){
+        super();
+        this.attachShadow({
+            mode: 'open'
+        });
+    }
+    get jumpButton() {
+        return this.shadowRoot.querySelector('#jump');
+    }
+    get attackButton() {
+        return this.shadowRoot.querySelector('#attack');
+    }
+    get leftButton() {
+        return this.shadowRoot.querySelector('#left');
+    }
+    get rightButton() {
+        return this.shadowRoot.querySelector('#right');
+    }
+    show() {
+        this.toggleAttribute('show', true);
+    }
+    hide() {
+        this.toggleAttribute('show', false);
+    }
+    connectedCallback() {
+        this.shadowRoot.appendChild(html.content.cloneNode(true));
+    }
+}
+customElements.define('app-button-bar', ButtonBarElement);
+
+},{"bundle-text:./button-bar.html":"kRPEv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kRPEv":[function(require,module,exports) {
+module.exports = "<style>:host {\n  display: none;\n}\n\n:host([show]) {\n  display: block;\n}\n\n#buttons {\n  justify-content: space-between;\n  display: flex;\n  position: absolute;\n  bottom: 32px;\n  left: 16px;\n  right: 16px;\n}\n\nbutton {\n  height: 64px;\n  width: 64px;\n  color: #999;\n  background-color: #fff0;\n  border: 1px solid #999;\n  border-radius: 8px;\n  justify-content: center;\n  align-items: center;\n  margin-left: 4px;\n  margin-right: 4px;\n  padding: 0;\n  font-size: 24px;\n  transition: all .3s;\n  display: inline-flex;\n}\n\nbutton svg {\n  height: 1em;\n  width: 1em;\n}\n\nbutton:active, button:focus {\n  outline: none;\n}\n\nbutton:hover {\n  background-color: #ffffff40;\n}\n\n#jump:before {\n  background-image: url(\"up-arrow_999_64x64.d68cd5b8.svg\");\n}\n\n#attack:before {\n  background-image: url(\"axe_999_64x64.099a5152.svg\");\n}\n\n#left:before {\n  background-image: url(\"up-arrow_999_64x64.d68cd5b8.svg\");\n  transform: rotate(-90deg);\n}\n\n#right:before {\n  background-image: url(\"up-arrow_999_64x64.d68cd5b8.svg\");\n  transform: rotate(90deg);\n}\n\n.icon-button:before {\n  content: \"\";\n  height: 1em;\n  width: 1em;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n\n</style>\n<div id=\"buttons\">\n  <div>\n    <button class=\"icon-button\" id=\"jump\"></button>\n    <button class=\"icon-button\" id=\"attack\"></button>\n  </div>\n  <div>\n    <button class=\"icon-button\" id=\"left\"></button>\n    <button class=\"icon-button\" id=\"right\"></button>\n  </div>\n</div>\n<script src=\"/button-bar.5be0dd88.js\"></script>";
+
+},{}],"jbNj6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "NavBarElement", ()=>NavBarElement
+);
+var _navBarHtml = require("bundle-text:./nav-bar.html");
+var _navBarHtmlDefault = parcelHelpers.interopDefault(_navBarHtml);
+var html = document.createElement('template');
+html.innerHTML = _navBarHtmlDefault.default;
+class NavBarElement extends HTMLElement {
+    constructor(){
+        super();
+        this.attachShadow({
+            mode: 'open'
+        });
+    }
+    get volume0Button() {
+        return this.shadowRoot.querySelector('#volume-0');
+    }
+    get volume1Button() {
+        return this.shadowRoot.querySelector('#volume-1');
+    }
+    get showInfoButton() {
+        return this.shadowRoot.querySelector('#show-info');
+    }
+    mute() {
+        this.toggleAttribute('muted', true);
+    }
+    unmute() {
+        this.toggleAttribute('muted', false);
+    }
+    connectedCallback() {
+        this.shadowRoot.appendChild(html.content.cloneNode(true));
+    }
+}
+customElements.define('app-nav-bar', NavBarElement);
+
+},{"bundle-text:./nav-bar.html":"1qLZL","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1qLZL":[function(require,module,exports) {
+module.exports = "<style>#volume-1 {\n  display: none;\n}\n\n:host([muted]) #volume-1 {\n  display: inherit;\n}\n\n:host([muted]) #volume-0 {\n  display: none;\n}\n\n#buttons {\n  justify-content: space-between;\n  display: flex;\n  position: absolute;\n  bottom: 32px;\n  left: 16px;\n  right: 16px;\n}\n\nbutton {\n  height: 64px;\n  width: 64px;\n  color: #999;\n  background-color: #fff0;\n  border: 1px solid #999;\n  border-radius: 8px;\n  justify-content: center;\n  align-items: center;\n  margin-left: 4px;\n  margin-right: 4px;\n  padding: 0;\n  font-size: 24px;\n  transition: all .3s;\n  display: inline-flex;\n}\n\nbutton svg {\n  height: 1em;\n  width: 1em;\n}\n\nbutton:active, button:focus {\n  outline: none;\n}\n\nbutton:hover {\n  background-color: #ffffff40;\n}\n\nnav {\n  justify-content: flex-end;\n  display: flex;\n  position: absolute;\n  top: 32px;\n  left: 16px;\n  right: 16px;\n}\n\nnav button {\n  border: none;\n}\n\n.icon-button:before {\n  content: \"\";\n  height: 1em;\n  width: 1em;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n\n#volume-0:before {\n  background-image: url(\"volume-0_999_64x64.7e4bfc2d.svg\");\n}\n\n#volume-1:before {\n  background-image: url(\"volume-1_999_64x64.81168351.svg\");\n}\n\n#show-info:before {\n  background-image: url(\"info-circle_999_64x64.77d50b73.svg\");\n}\n\n</style>\n<nav>\n  <button class=\"icon-button\" id=\"volume-0\"></button>\n  <button class=\"icon-button hidden\" id=\"volume-1\"></button>\n  <button class=\"icon-button\" id=\"show-info\"></button>\n</nav>\n<script src=\"/nav-bar.b8692972.js\"></script>";
+
+},{}],"6KuQA":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "axes", ()=>axes
@@ -1507,7 +1658,6 @@ parcelHelpers.export(exports, "Player", ()=>Player
 );
 parcelHelpers.export(exports, "player", ()=>player
 );
-var _audioManager = require("./audio-manager");
 var _axes = require("./axes");
 var _canvas = require("./canvas");
 var _consts = require("./consts");
@@ -1515,88 +1665,12 @@ var _coordinates = require("./coordinates");
 var _flames = require("./flames");
 var _boss = require("./boss");
 var _frames = require("./frames");
-var _phaseManager = require("./phase-manager");
 var _platforms = require("./platforms");
 var _plumes = require("./plumes");
 var _timeManager = require("./time-manager");
 var _img = require("./img");
 var _urls = require("./urls");
-class KeyManager {
-    keys = {
-        right: {
-            pressed: false
-        },
-        left: {
-            pressed: false
-        },
-        jump: {
-            pressed: false
-        },
-        attack: {
-            pressed: false
-        }
-    };
-    constructor(){
-        const jump = ()=>{
-            if (!player.stunned && player.velocity.y === 0) {
-                player.velocity.y -= _consts.JUMP_SPEED;
-                _audioManager.audioManager.playJumpSound();
-            }
-        };
-        const startRight = ()=>{
-            if (!player.stunned) {
-                this.keys.right.pressed = true;
-                player.facingRight = true;
-            }
-        };
-        const stopRight = ()=>this.keys.right.pressed = false
-        ;
-        const startLeft = ()=>{
-            if (!player.stunned) {
-                this.keys.left.pressed = true;
-                player.facingRight = false;
-            }
-        };
-        const stopLeft = ()=>this.keys.left.pressed = false
-        ;
-        const attack = ()=>{
-            if (!player.stunned && _timeManager.timeManager.now > player.lastAttack + _consts.PLAYER_ATTACKINTERVAL) player.attack();
-        };
-        addEventListener('keydown', (e)=>{
-            if (_phaseManager.phaseManager.phase >= _phaseManager.PHASES.ropeburning) return;
-            const fn = {
-                ' ': jump,
-                ArrowUp: jump,
-                ArrowRight: startRight,
-                ArrowLeft: startLeft
-            }[e.key];
-            (fn ?? attack)();
-        });
-        addEventListener('keyup', (e)=>{
-            const fn = {
-                ArrowRight: stopRight,
-                ArrowLeft: stopLeft
-            }[e.key];
-            fn?.();
-        });
-        const touch = matchMedia('(hover: none)').matches;
-        if (touch) {
-            const buttonsDiv = document.getElementById('buttons');
-            buttonsDiv.style.display = 'flex';
-            const rightBtn = document.getElementById('right');
-            rightBtn.addEventListener('touchstart', startRight);
-            rightBtn.addEventListener('touchend', stopRight);
-            const leftBtn = document.getElementById('left');
-            leftBtn.addEventListener('touchstart', startLeft);
-            leftBtn.addEventListener('touchend', stopLeft);
-            const jumpBtn = document.getElementById('jump');
-            jumpBtn.addEventListener('touchstart', jump);
-            const attackBtn = document.getElementById('attack');
-            attackBtn.addEventListener('touchstart', attack);
-        }
-    }
-}
-const keys = new KeyManager();
+var _keyManager = require("./key-manager");
 class Player extends _coordinates.Coordinates {
     hasFlame = false;
     facingRight = true;
@@ -1739,8 +1813,8 @@ class Player extends _coordinates.Coordinates {
         this.velocity.y += _consts.PLAYER_GRAVITY * _timeManager.timeManager.msPerFrame;
         // Update X velocity
         if (this.flying) this.velocity.x *= 0.9;
-        else if (keys.keys.right.pressed) this.velocity.x = _consts.WALKING_SPEED;
-        else if (keys.keys.left.pressed) this.velocity.x = -_consts.WALKING_SPEED;
+        else if (_keyManager.keyManager.keys.right.pressed) this.velocity.x = _consts.WALKING_SPEED;
+        else if (_keyManager.keyManager.keys.left.pressed) this.velocity.x = -_consts.WALKING_SPEED;
         else this.velocity.x = 0;
         _platforms.platforms.forEach((platform)=>{
             if (this.right > platform.left && this.left < platform.right || this.nextFrame.right > platform.left && this.nextFrame.left < platform.right) {
@@ -1786,7 +1860,7 @@ const player = new Player({
  //     y: 23.5 * 32,
  // });
 
-},{"./audio-manager":"eqlY2","./axes":"6KuQA","./canvas":"3ib9d","./consts":"i99Dc","./coordinates":"96akj","./flames":"hqADu","./boss":"i5HRn","./frames":"27wmM","./phase-manager":"2aQoL","./platforms":"eYBZp","./plumes":"6HX0g","./time-manager":"g5oF1","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hqADu":[function(require,module,exports) {
+},{"./axes":"6KuQA","./canvas":"3ib9d","./consts":"i99Dc","./coordinates":"96akj","./flames":"hqADu","./boss":"i5HRn","./frames":"27wmM","./platforms":"eYBZp","./plumes":"6HX0g","./time-manager":"g5oF1","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./key-manager":"9BaVj"}],"hqADu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Flame", ()=>Flame
@@ -1898,373 +1972,7 @@ class Frames {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2aQoL":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "PHASES", ()=>PHASES
-);
-parcelHelpers.export(exports, "phaseManager", ()=>phaseManager
-);
-var _healthbar = require("./healthbar");
-var _platforms = require("./platforms");
-var _explosions = require("./explosions");
-var _canvas = require("./canvas");
-var _coordinates = require("./coordinates");
-var _chandelier = require("./chandelier");
-var _rope = require("./rope");
-var _audioManager = require("./audio-manager");
-var _buttonManager = require("./button-manager");
-var _img = require("./img");
-var _urls = require("./urls");
-async function wait(ms) {
-    return new Promise((resolve)=>setTimeout(resolve, ms)
-    );
-}
-const PHASES = {
-    clicktostart: 0,
-    start: 1,
-    tunnel: 2,
-    bossfight: 3,
-    ropeburning: 4,
-    ropefalling: 5,
-    bossdying: 6,
-    end: 7
-};
-class PhaseManager {
-    backDoorImage = _img.img(_urls.ASSET_URLS['../img/back-door_32x64.png']);
-    showBackDoor = false;
-    phase = PHASES.clicktostart;
-    startStartPhase() {
-        if (this.phase >= PHASES.start) return;
-        this.phase = PHASES.start;
-        _buttonManager.buttonManager.show();
-    }
-    startTunnelPhase() {
-        if (this.phase >= PHASES.tunnel) return;
-        _audioManager.audioManager.playTunnelMusic();
-        this.phase = PHASES.tunnel;
-    }
-    startBossFightPhase() {
-        if (this.phase >= PHASES.bossfight) return;
-        _audioManager.audioManager.pauseTunnelMusic();
-        _audioManager.audioManager.playBossFightMusic();
-        this.showBackDoor = true;
-        _healthbar.healthBar.show = true;
-        _platforms.platforms.push(new _platforms.LeftPlatform({
-            right: 3456,
-            bottom: 864,
-            top: 800
-        }));
-        _explosions.explosions.add({
-            left: 3422,
-            top: 798
-        });
-        _explosions.explosions.add({
-            left: 3422,
-            top: 830
-        });
-        _audioManager.audioManager.playDoorslamSound();
-        this.phase = PHASES.bossfight;
-    }
-    async startRopeBurningPhase() {
-        if (this.phase >= PHASES.ropeburning) return;
-        _audioManager.audioManager.pauseBossFightMusic();
-        this.phase = PHASES.ropeburning;
-        _explosions.explosions.add({
-            left: 4224,
-            top: 192
-        });
-        _audioManager.audioManager.playRopeExplosionSound();
-        await wait(200);
-        _explosions.explosions.add({
-            left: 4224,
-            top: 224
-        });
-        _audioManager.audioManager.playRopeExplosionSound();
-        await wait(200);
-        _explosions.explosions.add({
-            left: 4224,
-            top: 256
-        });
-        _audioManager.audioManager.playRopeExplosionSound();
-        await wait(200);
-        _explosions.explosions.add({
-            left: 4224,
-            top: 288
-        });
-        _audioManager.audioManager.playRopeExplosionSound();
-        await wait(200);
-        _explosions.explosions.add({
-            left: 4224,
-            top: 320
-        });
-        _audioManager.audioManager.playRopeExplosionSound();
-        this.startRopeFallingPhase();
-    }
-    async startRopeFallingPhase() {
-        if (this.phase >= PHASES.ropefalling) return;
-        this.phase = PHASES.ropefalling;
-        _chandelier.chandelier.dropped = true;
-    }
-    async startBossDyingPhase() {
-        if (this.phase >= PHASES.bossdying) return;
-        this.phase = PHASES.bossdying;
-        _healthbar.healthBar.die();
-        _chandelier.chandelier.show = false;
-        _rope.rope.show = false;
-        // #region Explosions
-        _explosions.explosions.add({
-            left: 4291,
-            top: 642
-        });
-        _explosions.explosions.add({
-            left: 4283,
-            top: 676
-        });
-        _explosions.explosions.add({
-            left: 4264,
-            top: 681
-        });
-        _explosions.explosions.add({
-            left: 4282,
-            top: 688
-        });
-        _explosions.explosions.add({
-            left: 4186,
-            top: 621
-        });
-        _explosions.explosions.add({
-            left: 4194,
-            top: 649
-        });
-        _explosions.explosions.add({
-            left: 4203,
-            top: 642
-        });
-        _explosions.explosions.add({
-            left: 4223,
-            top: 664
-        });
-        _explosions.explosions.add({
-            left: 4219,
-            top: 668
-        });
-        _explosions.explosions.add({
-            left: 4203,
-            top: 686
-        });
-        _explosions.explosions.add({
-            left: 4200,
-            top: 670
-        });
-        _explosions.explosions.add({
-            left: 4200,
-            top: 700
-        });
-        _explosions.explosions.add({
-            left: 4205,
-            top: 792
-        });
-        _explosions.explosions.add({
-            left: 4248,
-            top: 730
-        });
-        _explosions.explosions.add({
-            left: 4154,
-            top: 686
-        });
-        _explosions.explosions.add({
-            left: 4126,
-            top: 725
-        });
-        _explosions.explosions.add({
-            left: 4214,
-            top: 598
-        });
-        _audioManager.audioManager.playDeathSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4159,
-            top: 654
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4161,
-            top: 706
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4274,
-            top: 851
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4206,
-            top: 734
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4192,
-            top: 733
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4203,
-            top: 732
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        _explosions.explosions.add({
-            left: 4252,
-            top: 546
-        });
-        _audioManager.audioManager.playBossExplosionSound();
-        await wait(300);
-        // #endregion
-        this.startEndPhase();
-    }
-    async startEndPhase() {
-        if (this.phase >= PHASES.end) return;
-        this.phase = PHASES.end;
-        // #region Explosions
-        _explosions.explosions.add({
-            left: 4237,
-            top: 560
-        });
-        _explosions.explosions.add({
-            left: 4205,
-            top: 596
-        });
-        _explosions.explosions.add({
-            left: 4251,
-            top: 603
-        });
-        _explosions.explosions.add({
-            left: 4231,
-            top: 642
-        });
-        _explosions.explosions.add({
-            left: 4295,
-            top: 644
-        });
-        _explosions.explosions.add({
-            left: 4249,
-            top: 656
-        });
-        _explosions.explosions.add({
-            left: 4243,
-            top: 681
-        });
-        _explosions.explosions.add({
-            left: 4203,
-            top: 684
-        });
-        _explosions.explosions.add({
-            left: 4266,
-            top: 684
-        });
-        _explosions.explosions.add({
-            left: 4219,
-            top: 692
-        });
-        _explosions.explosions.add({
-            left: 4215,
-            top: 700
-        });
-        _explosions.explosions.add({
-            left: 4293,
-            top: 730
-        });
-        _explosions.explosions.add({
-            left: 4126,
-            top: 740
-        });
-        _explosions.explosions.add({
-            left: 4187,
-            top: 746
-        });
-        _explosions.explosions.add({
-            left: 4224,
-            top: 750
-        });
-        _explosions.explosions.add({
-            left: 4199,
-            top: 767
-        });
-        _explosions.explosions.add({
-            left: 4176,
-            top: 768
-        });
-        _explosions.explosions.add({
-            left: 4296,
-            top: 813
-        });
-        _explosions.explosions.add({
-            left: 4161,
-            top: 820
-        });
-        _explosions.explosions.add({
-            left: 4179,
-            top: 844
-        });
-        _explosions.explosions.add({
-            left: 4180,
-            top: 882
-        });
-        _audioManager.audioManager.playDeathSound();
-        // #endregion
-        await wait(2000);
-        _audioManager.audioManager.playEndCreditsMusic();
-    }
-    drawBackDoor() {
-        _canvas.c.drawImage(this.backDoorImage, 3424 - _coordinates.offset.x, 800 - _coordinates.offset.y, 32, 64);
-    }
-}
-const phaseManager = new PhaseManager();
-
-},{"./healthbar":"5clUK","./platforms":"eYBZp","./explosions":"esUVw","./canvas":"3ib9d","./coordinates":"96akj","./chandelier":"bvCN6","./rope":"9scZJ","./audio-manager":"eqlY2","./button-manager":"2Z5wt","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5clUK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "healthBar", ()=>healthBar
-);
-var _canvas = require("./canvas");
-class HealthBar {
-    health = 1;
-    deathTime = null;
-    show = false;
-    die() {
-        this.deathTime = new Date().valueOf();
-    }
-    update() {
-        if (!this.show) return;
-        if (this.deathTime) {
-            if (this.health > 0.0001) this.health = 1 * Math.exp(-(new Date().valueOf() - this.deathTime) / 200);
-        } else this.health = 1 - 0.99 * (1 - this.health);
-        this.draw();
-    }
-    draw() {
-        _canvas.c.fillStyle = 'white';
-        _canvas.c.fillRect(16, 16, _canvas.FRAME_WIDTH - 32, 20);
-        _canvas.c.fillRect(16, 32, 154, 24);
-        _canvas.c.fillStyle = 'black';
-        _canvas.c.fillRect(18, 18, _canvas.FRAME_WIDTH - 36, 16);
-        _canvas.c.fillRect(18, 30, 150, 24);
-        _canvas.c.fillStyle = 'red';
-        _canvas.c.fillRect(20, 20, (_canvas.FRAME_WIDTH - 40) * this.health, 12);
-        _canvas.c.fillStyle = 'white';
-        _canvas.c.textAlign = 'left';
-        _canvas.c.font = 'bold 14px Inter';
-        _canvas.c.fillText('Grinning Colossus', 28, 48);
-    }
-}
-const healthBar = new HealthBar();
-
-},{"./canvas":"3ib9d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eYBZp":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eYBZp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LeftPlatform", ()=>LeftPlatform
@@ -2829,7 +2537,525 @@ const platforms = [
     })
 ];
 
-},{"./coordinates":"96akj","./canvas":"3ib9d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"esUVw":[function(require,module,exports) {
+},{"./coordinates":"96akj","./canvas":"3ib9d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6HX0g":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "plumes", ()=>plumes
+);
+var _coordinates = require("./coordinates");
+var _frames = require("./frames");
+var _audioManager = require("./audio-manager");
+var _canvas = require("./canvas");
+var _img = require("./img");
+var _urls = require("./urls");
+const plumeImages = [
+    _img.img(_urls.ASSET_URLS['../img/plume-1_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-2_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-3_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-4_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-5_43x21.png']),
+    _img.img(_urls.ASSET_URLS['../img/plume-6_43x21.png']), 
+];
+class Plumes {
+    plumes = [];
+    add({ left , bottom , facingRight  }) {
+        this.plumes.push(new Plume({
+            left,
+            bottom,
+            facingRight
+        }));
+        _audioManager.audioManager.playLandSound();
+    }
+    update() {
+        this.plumes = this.plumes.filter((plume)=>plume.frames.currentIndex < 5
+        );
+        this.draw();
+    }
+    draw() {
+        this.plumes.forEach((plume)=>plume.draw()
+        );
+    }
+}
+class Plume extends _coordinates.Coordinates {
+    frames = new _frames.Frames({
+        images: plumeImages,
+        fps: 14
+    });
+    constructor({ left , bottom , facingRight  }){
+        super({
+            x: left,
+            y: bottom - 21,
+            width: 43,
+            height: 21
+        });
+        this.facingRight = facingRight;
+    }
+    draw() {
+        const img = this.frames.get();
+        if (this.facingRight) _canvas.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
+        else {
+            _canvas.c.save();
+            _canvas.c.scale(-1, 1);
+            _canvas.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
+            _canvas.c.restore();
+        }
+    }
+}
+const plumes = new Plumes();
+
+},{"./coordinates":"96akj","./frames":"27wmM","./audio-manager":"eqlY2","./canvas":"3ib9d","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9BaVj":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "keyManager", ()=>keyManager
+);
+var _audioManager = require("./audio-manager");
+var _consts = require("./consts");
+var _phaseManager = require("./phase-manager");
+var _player = require("./player");
+var _timeManager = require("./time-manager");
+class KeyManager {
+    keys = {
+        right: {
+            pressed: false
+        },
+        left: {
+            pressed: false
+        },
+        jump: {
+            pressed: false
+        },
+        attack: {
+            pressed: false
+        }
+    };
+    constructor(){
+        const jump = ()=>{
+            if (!_player.player.stunned && _player.player.velocity.y === 0) {
+                _player.player.velocity.y -= _consts.JUMP_SPEED;
+                _audioManager.audioManager.playJumpSound();
+            }
+        };
+        const startRight = ()=>{
+            if (!_player.player.stunned) {
+                this.keys.right.pressed = true;
+                _player.player.facingRight = true;
+            }
+        };
+        const stopRight = ()=>this.keys.right.pressed = false
+        ;
+        const startLeft = ()=>{
+            if (!_player.player.stunned) {
+                this.keys.left.pressed = true;
+                _player.player.facingRight = false;
+            }
+        };
+        const stopLeft = ()=>this.keys.left.pressed = false
+        ;
+        const attack = ()=>{
+            if (!_player.player.stunned && _timeManager.timeManager.now > _player.player.lastAttack + _consts.PLAYER_ATTACKINTERVAL) _player.player.attack();
+        };
+        addEventListener('keydown', (e)=>{
+            if (_phaseManager.phaseManager.phase >= _phaseManager.PHASES.ropeburning) return;
+            const fn = {
+                ' ': jump,
+                ArrowUp: jump,
+                ArrowRight: startRight,
+                ArrowLeft: startLeft
+            }[e.key];
+            (fn ?? attack)();
+        });
+        addEventListener('keyup', (e)=>{
+            const fn = {
+                ArrowRight: stopRight,
+                ArrowLeft: stopLeft
+            }[e.key];
+            fn?.();
+        });
+        const touch = matchMedia('(hover: none)').matches;
+        if (touch) {
+            const buttonsDiv = document.getElementsByTagName('app-button-bar')[0];
+            const rightBtn = buttonsDiv.rightButton;
+            rightBtn.addEventListener('touchstart', startRight);
+            rightBtn.addEventListener('touchend', stopRight);
+            const leftBtn = buttonsDiv.leftButton;
+            leftBtn.addEventListener('touchstart', startLeft);
+            leftBtn.addEventListener('touchend', stopLeft);
+            const jumpBtn = buttonsDiv.jumpButton;
+            jumpBtn.addEventListener('touchstart', jump);
+            const attackBtn = buttonsDiv.attackButton;
+            attackBtn.addEventListener('touchstart', attack);
+        }
+    }
+}
+const keyManager = new KeyManager();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./audio-manager":"eqlY2","./consts":"i99Dc","./phase-manager":"2aQoL","./player":"cK1Qv","./time-manager":"g5oF1"}],"2aQoL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "PHASES", ()=>PHASES
+);
+parcelHelpers.export(exports, "phaseManager", ()=>phaseManager
+);
+var _healthbar = require("./healthbar");
+var _platforms = require("./platforms");
+var _explosions = require("./explosions");
+var _canvas = require("./canvas");
+var _coordinates = require("./coordinates");
+var _chandelier = require("./chandelier");
+var _rope = require("./rope");
+var _audioManager = require("./audio-manager");
+var _buttonManager = require("./button-manager");
+var _img = require("./img");
+var _urls = require("./urls");
+async function wait(ms) {
+    return new Promise((resolve)=>setTimeout(resolve, ms)
+    );
+}
+const PHASES = {
+    clicktostart: 0,
+    start: 1,
+    tunnel: 2,
+    bossfight: 3,
+    ropeburning: 4,
+    ropefalling: 5,
+    bossdying: 6,
+    end: 7
+};
+class PhaseManager {
+    backDoorImage = _img.img(_urls.ASSET_URLS['../img/back-door_32x64.png']);
+    showBackDoor = false;
+    phase = PHASES.clicktostart;
+    startStartPhase() {
+        if (this.phase >= PHASES.start) return;
+        this.phase = PHASES.start;
+        _buttonManager.buttonManager.show();
+    }
+    startTunnelPhase() {
+        if (this.phase >= PHASES.tunnel) return;
+        _audioManager.audioManager.playTunnelMusic();
+        this.phase = PHASES.tunnel;
+    }
+    startBossFightPhase() {
+        if (this.phase >= PHASES.bossfight) return;
+        _audioManager.audioManager.pauseTunnelMusic();
+        _audioManager.audioManager.playBossFightMusic();
+        this.showBackDoor = true;
+        _healthbar.healthBar.show = true;
+        _platforms.platforms.push(new _platforms.LeftPlatform({
+            right: 3456,
+            bottom: 864,
+            top: 800
+        }));
+        _explosions.explosions.add({
+            left: 3422,
+            top: 798
+        });
+        _explosions.explosions.add({
+            left: 3422,
+            top: 830
+        });
+        _audioManager.audioManager.playDoorslamSound();
+        this.phase = PHASES.bossfight;
+    }
+    async startRopeBurningPhase() {
+        if (this.phase >= PHASES.ropeburning) return;
+        _audioManager.audioManager.pauseBossFightMusic();
+        this.phase = PHASES.ropeburning;
+        _explosions.explosions.add({
+            left: 4224,
+            top: 192
+        });
+        _audioManager.audioManager.playRopeExplosionSound();
+        await wait(200);
+        _explosions.explosions.add({
+            left: 4224,
+            top: 224
+        });
+        _audioManager.audioManager.playRopeExplosionSound();
+        await wait(200);
+        _explosions.explosions.add({
+            left: 4224,
+            top: 256
+        });
+        _audioManager.audioManager.playRopeExplosionSound();
+        await wait(200);
+        _explosions.explosions.add({
+            left: 4224,
+            top: 288
+        });
+        _audioManager.audioManager.playRopeExplosionSound();
+        await wait(200);
+        _explosions.explosions.add({
+            left: 4224,
+            top: 320
+        });
+        _audioManager.audioManager.playRopeExplosionSound();
+        this.startRopeFallingPhase();
+    }
+    async startRopeFallingPhase() {
+        if (this.phase >= PHASES.ropefalling) return;
+        this.phase = PHASES.ropefalling;
+        _chandelier.chandelier.dropped = true;
+    }
+    async startBossDyingPhase() {
+        if (this.phase >= PHASES.bossdying) return;
+        this.phase = PHASES.bossdying;
+        _healthbar.healthBar.die();
+        _chandelier.chandelier.show = false;
+        _rope.rope.show = false;
+        // #region Explosions
+        _explosions.explosions.add({
+            left: 4291,
+            top: 642
+        });
+        _explosions.explosions.add({
+            left: 4283,
+            top: 676
+        });
+        _explosions.explosions.add({
+            left: 4264,
+            top: 681
+        });
+        _explosions.explosions.add({
+            left: 4282,
+            top: 688
+        });
+        _explosions.explosions.add({
+            left: 4186,
+            top: 621
+        });
+        _explosions.explosions.add({
+            left: 4194,
+            top: 649
+        });
+        _explosions.explosions.add({
+            left: 4203,
+            top: 642
+        });
+        _explosions.explosions.add({
+            left: 4223,
+            top: 664
+        });
+        _explosions.explosions.add({
+            left: 4219,
+            top: 668
+        });
+        _explosions.explosions.add({
+            left: 4203,
+            top: 686
+        });
+        _explosions.explosions.add({
+            left: 4200,
+            top: 670
+        });
+        _explosions.explosions.add({
+            left: 4200,
+            top: 700
+        });
+        _explosions.explosions.add({
+            left: 4205,
+            top: 792
+        });
+        _explosions.explosions.add({
+            left: 4248,
+            top: 730
+        });
+        _explosions.explosions.add({
+            left: 4154,
+            top: 686
+        });
+        _explosions.explosions.add({
+            left: 4126,
+            top: 725
+        });
+        _explosions.explosions.add({
+            left: 4214,
+            top: 598
+        });
+        _audioManager.audioManager.playDeathSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4159,
+            top: 654
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4161,
+            top: 706
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4274,
+            top: 851
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4206,
+            top: 734
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4192,
+            top: 733
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4203,
+            top: 732
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        _explosions.explosions.add({
+            left: 4252,
+            top: 546
+        });
+        _audioManager.audioManager.playBossExplosionSound();
+        await wait(300);
+        // #endregion
+        this.startEndPhase();
+    }
+    async startEndPhase() {
+        if (this.phase >= PHASES.end) return;
+        this.phase = PHASES.end;
+        // #region Explosions
+        _explosions.explosions.add({
+            left: 4237,
+            top: 560
+        });
+        _explosions.explosions.add({
+            left: 4205,
+            top: 596
+        });
+        _explosions.explosions.add({
+            left: 4251,
+            top: 603
+        });
+        _explosions.explosions.add({
+            left: 4231,
+            top: 642
+        });
+        _explosions.explosions.add({
+            left: 4295,
+            top: 644
+        });
+        _explosions.explosions.add({
+            left: 4249,
+            top: 656
+        });
+        _explosions.explosions.add({
+            left: 4243,
+            top: 681
+        });
+        _explosions.explosions.add({
+            left: 4203,
+            top: 684
+        });
+        _explosions.explosions.add({
+            left: 4266,
+            top: 684
+        });
+        _explosions.explosions.add({
+            left: 4219,
+            top: 692
+        });
+        _explosions.explosions.add({
+            left: 4215,
+            top: 700
+        });
+        _explosions.explosions.add({
+            left: 4293,
+            top: 730
+        });
+        _explosions.explosions.add({
+            left: 4126,
+            top: 740
+        });
+        _explosions.explosions.add({
+            left: 4187,
+            top: 746
+        });
+        _explosions.explosions.add({
+            left: 4224,
+            top: 750
+        });
+        _explosions.explosions.add({
+            left: 4199,
+            top: 767
+        });
+        _explosions.explosions.add({
+            left: 4176,
+            top: 768
+        });
+        _explosions.explosions.add({
+            left: 4296,
+            top: 813
+        });
+        _explosions.explosions.add({
+            left: 4161,
+            top: 820
+        });
+        _explosions.explosions.add({
+            left: 4179,
+            top: 844
+        });
+        _explosions.explosions.add({
+            left: 4180,
+            top: 882
+        });
+        _audioManager.audioManager.playDeathSound();
+        // #endregion
+        await wait(2000);
+        _audioManager.audioManager.playEndCreditsMusic();
+    }
+    drawBackDoor() {
+        _canvas.c.drawImage(this.backDoorImage, 3424 - _coordinates.offset.x, 800 - _coordinates.offset.y, 32, 64);
+    }
+}
+const phaseManager = new PhaseManager();
+
+},{"./healthbar":"5clUK","./platforms":"eYBZp","./explosions":"esUVw","./canvas":"3ib9d","./coordinates":"96akj","./chandelier":"bvCN6","./rope":"9scZJ","./audio-manager":"eqlY2","./button-manager":"2Z5wt","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5clUK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "healthBar", ()=>healthBar
+);
+var _canvas = require("./canvas");
+class HealthBar {
+    health = 1;
+    deathTime = null;
+    show = false;
+    die() {
+        this.deathTime = new Date().valueOf();
+    }
+    update() {
+        if (!this.show) return;
+        if (this.deathTime) {
+            if (this.health > 0.0001) this.health = 1 * Math.exp(-(new Date().valueOf() - this.deathTime) / 200);
+        } else this.health = 1 - 0.99 * (1 - this.health);
+        this.draw();
+    }
+    draw() {
+        _canvas.c.fillStyle = 'white';
+        _canvas.c.fillRect(16, 16, _canvas.FRAME_WIDTH - 32, 20);
+        _canvas.c.fillRect(16, 32, 154, 24);
+        _canvas.c.fillStyle = 'black';
+        _canvas.c.fillRect(18, 18, _canvas.FRAME_WIDTH - 36, 16);
+        _canvas.c.fillRect(18, 30, 150, 24);
+        _canvas.c.fillStyle = 'red';
+        _canvas.c.fillRect(20, 20, (_canvas.FRAME_WIDTH - 40) * this.health, 12);
+        _canvas.c.fillStyle = 'white';
+        _canvas.c.textAlign = 'left';
+        _canvas.c.font = 'bold 14px Inter';
+        _canvas.c.fillText('Grinning Colossus', 28, 48);
+    }
+}
+const healthBar = new HealthBar();
+
+},{"./canvas":"3ib9d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"esUVw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "explosions", ()=>explosions
@@ -2978,87 +3204,34 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "buttonManager", ()=>buttonManager
 );
+var _audioManager = require("./audio-manager");
+var _elementManager = require("./element-manager");
 class ButtonManager {
-    buttons = document.getElementById('buttons');
+    volume0Button = _elementManager.elementManager.navbar.volume0Button;
+    volume1Button = _elementManager.elementManager.navbar.volume1Button;
+    showInfoButton = _elementManager.elementManager.navbar.showInfoButton;
+    constructor(){
+        this.volume0Button.addEventListener('click', ()=>_audioManager.audioManager.setVolume(0)
+        );
+        this.volume1Button.addEventListener('click', ()=>_audioManager.audioManager.setVolume(1)
+        );
+        this.showInfoButton.addEventListener('click', ()=>{
+            document.getElementsByTagName('app-info-modal')[0].toggleAttribute('open');
+        });
+    }
     show() {
-        this.buttons.classList.remove('hidden');
+        _elementManager.elementManager.buttonbar.show();
     }
     hide() {
-        this.buttons.classList.add('hidden');
+        _elementManager.elementManager.buttonbar.hide();
     }
     setOpacity(value) {
-        this.buttons.style.opacity = String(value);
+        _elementManager.elementManager.buttonbar.style.opacity = String(value);
     }
 }
 const buttonManager = new ButtonManager();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6HX0g":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "plumes", ()=>plumes
-);
-var _coordinates = require("./coordinates");
-var _frames = require("./frames");
-var _audioManager = require("./audio-manager");
-var _canvas = require("./canvas");
-var _img = require("./img");
-var _urls = require("./urls");
-const plumeImages = [
-    _img.img(_urls.ASSET_URLS['../img/plume-1_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-2_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-3_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-4_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-5_43x21.png']),
-    _img.img(_urls.ASSET_URLS['../img/plume-6_43x21.png']), 
-];
-class Plumes {
-    plumes = [];
-    add({ left , bottom , facingRight  }) {
-        this.plumes.push(new Plume({
-            left,
-            bottom,
-            facingRight
-        }));
-        _audioManager.audioManager.playLandSound();
-    }
-    update() {
-        this.plumes = this.plumes.filter((plume)=>plume.frames.currentIndex < 5
-        );
-        this.draw();
-    }
-    draw() {
-        this.plumes.forEach((plume)=>plume.draw()
-        );
-    }
-}
-class Plume extends _coordinates.Coordinates {
-    frames = new _frames.Frames({
-        images: plumeImages,
-        fps: 14
-    });
-    constructor({ left , bottom , facingRight  }){
-        super({
-            x: left,
-            y: bottom - 21,
-            width: 43,
-            height: 21
-        });
-        this.facingRight = facingRight;
-    }
-    draw() {
-        const img = this.frames.get();
-        if (this.facingRight) _canvas.c.drawImage(img, this.localLeft, this.localTop, this.width, this.height);
-        else {
-            _canvas.c.save();
-            _canvas.c.scale(-1, 1);
-            _canvas.c.drawImage(img, -1 * this.localRight, this.localTop, this.width, this.height);
-            _canvas.c.restore();
-        }
-    }
-}
-const plumes = new Plumes();
-
-},{"./coordinates":"96akj","./frames":"27wmM","./audio-manager":"eqlY2","./canvas":"3ib9d","./img":"hlH8y","./urls":"8OWkF","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4YS9J":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./audio-manager":"eqlY2","./element-manager":"fyl1r"}],"4YS9J":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "lasers", ()=>lasers
