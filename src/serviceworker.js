@@ -1,7 +1,4 @@
-import * as moo from '@parcel/service-worker';
-import { ASSET_URLS } from './js/urls';
-
-console.log(moo);
+import { manifest } from '@parcel/service-worker';
 
 const CACHE_NAME = 'version-0.1';
 const OFFLINE_URL = 'index.html';
@@ -15,7 +12,7 @@ self.addEventListener('install', function (event) {
         // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
         await cache.add(new Request(OFFLINE_URL, { cache: 'reload' }));
         await cache.add('/');
-        await cache.addAll(Object.values(ASSET_URLS));
+        await cache.addAll(manifest);
     })());
 
     self.skipWaiting();
